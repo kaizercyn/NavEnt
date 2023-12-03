@@ -1,12 +1,29 @@
+@font-face {
+    font-family: 'JaliLatin Medium';
+    src: url('../res/fonts/JaliLatin/JaliLatin-Medium.woff2') format('woff2'),
+         url('../res/fonts/JaliLatin/JaliLatin-Medium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'JaliLatin ExtraLight';
+    src: url('../res/fonts/JaliLatin/JaliLatin-ExtraLight.woff2') format('woff2'),
+         url('../res/fonts/JaliLatin/JaliLatin-ExtraLight.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 body {
     margin: 0;
     font-family: Arial, sans-serif;
 }
 
 header {
-    background-color: #333;
-    color: white;
+    background-color: #000e1e;
+    color: #F1F1F1;
     padding: 10px 20px;
+    
 }
 
 nav {
@@ -23,10 +40,23 @@ nav {
     color: white;
     text-decoration: none;
     margin: 0 15px;
+    font-family: 'JaliLatin Medium', sans-serif;
+    position: relative
 }
 
-.nav-links a:hover {
-    text-decoration: underline;
+.nav-links a::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #e4970e;
+    transition: width 0.5s;
+}
+
+.nav-links a:hover::before {
+    width: 100%;
 }
 
 .user-info a {
@@ -45,9 +75,17 @@ nav {
     margin-right: 8px;
 }
 
-footer {
-    background-color: #333;
-    color: white;
-    padding: 10px 20px;
+footer{
+    position: relative;
+    width: auto;
+    color: #F1F1F1;
+    font-family: 'JaliLatin ExtraLight', sans-serif;
+    font-size: 12px;
     text-align: center;
+    word-spacing: 2px;
+}
+
+.footer-bottom{
+    background: #000e1e;
+    padding: 5px 0;
 }
