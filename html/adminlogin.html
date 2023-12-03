@@ -1,3 +1,6 @@
+# CHANGE DIS COZ NI COPY PASTE KO LANG YUNG CODE 
+# FROM USER LOGIN
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +9,16 @@
     <title>Admin Login</title>
 </head>
 <body>
-    
+    <div class="login_form">
+        <form action="php\login.php" method="POST">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit">Login</button>
+        </form>
+    </div>
 </body>
 </html>
