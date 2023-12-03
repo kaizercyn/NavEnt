@@ -20,20 +20,20 @@ body {
 }
 
 header {
-    background-color: #000e1e;
+    background-color: #1c3946;
     color: #F1F1F1;
     padding: 10px 20px;
-    
-}
-
-nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.logo img {
-    max-height: 40px;
+.nav-links {
+    display: flex;
+    padding: 6px 0;
+    justify-content: center;
+    background-color: #000e1e;
+    width: 100%; /* Set the width to 100% or adjust as needed */
 }
 
 .nav-links a {
@@ -41,7 +41,7 @@ nav {
     text-decoration: none;
     margin: 0 15px;
     font-family: 'JaliLatin Medium', sans-serif;
-    position: relative
+    position: relative;
 }
 
 .nav-links a::before {
@@ -57,6 +57,10 @@ nav {
 
 .nav-links a:hover::before {
     width: 100%;
+}
+
+.logo img {
+    max-height: 60px;
 }
 
 .user-info a {
