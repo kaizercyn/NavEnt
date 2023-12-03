@@ -1,0 +1,48 @@
+/* styles.css */
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo img {
+    max-height: 40px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+}
+
+.nav-links a:hover {
+    text-decoration: underline;
+}
+
+.user-info a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+}
+
+.user-info a:hover {
+    text-decoration: underline;
+}
+
+.user-info img {
+    max-height: 30px;
+    margin-right: 8px;
+}
