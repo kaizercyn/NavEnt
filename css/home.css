@@ -46,3 +46,10 @@ nav {
     max-height: 30px;
     margin-right: 8px;
 }
+
+footer {
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+}
