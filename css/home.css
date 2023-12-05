@@ -39,23 +39,21 @@ nav {
 .nav-links {
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
-.links-container {
-    display: flex;
-    align-items: center;
-    margin-right: auto; /* Push the links to the center */
-}
-
-.links-container a {
+.nav-links a {
     color: white;
     text-decoration: none;
     margin: 0 15px;
     font-family: 'JaliLatin Medium', sans-serif;
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.links-container a::before {
+.nav-links a::before {
     content: '';
     position: absolute;
     bottom: 0;
@@ -66,7 +64,7 @@ nav {
     transition: width 0.5s;
 }
 
-.links-container a:hover::before {
+.nav-links a:hover::before {
     width: 100%;
 }
 
@@ -81,6 +79,8 @@ nav {
     border: 1px solid #F1F1F1;
     border-radius: 18px;
     font-size: 12px;
+    display: flex;
+    align-items: center;
 }
 
 .logo img {
