@@ -28,15 +28,26 @@ header {
     align-items: center;
 }
 
-.nav-links {
+nav {
     display: flex;
-    padding: 6px 0;
-    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
     background-color: #000e1e;
-    width: 100%; /* Set the width to 100% or adjust as needed */
+    padding: 10px 20px; /* Adjust padding for better spacing */
 }
 
-.nav-links a {
+.nav-links {
+    display: flex;
+    align-items: center;
+}
+
+.links-container {
+    display: flex;
+    align-items: center;
+    margin-right: auto; /* Push the links to the center */
+}
+
+.links-container a {
     color: white;
     text-decoration: none;
     margin: 0 15px;
@@ -44,7 +55,7 @@ header {
     position: relative;
 }
 
-.nav-links a::before {
+.links-container a::before {
     content: '';
     position: absolute;
     bottom: 0;
@@ -55,8 +66,21 @@ header {
     transition: width 0.5s;
 }
 
-.nav-links a:hover::before {
+.links-container a:hover::before {
     width: 100%;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+}
+
+.search-container input {
+    padding: 3px;
+    box-sizing: border-box;
+    border: 1px solid #F1F1F1;
+    border-radius: 18px;
+    font-size: 12px;
 }
 
 .logo img {
