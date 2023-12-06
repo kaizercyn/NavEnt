@@ -1,10 +1,23 @@
 <?php
 session_start();
-require('dbconnection.php');
-if (isset($_POST['username'])){
+require("dbconnection.php");
+if (isset($_POST['submit'])){
     $username = $_POST['username'];
     $password = $_POST['password'];
-    $st = $conn -> prepare("SELECT * FROM ACCOUNTS WHERE User_ID=? and Password=?");
+
+    // require("loginfuntions.php");
+
+    // if (emptyInputLogin($username, $password) !== false){
+    //     header("Location: ../login.php?error=emptyinput");
+    //     exit();
+    // }
+
+    // if (userNotFound($conn, $username) !== false){
+    //     header("Location: ../login.php?error=usernotfound");
+    //     exit();
+    // }
+
+    $st = $conn -> prepare("SELECT * FROM ACCOUNTS WHERE User_ID=? and Password=?;");
     $st-> bind_param('ss', $username, $password);
     $st-> execute();
     $result= $st->get_result();
@@ -18,5 +31,7 @@ if (isset($_POST['username'])){
         echo "wrong login credentials";
     }
     $st->close();
+} else {
+    header("Location: login.php");
 }
 ?>
