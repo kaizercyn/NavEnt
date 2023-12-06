@@ -1,49 +1,78 @@
+@font-face {
+    font-family: 'JaliLatin Medium';
+    src: url('../res/fonts/JaliLatin/JaliLatin-Medium.woff2') format('woff2'),
+         url('../res/fonts/JaliLatin/JaliLatin-Medium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'JaliLatin Regular';
+    src: url('../res/fonts/JaliLatin/JaliLatin-Regular.woff2') format('woff2'),
+         url('../res/fonts/JaliLatin/JaliLatin-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: JaliLatin Medium, sans-serif;
     margin: 0;
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-end;
+    align-items: center;
+    justify-content: center;
     height: 100vh;
     background-color: #000e1e;
 }
 
-.logo-container {
-    position: absolute;
-    top: 15px;
-    right: 15px;
+.container {
+    display: flex;
+}
+
+.login-form-container {
+    color: #E4960E;
+    background-color: #1C3947;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: inset -5px -5px 20px rgba(0, 0, 0, 0.4);
 }
 
 .logo {
-    max-height: 300px;
+    max-height: 320px;
+    margin-right: 50px;
+}
+
+.login-form-container {
+    color: #E4960E;
 }
 
 .login_form {
     margin: 20px;
-    color: #E4960E;
+    text-align: center;
 }
 
 .login_form label {
-    margin-bottom: 10px;
+    margin-bottom: 8px;
+    display: block; 
 }
 
-.login_form input {
+.login_form input,
+.login_form select {
     padding: 4px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     width: 100%;
     box-sizing: border-box;
-    padding: 3px;
     border: 1px solid #F1F1F1;
-    border-radius: 10px;
+    border-radius: 8px;
 }
 
 .login_form button {
+    font-family: JaliLatin Regular, sans-serif;
     padding: 10px 20px;
     background-color: #E4960E;
     color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
+    margin-top: 12px;
     cursor: pointer;
 }
 
