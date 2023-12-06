@@ -1,42 +1,56 @@
 @font-face {
-    font-family: 'JaliLatin Medium';
-    src: url('../res/fonts/JaliLatin/JaliLatin-Medium.woff2') format('woff2'),
-         url('../res/fonts/JaliLatin/JaliLatin-Medium.woff') format('woff');
+    font-family: 'Demine';
+    src: url('/res/fonts/Demine/Demine.woff2') format('woff2'),
+         url('/res/fonts/Demine/Demine.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'JaliLatin ExtraLight';
-    src: url('../res/fonts/JaliLatin/JaliLatin-ExtraLight.woff2') format('woff2'),
-         url('../res/fonts/JaliLatin/JaliLatin-ExtraLight.woff') format('woff');
+    font-family: 'CAZentrum Condensed Light';
+    src: url('/res/fonts/CAZentrum/CAZentrumCondensed-Light.woff2') format('woff2'),
+         url('/res/fonts/CAZentrum/CAZentrumCondensed-Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'CAZentrum Regular';
+    src: url('/res/fonts/CAZentrum/CAZentrum-Regular.woff2') format('woff2'),
+         url('/res/fonts/CAZentrum/CAZentrum-Regular.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
 
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
 }
 
 header {
-    background-color: #1c3946;
+    background-color: #000e1e;
     color: #F1F1F1;
-    padding: 10px 20px;
+    padding: 20px 20px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+}
+
+.logo img {
+    max-height: 90px;
+    margin: 0;
+    padding: 0;
 }
 
 nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #000e1e;
+    background-color: #E4960E;
     padding: 10px 20px;
 }
 
 .nav-links {
+    font-size:medium;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -46,7 +60,7 @@ nav {
     color: white;
     text-decoration: none;
     margin: 0 15px;
-    font-family: 'JaliLatin Medium', sans-serif;
+    font-family: 'Demine', sans-serif;
     position: relative;
     display: flex;
     align-items: center;
@@ -60,7 +74,7 @@ nav {
     left: 0;
     width: 0;
     height: 2px;
-    background-color: #e4970e;
+    background-color: #71999B;
     transition: width 0.5s;
 }
 
@@ -83,31 +97,11 @@ nav {
     align-items: center;
 }
 
-.logo img {
-    max-height: 60px;
-}
-
-.user-info a {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: white;
-}
-
-.user-info a:hover {
-    text-decoration: underline;
-}
-
-.user-info img {
-    max-height: 30px;
-    margin-right: 8px;
-}
-
 footer{
     position: relative;
     width: auto;
     color: #F1F1F1;
-    font-family: 'JaliLatin ExtraLight', sans-serif;
+    font-family: 'CAZentrum Condensed Light', sans-serif;
     font-size: 12px;
     text-align: center;
     word-spacing: 2px;
@@ -116,4 +110,67 @@ footer{
 .footer-bottom{
     background: #000e1e;
     padding: 5px 0;
+}
+
+.user-placeholder-button {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: #71999B;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+    z-index: 999;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.user-placeholder-button img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.user-placeholder-button:hover {
+    background-color: #EDA92C;
+}
+
+/* Add these styles for the search icon */
+.search-icon {
+    width: 50px;
+    height: 50px;
+    background-color: #71999B;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+    z-index: 999;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-icon img {
+    width: 70%; /* Adjust the size of the search icon as needed */
+}
+
+.search-input {
+    padding: 3px;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 50%;
+    font-size: 12px;
+    width: 0; /* Initially set width to 0 */
+    height: 100%;
+    background-color: transparent;
+    color: white;
+    outline: none;
+    transition: width 0.5s; /* Add transition for smooth animation */
+}
+
+/* Add hover styles for the search container */
+.search-container:hover .search-input {
+    width: 100px; /* Adjust the width of the input field when hovered */
 }
