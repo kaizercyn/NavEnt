@@ -14,6 +14,14 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'Demine';
+    src: url('/res/fonts/Demine/Demine.woff2') format('woff2'),
+         url('/res/fonts/Demine/Demine.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 body {
     margin: 0;
 }
@@ -51,7 +59,68 @@ header {
     margin-right: 8px;
 }
 
-footer{
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 20px;
+}
+
+.event-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 10px;
+    max-width: 300px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow for embossed effect */
+}
+
+.card-header {
+    position: relative;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    overflow: hidden;
+}
+
+.card-header img {
+    width: 100%;
+    display: block;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.event-card h2,
+.event-card p,
+.event-card a {
+    position: relative;
+    z-index: 2;
+    color: #000e1e; 
+    font-family: 'Demine', sans-serif;
+}
+
+.event-card p {
+    font-size: 14px;
+    font-family: 'CAZentrum Condensed Light', sans-serif;
+}
+
+.edit-button {
+    font-family: 'CAZentrum Condensed Light', sans-serif;
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #E4960E;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.edit-button:hover {
+    background-color: #EDA92C;
+}
+
+footer {
     position: relative;
     width: auto;
     color: #F1F1F1;
@@ -61,7 +130,7 @@ footer{
     word-spacing: 2px;
 }
 
-.footer-bottom{
+.footer-bottom {
     background: #000e1e;
     padding: 5px 0;
 }
