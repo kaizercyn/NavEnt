@@ -4,18 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homepage</title>
-    <link rel="stylesheet" href="../css/home.css">
+    <link rel="stylesheet" href="css/home.css">
 </head>
 <body>
     <header>
         <div class="logo">
-            <img src="../res/imgs/navi-event-logo.png" alt="Logo">
-        </div>
-        <div class="user-info">
-            <a href="..\html\user.html">
-                <img src="../res/imgs/prof_placeholder.png" alt="User Avatar">
-                <span>User123</span>
-            </a>
+            <img src="../res/imgs/navi-event-logo(3d).png" alt="Logo">
         </div>
     </header>
     <nav>
@@ -25,11 +19,22 @@
             <a href="..\html\home.html">HOME</a>
             <a href="..\html\announcement.html">ANNOUNCEMENTS</a>
         </div>
-        <div class="search-container">
-            <input type="text" placeholder="Search...">
-        </div>
     </nav>
     <main>
+
+        <a href="user_profile.html">
+            <div class="user-placeholder-button">
+                <img src="/res/imgs/prof_placeholder.png" alt="User Placeholder">
+            </div>
+        </a>
+
+        <div class="search-container">
+            <div class="search-icon" id="searchIcon">
+                <img src="/res/imgs/search_icon.png" alt="Search">
+            </div>
+            <input type="text" placeholder="Search..." class="search-input" id="searchInput">
+        </div>
+
         <section class="featured-events">
             <h2>Featured Events</h2>
             <!-- Add content for Featured Events here -->

@@ -14,6 +14,22 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'CAZentrum Condensed Black';
+    src: url('/res/fonts/CAZentrum/CAZentrumCondensed-Black.woff2') format('woff2'),
+         url('/res/fonts/CAZentrum/CAZentrumCondensed-Black.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Demine';
+    src: url('/res/fonts/Demine/Demine.woff2') format('woff2'),
+         url('/res/fonts/Demine/Demine.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 body {
     margin: 0;
 }
@@ -21,37 +37,96 @@ body {
 header {
     background-color: #000e1e;
     color: #F1F1F1;
-    padding: 10px 20px;
+    padding: 20px 20px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 }
 
 .logo img {
-    max-height: 60px;
+    max-height: 90px;
+    margin: 0;
+    padding: 0;
 }
 
-.user-info a {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
+/* Update this style for the create button */
+.create-button {
+    font-family: 'CAZentrum Condensed Black', sans-serif;
+    display: block; /* Change display property to block */
+    margin: 20px auto; /* Center the button horizontally with auto margins */
+    padding: 8px 16px;
+    background-color: #153437;
     color: white;
+    text-decoration: none;
+    border-radius: 5px;
 }
 
-.user-info span {
-    font-family: 'CAZentrum Regular', sans-serif;
+.create-button:hover {
+    background-color: #71999B;
 }
 
-.user-info a:hover {
-    text-decoration: underline;
+/* Add this style for the main container to ensure proper centering */
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; /* Add this line to center vertically */
+    min-height: 100vh; /* Add this line for centering vertically */
 }
 
-.user-info img {
-    max-height: 30px;
-    margin-right: 8px;
+.event-card {
+    background-color: #E4960E;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 10px;
+    max-width: 300px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow for embossed effect */
 }
 
-footer{
+.card-header {
+    position: relative;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    overflow: hidden;
+}
+
+.card-header img {
+    width: 100%;
+    display: block;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.event-card h2 {
+    font-family: 'Demine', sans-serif;
+    position: relative;
+    z-index: 2;
+    color: #000e1e; 
+}
+
+.event-card p {
+    font-size: 14px;
+    font-family: 'CAZentrum Condensed Light', sans-serif;
+}
+
+.edit-button {
+    font-family: 'CAZentrum Condensed Black', sans-serif;
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #153437;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.edit-button:hover {
+    background-color: #71999B;
+}
+
+footer {
     position: relative;
     width: auto;
     color: #F1F1F1;
@@ -59,9 +134,36 @@ footer{
     font-size: 12px;
     text-align: center;
     word-spacing: 2px;
+
 }
 
-.footer-bottom{
+.footer-bottom {
     background: #000e1e;
     padding: 5px 0;
 }
+
+.user-placeholder-button {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: #71999B;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+    z-index: 999;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.user-placeholder-button img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.user-placeholder-button:hover {
+    background-color: #EDA92C;
+}
+
