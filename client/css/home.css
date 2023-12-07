@@ -1,38 +1,39 @@
 @font-face {
     font-family: 'Demine';
-    src: url('/res/fonts/Demine/Demine.woff2') format('woff2'),
-         url('/res/fonts/Demine/Demine.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'CAZentrum Condensed Light';
-    src: url('/res/fonts/CAZentrum/CAZentrumCondensed-Light.woff2') format('woff2'),
-         url('/res/fonts/CAZentrum/CAZentrumCondensed-Light.woff') format('woff');
+    src: url('/Users/kaizercyn/Documents/BSCS/3RD - 1ST/CS 312/FINALS/final proj/w:bootstrap/res/font/Demine/Demine.woff2') format('woff2'),
+         url('/Users/kaizercyn/Documents/BSCS/3RD - 1ST/CS 312/FINALS/final proj/w:bootstrap/res/font/Demine/Demine.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'CAZentrum Regular';
-    src: url('/res/fonts/CAZentrum/CAZentrum-Regular.woff2') format('woff2'),
-         url('/res/fonts/CAZentrum/CAZentrum-Regular.woff') format('woff');
+    src: url('/Users/kaizercyn/Documents/BSCS/3RD - 1ST/CS 312/FINALS/final proj/w:bootstrap/res/font/CAZentrum/CAZentrum-Regular.woff2') format('woff2'),
+         url('/Users/kaizercyn/Documents/BSCS/3RD - 1ST/CS 312/FINALS/final proj/w:bootstrap/res/font/CAZentrum/CAZentrum-Regular.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
 
-body {
-    margin: 0;
+@font-face {
+    font-family: 'CAZentrum Condensed Light';
+    src: url('/Users/kaizercyn/Documents/BSCS/3RD - 1ST/CS 312/FINALS/final proj/w:bootstrap/res/font/CAZentrum/CAZentrumCondensed-Light.woff2') format('woff2'),
+         url('/Users/kaizercyn/Documents/BSCS/3RD - 1ST/CS 312/FINALS/final proj/w:bootstrap/res/font/CAZentrum/CAZentrumCondensed-Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Curiosa ExtraBold';
+    src: url('/Users/kaizercyn/Documents/BSCS/3RD - 1ST/CS 312/FINALS/final proj/w:bootstrap/res/font/Curiosa/Curiosa-ExtraBold.woff2') format('woff2'),
+         url('/Users/kaizercyn/Documents/BSCS/3RD - 1ST/CS 312/FINALS/final proj/w:bootstrap/res/font/Curiosa/Curiosa-ExtraBold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }
 
 header {
     background-color: #000e1e;
     color: #F1F1F1;
-    padding: 20px 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    padding: 20px;
 }
 
 .logo img {
@@ -46,21 +47,23 @@ nav {
     justify-content: space-between;
     align-items: center;
     background-color: #E4960E;
-    padding: 10px 20px;
+    padding: 10px 0;
 }
 
 .nav-links {
-    font-size:medium;
+    font-size: medium;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 0 20px;
 }
 
 .nav-links a {
-    color: white;
+    color: #F1F1F1;
     text-decoration: none;
     margin: 0 15px;
-    font-family: 'Demine', sans-serif;
+    font-family: 'Curiosa ExtraBold', sans-serif;
     position: relative;
     display: flex;
     align-items: center;
@@ -82,24 +85,84 @@ nav {
     width: 100%;
 }
 
-.search-container {
-    display: flex;
-    align-items: center;
+h1,
+h5 {
+    font-family: 'Demine', 'San Serif';
 }
 
-.search-container input {
-    padding: 3px;
-    box-sizing: border-box;
-    border: 1px solid #F1F1F1;
-    border-radius: 18px;
-    font-size: 12px;
-    display: flex;
-    align-items: center;
+h2,
+p {
+    font-family: 'CAZentrum Regular', 'San Serif';
 }
 
-footer{
+.latest-event {
     position: relative;
-    width: auto;
+    width: 300px;
+    height: 200px;
+}
+
+.latest-event .card-img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.latest-event .card-img-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 1rem;
+    color: white;
+}
+
+.latest-event .btn {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: #EDA92C;
+    border-color: #EDA92C;
+    font-family: 'CAZentrum Condensed Light', 'San Serif';
+}
+
+.latest-event .btn:hover {
+    background-color: #E4960E;
+    border-color: #E4960E;
+}
+
+.card-img {
+    filter: brightness(0.6);
+}
+
+.latest-event .card-title,
+.latest-event .card-text,
+.latest-event small {
+    color: white;
+}
+
+.ev {
+    height: 380px;
+}
+
+.e-img {
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.6);
+}
+
+.carousel-inner .btn {
+    background-color: #EDA92C;
+    border-color: #EDA92C;
+    font-family: 'CAZentrum Condensed Light', 'San Serif';
+}
+
+.carousel-inner .btn:hover {
+    background-color: #E4960E;
+    border-color: #E4960E;
+}
+
+footer {
+    position: relative;
+    width: 100%;
     color: #F1F1F1;
     font-family: 'CAZentrum Condensed Light', sans-serif;
     font-size: 12px;
@@ -107,70 +170,7 @@ footer{
     word-spacing: 2px;
 }
 
-.footer-bottom{
+.footer-bottom {
     background: #000e1e;
-    padding: 5px 0;
-}
-
-.user-placeholder-button {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    width: 50px;
-    height: 50px;
-    background-color: #71999B;
-    border-radius: 50%;
-    overflow: hidden;
-    cursor: pointer;
-    z-index: 999;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
-
-.user-placeholder-button img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.user-placeholder-button:hover {
-    background-color: #EDA92C;
-}
-
-/* Add these styles for the search icon */
-.search-icon {
-    width: 50px;
-    height: 50px;
-    background-color: #71999B;
-    border-radius: 50%;
-    overflow: hidden;
-    cursor: pointer;
-    z-index: 999;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.search-icon img {
-    width: 70%; /* Adjust the size of the search icon as needed */
-}
-
-.search-input {
-    padding: 3px;
-    box-sizing: border-box;
-    border: none;
-    border-radius: 50%;
-    font-size: 12px;
-    width: 0; /* Initially set width to 0 */
-    height: 100%;
-    background-color: transparent;
-    color: white;
-    outline: none;
-    transition: width 0.5s; /* Add transition for smooth animation */
-}
-
-/* Add hover styles for the search container */
-.search-container:hover .search-input {
-    width: 100px; /* Adjust the width of the input field when hovered */
+    padding: 3px 0;
 }
