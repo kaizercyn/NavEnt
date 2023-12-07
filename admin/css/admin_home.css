@@ -49,11 +49,10 @@ header {
     padding: 0;
 }
 
-/* Update this style for the create button */
 .create-button {
     font-family: 'CAZentrum Condensed Black', sans-serif;
-    display: block; /* Change display property to block */
-    margin: 20px auto; /* Center the button horizontally with auto margins */
+    display: block;
+    margin: 20px auto;
     padding: 8px 16px;
     background-color: #153437;
     color: white;
@@ -65,13 +64,12 @@ header {
     background-color: #71999B;
 }
 
-/* Add this style for the main container to ensure proper centering */
 main {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column; /* Add this line to center vertically */
-    min-height: 100vh; /* Add this line for centering vertically */
+    flex-direction: column; 
+    min-height: 100vh;
 }
 
 .event-card {
@@ -82,7 +80,7 @@ main {
     margin: 10px;
     max-width: 300px;
     text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow for embossed effect */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .card-header {
