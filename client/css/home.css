@@ -54,21 +54,21 @@ header {
     font-family: 'Curiosa ExtraLight', sans-serif;
 }
 
+
 nav {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     background-color: #E4960E;
-    padding: 10px 0;
+    padding: 10px 20px; /* Adjust padding as needed */
 }
 
 .nav-links {
     font-size: medium;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    padding: 0 20px;
+    list-style: none; /* Remove default list styles */
+    margin: 0;
+    padding: 0;
 }
 
 .nav-links a {
@@ -95,6 +95,41 @@ nav {
 
 .nav-links a:hover::before {
     width: 100%;
+}
+
+.box {
+    height: 30px;
+    display: flex;
+    cursor: pointer;
+    padding: 10px 10px;
+    background: #F1F1F1;
+    border-radius: 30px;
+    align-items: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.box:hover input {
+    font-family: 'Curiosa ExtraLight', sans-serif;
+    width: 400px;
+}
+
+.box input {
+    font-family: 'Curiosa ExtraLight', sans-serif;
+    width: 0;
+    outline: none;
+    border: none;
+    font-weight: 500;
+    transition: 0.8s;
+    background: transparent;
+}
+
+.box a .fas {
+    color: #71999B;
+    font-size: 18px;
+}
+
+.search-icon {
+    color: #71999B;
 }
 
 h1,
