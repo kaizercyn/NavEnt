@@ -165,7 +165,7 @@ p {
     color: white;
 }
 
-.latest-event .btn
+.latest-event .btn,
 .upcoming-event .btn {
     position: absolute;
     bottom: 10px;
