@@ -16,7 +16,7 @@
     <header>
         <div class="d-flex align-items-center justify-content-between">
             <div class="logo">
-                <img src="C:\Users\cyang\Documents\BSCS\3YEAR\1SEM\CS312\webdevfinals\res\imgs\navi-event-logo(3d).png" alt="Logo">
+                <img src="/Users/kaizercyn/Documents/BSCS/3RD - 1ST/CS 312/FINALS/final proj/webdevfinals/res/imgs/navi-event-logo(3d).png" alt="Logo">
             </div>
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 <button class="btn me-md-2 text-light h-btn" type="button">Login</button>
@@ -47,7 +47,7 @@
           
         <div class="carousel-inner">
           <div class="carousel-item active ev">
-            <img src="C:\Users\cyang\Documents\BSCS\3YEAR\1SEM\CS312\webdevfinals\res\imgs\event1.jpeg" class="d-block w-100 e-img" alt="event1">
+            <img src="/Users/kaizercyn/Documents/BSCS/3RD - 1ST/CS 312/FINALS/final proj/webdevfinals/res/imgs/event2.jpeg" class="d-block w-100 e-img" alt="event1">
             <div class="carousel-caption top-0 mt-4 d-none d-md-block">
                 <h2 class="mt-5c fs-3 text-uppercase">Tagline</h2>
                 <h1 class="display-1 fw-bolder text-capitalize">Event Name</h1>
@@ -55,7 +55,7 @@
               </div>
         </div>
           <div class="carousel-item ev">
-            <img src="C:\Users\cyang\Documents\BSCS\3YEAR\1SEM\CS312\webdevfinals\res\imgs\event2.jpeg" class="d-block w-100 e-img" alt="event2">
+            <img src="/Users/kaizercyn/Documents/BSCS/3RD - 1ST/CS 312/FINALS/final proj/webdevfinals/res/imgs/event3.jpeg" class="d-block w-100 e-img" alt="event2">
             <div class="carousel-caption top-0 mt-4 d-none d-md-block">
                 <h2 class="mt-5c fs-3 text-uppercase">Tagline</h2>
                 <h1 class="display-1 fw-bolder text-capitalize">Event Name</h1>
@@ -63,7 +63,7 @@
               </div>
         </div>
           <div class="carousel-item ev">
-            <img src="C:\Users\cyang\Documents\BSCS\3YEAR\1SEM\CS312\webdevfinals\res\imgs\event3.jpeg" class="d-block w-100 e-img" alt="event3">
+            <img src="/Users/kaizercyn/Documents/BSCS/3RD - 1ST/CS 312/FINALS/final proj/webdevfinals/res/imgs/event3.jpeg" class="d-block w-100 e-img" alt="event3">
             <div class="carousel-caption top-0 mt-4 d-none d-md-block">
                 <h2 class="mt-5c fs-3 text-uppercase">Tagline</h2>
                 <h1 class="display-1 fw-bolder text-capitalize">Event Name</h1>
@@ -81,15 +81,19 @@
           <span class="visually-hidden">Next</span>
         </button>
       </div>
-
+      
+      <div class="container events-container">
     <section id="packages" class="pt-3 pb-3">
         <h1 class="text-center my-3">Latest Events</h1>
     </section>
       
-      <div class="container">
-        <div class="row">
-            <div class="col-lg">
-                <div class="card latest-event w-100">
+    <div id="latestEventsSlider" class="carousel slide" data-bs-ride="false">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div class="container">
+              <div class="row">
+                <div class="col-lg">
+                  <div class="card latest-event w-100">
                     <img src="https://images.unsplash.com/photo-1560439514-07abbb294a86?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img" alt="event4">
                     <div class="card-img-overlay">
                         <h5 class="card-title">Event Name</h5>
@@ -97,10 +101,10 @@
                         <p class="card-text"><small>Date of Event</small></p>
                         <button class="btn btn-primary">Read More</button>
                     </div>
+                  </div>
                 </div>
-            </div>
-            <div class="col-lg">
-                <div class="card latest-event w-100">
+                <div class="col-lg">
+                  <div class="card latest-event w-100">
                     <img src="https://images.unsplash.com/photo-1559223694-98ed5e272fef?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img" alt="event5">
                     <div class="card-img-overlay">
                         <h5 class="card-title">Event Name</h5>
@@ -108,10 +112,10 @@
                         <p class="card-text"><small>Date of Event</small></p>
                         <button class="btn btn-primary">Read More</button>
                     </div>
+                  </div>
                 </div>
-            </div>
-            <div class="col-lg">
-                <div class="card latest-event w-100">
+                <div class="col-lg">
+                  <div class="card latest-event w-100">
                     <img src="https://images.unsplash.com/photo-1563807894768-f28bee0d37b6?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img" alt="event6">
                     <div class="card-img-overlay">
                         <h5 class="card-title">Event Name</h5>
@@ -119,19 +123,81 @@
                         <p class="card-text"><small>Date of Event</small></p>
                         <button class="btn btn-primary">Read More</button>
                     </div>
+                  </div>
                 </div>
+              </div>
             </div>
+          </div>
+      
+          <div class="carousel-item">
+            <div class="container">
+              <div class="row">
+                <div class="col-lg">
+                  <div class="card latest-event w-100">
+                    <img src="https://images.unsplash.com/photo-1560439514-07abbb294a86?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img" alt="event4">
+                    <div class="card-img-overlay">
+                        <h5 class="card-title">Event Name</h5>
+                        <p class="card-text">Description</p>
+                        <p class="card-text"><small>Date of Event</small></p>
+                        <button class="btn btn-primary">Read More</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg">
+                  <div class="card latest-event w-100">
+                   <img src="https://images.unsplash.com/photo-1559223694-98ed5e272fef?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img" alt="event5">
+                    <div class="card-img-overlay">
+                        <h5 class="card-title">Event Name</h5>
+                        <p class="card-text">Description</p>
+                        <p class="card-text"><small>Date of Event</small></p>
+                        <button class="btn btn-primary">Read More</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg">
+                  <div class="card latest-event w-100">
+                    <img src="https://images.unsplash.com/photo-1563807894768-f28bee0d37b6?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img" alt="event6">
+                    <div class="card-img-overlay">
+                        <h5 class="card-title">Event Name</h5>
+                        <p class="card-text">Description</p>
+                        <p class="card-text"><small>Date of Event</small></p>
+                        <button class="btn btn-primary">Read More</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      
         </div>
+      
+        <button class="carousel-control-prev" type="button" data-bs-target="#latestEventsSlider" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#latestEventsSlider" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
       </div>
+      
+      <script>
+        const latestEventsSlider = new bootstrap.Carousel(document.getElementById('latestEventsSlider'), {
+          interval: false,
+        });
+      </script>
       
     <section id="packages" class="pt-3 pb-3">
         <h1 class="text-center my-3">Upcoming Events</h1>
     </section>
-      
-      <div class="container">
-        <div class="row">
-            <div class="col-lg">
-                <div class="card latest-event w-100">
+
+    <div id="upcomingEventsSlider" class="carousel slide" data-bs-ride="false">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div class="container">
+              <div class="row">
+                <div class="col-lg">
+                  <div class="card upcoming-event w-100">
                     <img src="https://images.unsplash.com/photo-1560439514-07abbb294a86?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img" alt="event4">
                     <div class="card-img-overlay">
                         <h5 class="card-title">Event Name</h5>
@@ -139,10 +205,10 @@
                         <p class="card-text"><small>Date of Event</small></p>
                         <button class="btn btn-primary">Read More</button>
                     </div>
+                  </div>
                 </div>
-            </div>
-            <div class="col-lg">
-                <div class="card latest-event w-100">
+                <div class="col-lg">
+                  <div class="card upcoming-event w-100">
                     <img src="https://images.unsplash.com/photo-1559223694-98ed5e272fef?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img" alt="event5">
                     <div class="card-img-overlay">
                         <h5 class="card-title">Event Name</h5>
@@ -150,10 +216,10 @@
                         <p class="card-text"><small>Date of Event</small></p>
                         <button class="btn btn-primary">Read More</button>
                     </div>
+                  </div>
                 </div>
-            </div>
-            <div class="col-lg">
-                <div class="card latest-event w-100">
+                <div class="col-lg">
+                  <div class="card upcoming-event w-100">
                     <img src="https://images.unsplash.com/photo-1563807894768-f28bee0d37b6?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img" alt="event6">
                     <div class="card-img-overlay">
                         <h5 class="card-title">Event Name</h5>
@@ -161,15 +227,76 @@
                         <p class="card-text"><small>Date of Event</small></p>
                         <button class="btn btn-primary">Read More</button>
                     </div>
+                  </div>
                 </div>
+              </div>
             </div>
+          </div>
+      
+          <div class="carousel-item">
+            <div class="container">
+              <div class="row">
+                <div class="col-lg">
+                  <div class="card upcoming-event w-100">
+                    <img src="https://images.unsplash.com/photo-1560439514-07abbb294a86?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img" alt="event4">
+                    <div class="card-img-overlay">
+                        <h5 class="card-title">Event Name</h5>
+                        <p class="card-text">Description</p>
+                        <p class="card-text"><small>Date of Event</small></p>
+                        <button class="btn btn-primary">Read More</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg">
+                  <div class="card upcoming-event w-100">
+                   <img src="https://images.unsplash.com/photo-1559223694-98ed5e272fef?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img" alt="event5">
+                    <div class="card-img-overlay">
+                        <h5 class="card-title">Event Name</h5>
+                        <p class="card-text">Description</p>
+                        <p class="card-text"><small>Date of Event</small></p>
+                        <button class="btn btn-primary">Read More</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg">
+                  <div class="card upcoming-event w-100">
+                    <img src="https://images.unsplash.com/photo-1563807894768-f28bee0d37b6?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img" alt="event6">
+                    <div class="card-img-overlay">
+                        <h5 class="card-title">Event Name</h5>
+                        <p class="card-text">Description</p>
+                        <p class="card-text"><small>Date of Event</small></p>
+                        <button class="btn btn-primary">Read More</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      
         </div>
+      
+        <button class="carousel-control-prev" type="button" data-bs-target="#upcomingEventsSlider" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#upcomingEventsSlider" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+
+      <script>
+        const upcomingEventsSlider = new bootstrap.Carousel(document.getElementById('upcomingEventsSlider'), {
+        interval: false,
+        });
+      </script>
+      
       </div>
 
       <footer>
         <div class="footer-bottom">
             <div class="logo">
-                <img src="C:\Users\cyang\Documents\BSCS\3YEAR\1SEM\CS312\webdevfinals\res\imgs\navi-event-logo(3d).png" alt="Logo" class="footer-logo">
+                <img src="/Users/kaizercyn/Documents/BSCS/3RD - 1ST/CS 312/FINALS/final proj/webdevfinals/res/imgs/navi-event-logo(3d).png" alt="Logo" class="footer-logo">
             </div>
             <p>© 2023 NavEnt. A Saint Louis University Company. All Rights Reserved. CS Slot Org ™</p>
         </div>

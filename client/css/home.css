@@ -1,7 +1,7 @@
 @font-face {
     font-family: 'Demine';
-    src: url('..\res\fonts\Demine\Demine.woff') format('woff2'),
-         url('..\res\fonts\Demine\Demine.woff2') format('woff');
+    src: url('/Users/kaizercyn/Documents/BSCS/3RD - 1ST/CS 312/FINALS/final proj/webdevfinals/res/fonts/Demine/Demine.woff2') format('woff2'),
+         url('/Users/kaizercyn/Documents/BSCS/3RD - 1ST/CS 312/FINALS/final proj/webdevfinals/res/fonts/Demine/Demine.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
@@ -142,19 +142,22 @@ p {
     font-family: 'CAZentrum Regular', 'San Serif';
 }
 
-.latest-event {
+.latest-event,
+.upcoming-event {
     position: relative;
     width: 300px;
     height: 200px;
 }
 
-.latest-event .card-img {
+.latest-event .card-img,
+.upcoming-event .card-img {
     object-fit: cover;
     width: 100%;
     height: 100%;
 }
 
-.latest-event .card-img-overlay {
+.latest-event .card-img-overlay, 
+.upcoming-event .card-img-overlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -162,7 +165,8 @@ p {
     color: white;
 }
 
-.latest-event .btn {
+.latest-event .btn
+.upcoming-event .btn {
     position: absolute;
     bottom: 10px;
     right: 10px;
@@ -171,9 +175,48 @@ p {
     font-family: 'CAZentrum Condensed Light', 'San Serif';
 }
 
-.latest-event .btn:hover {
+.latest-event .btn:hover,
+.upcoming-event .btn:hover {
     background-color: #E4960E;
     border-color: #E4960E;
+}
+
+#latestEventsSlider .carousel-control-prev,
+#latestEventsSlider .carousel-control-next,
+#upcomingEventsSlider .carousel-control-prev,
+#upcomingEventsSlider .carousel-control-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30px;
+  height: 30px;
+  font-size: 3rem;
+  background-color: transparent; 
+  border: none;
+}
+
+#latestEventsSlider .carousel-control-prev::before,
+#upcomingEventsSlider .carousel-control-prev::before  {
+  content: '\2039';
+  font-size: 3rem;
+  color: #71999B;
+}
+
+#latestEventsSlider .carousel-control-next::before,
+#upcomingEventsSlider .carousel-control-next::before {
+  content: '\203A';
+  font-size: 3rem;
+  color: #71999B;
+}
+
+#latestEventsSlider .carousel-control-prev,
+#upcomingEventsSlider .carousel-control-prev {
+  left: -45px;
+}
+
+#latestEventsSlider .carousel-control-next,
+#upcomingEventsSlider .carousel-control-next {
+  right: -45px;
 }
 
 .card-img {
@@ -207,8 +250,9 @@ p {
     border-color: #E4960E;
 }
 
-.container {
-    margin-bottom: 20px;
+.events-container {
+    margin-bottom: 30px;
+    width: 100%;
 }
 
 footer {
@@ -231,7 +275,11 @@ footer {
 }
 
 .footer-logo {
-    max-width: 70px; /* Set the maximum width as needed */
+    max-width: 70px;
     height: auto;
-    margin-bottom: 20px; /* Adjust margin as needed */
+    margin-bottom: 20px;
+}
+
+footer p {
+    margin: 0;
 }
