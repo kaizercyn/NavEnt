@@ -30,6 +30,14 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'Curiosa ExtraLight';
+    src: url('/Users/kaizercyn/Documents/BSCS/3RD - 1ST/CS 312/FINALS/final proj/webdevfinals/res/fonts/Curiosa/Curiosa-ExtraLight.woff') format('woff2'),
+         url('/Users/kaizercyn/Documents/BSCS/3RD - 1ST/CS 312/FINALS/final proj/webdevfinals/res/fonts/Curiosa/Curiosa-ExtraLight.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 header {
     background-color: #000e1e;
     color: #F1F1F1;
@@ -40,6 +48,10 @@ header {
     max-height: 90px;
     margin: 0;
     padding: 0;
+}
+
+.h-btn {
+    font-family: 'Curiosa ExtraLight', sans-serif;
 }
 
 nav {
