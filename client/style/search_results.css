@@ -38,10 +38,6 @@
     font-style: normal;
 }
 
-body {
-    margin: 0;
-}
-
 header {
     background-color: #000e1e;
     color: #F1F1F1;
@@ -93,80 +89,84 @@ header {
     align-items: center;
 }
 
-.create-button {
-    font-family: 'CAZentrum Condensed Black', sans-serif;
-    display: block;
-    margin: 20px auto;
-    padding: 8px 16px;
-    background-color: #153437;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-}
-
-.create-button:hover {
-    background-color: #71999B;
-}
-
-main {
+nav {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column; 
-    min-height: 100vh;
-}
-
-.event-card {
     background-color: #E4960E;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 20px;
-    margin: 10px;
-    max-width: 300px;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px 20px;
 }
 
-.card-header {
-    position: relative;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    overflow: hidden;
+.nav-links {
+    font-size: medium;
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
-.card-header img {
-    width: 100%;
-    display: block;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-}
-
-.event-card h2 {
-    font-family: 'Demine', sans-serif;
-    position: relative;
-    z-index: 2;
-    color: #000e1e; 
-}
-
-.event-card p {
-    font-size: 14px;
-    font-family: 'CAZentrum Condensed Light', sans-serif;
-}
-
-.edit-button {
-    font-family: 'CAZentrum Condensed Black', sans-serif;
-    display: inline-block;
-    padding: 8px 16px;
-    background-color: #153437;
-    color: white;
+.nav-links a {
+    color: #F1F1F1;
     text-decoration: none;
-    border-radius: 5px;
-    margin-top: 10px;
+    margin: 0 15px;
+    font-family: 'Curiosa ExtraBold', sans-serif;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.edit-button:hover {
+.nav-links a::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
     background-color: #71999B;
+    transition: width 0.5s;
 }
+
+.nav-links a:hover::before {
+    width: 100%;
+}
+
+.box {
+    height: 30px;
+    display: flex;
+    cursor: pointer;
+    padding: 10px 10px;
+    background: #F1F1F1;
+    border-radius: 30px;
+    align-items: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.box:hover input {
+    font-family: 'Curiosa ExtraLight', sans-serif;
+    width: 400px;
+}
+
+.box input {
+    font-family: 'Curiosa ExtraLight', sans-serif;
+    width: 0;
+    outline: none;
+    border: none;
+    font-weight: 500;
+    transition: 0.8s;
+    background: transparent;
+}
+
+.box a .fas {
+    color: #71999B;
+    font-size: 18px;
+}
+
+.search-icon {
+    color: #71999B;
+}
+
+/* add css to main */
 
 footer {
     position: relative;
