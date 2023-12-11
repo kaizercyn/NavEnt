@@ -50,23 +50,57 @@ header {
     padding: 0;
 }
 
-.h-btn {
-    font-family: 'Curiosa ExtraLight', sans-serif;
+.profile-box {
+    display: flex;
+    align-items: center;
 }
 
+.pf {
+    height: 40px;
+    display: flex;
+    cursor: pointer;
+    padding: 10px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    align-items: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    transition: border-color 0.3s ease;
+}
+
+.pf:hover,
+.pf:active {
+    border-color: #F1F1F1; 
+}
+
+.profile-icon {
+    max-height: 30px;
+    font-size: 24px;
+    margin-right: 10px;
+}
+
+.username {
+    font-family: 'Curiosa ExtraLight', sans-serif;
+    font-weight: 500;
+    flex: 1;
+}
+
+.profile-icon, .username {
+    display: flex;
+    align-items: center;
+}
 
 nav {
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #E4960E;
-    padding: 10px 20px; /* Adjust padding as needed */
+    padding: 10px 20px;
 }
 
 .nav-links {
     font-size: medium;
     display: flex;
-    list-style: none; /* Remove default list styles */
+    list-style: none;
     margin: 0;
     padding: 0;
 }
