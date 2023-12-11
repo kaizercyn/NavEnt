@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Event</title>
+    <link rel="stylesheet" href="css/admin_event.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="../res/imgs/navi-event-logo(3d).png" alt="Logo">
+        </div>
+    </header>
+
+    <main>
+        <a href="admin_profile.html">
+            <div class="user-placeholder-button">
+                <img src="/res/imgs/prof_placeholder.png" alt="User Placeholder">
+            </div>
+        </a>
+
+        <div class="event-form">
+            <h1>Create New Event</h1>
+            <!-- Event Name -->
+            <label for="eventName">Event Name:</label>
+            <input type="text" id="eventName" name="eventName" required>
+
+            <!-- Event Type -->
+            <label for="eventType">Event Type:</label>
+            <select id="eventType" name="eventType">
+                <option value="series">Series</option>
+                <option value="am_pm">AM and PM</option>
+                <option value="one_time">One Time</option>
+            </select>
+
+    
+            <!-- Two columns for Start and End Date -->
+            <div class="date-columns">
+                <div class="date-input">
+                    <label for="start_date">Start Date:</label>
+                    <input type="date" id="start_date" name="start_date" required>
+                </div>
+
+                <div class="date-input">
+                    <label for="end_date">End Date:</label>
+                    <input type="date" id="end_date" name="end_date" required>
+                </div>
+            </div>
+
+            <!-- Other input fields for event details -->
+
+            <!-- Registration Form or Link -->
+            <label for="registrationOption">Registration Option:</label>
+            <select id="registrationOption" name="registrationOption">
+                <option value="form">Create Registration Form</option>
+                <option value="link">Append Registration Link</option>
+            </select>
+
+            <!-- Upload Button for Images, Videos, etc. -->
+            <label for="uploadFile">Upload Event Cover:</label>
+            <input type="file" id="uploadFile" name="uploadFile" accept="image/*, video/*">
+
+                        <!-- Preview button below the two buttons -->
+                        <div class="preview-button">
+                            <a href="#">Preview</a>
+                        </div>
+
+            <!-- Three columns for buttons -->
+            <div class="button-container">
+                <button type="button">Save as Draft</button>
+                <button type="submit">Save and Publish</button>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-bottom">
+            <p>&copy; 2023 Navi Event. A Saint Louis University Company. All Rights Reserved. CS Slot Org ™</p>
+        </div>
+    </footer>
+</body>
+</html>

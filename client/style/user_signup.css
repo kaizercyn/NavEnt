@@ -26,6 +26,7 @@ body {
 
 .container {
     display: flex;
+    align-items: center;
 }
 
 .signup-form-container {
@@ -41,7 +42,7 @@ body {
     margin-right: 50px;
 }
 
-.login-form-container {
+.signup-form-container {
     color: #E4960E;
 }
 
