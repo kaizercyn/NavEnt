@@ -1,39 +1,39 @@
 @font-face {
     font-family: 'Demine';
-    src: url('/Users/kaizercyn/Documents/BSCS/3RD - 1ST/CS 312/FINALS/final proj/webdevfinals/res/fonts/Demine/Demine.woff2') format('woff2'),
-         url('/Users/kaizercyn/Documents/BSCS/3RD - 1ST/CS 312/FINALS/final proj/webdevfinals/res/fonts/Demine/Demine.woff') format('woff');
+    src: url('font/Demine/Demine.woff2') format('woff2'),
+         url('font/Demine/Demine.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'CAZentrum Regular';
-    src: url('/Users/kaizercyn/Documents/BSCS/3RD - 1ST/CS 312/FINALS/final proj/w:bootstrap/res/font/CAZentrum/CAZentrum-Regular.woff2') format('woff2'),
-         url('/Users/kaizercyn/Documents/BSCS/3RD - 1ST/CS 312/FINALS/final proj/w:bootstrap/res/font/CAZentrum/CAZentrum-Regular.woff') format('woff');
+    src: url('font/CAZentrum/CAZentrum-Regular.woff2') format('woff2'),
+         url('font/CAZentrum/CAZentrum-Regular.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'CAZentrum Condensed Light';
-    src: url('/Users/kaizercyn/Documents/BSCS/3RD - 1ST/CS 312/FINALS/final proj/w:bootstrap/res/font/CAZentrum/CAZentrumCondensed-Light.woff2') format('woff2'),
-         url('/Users/kaizercyn/Documents/BSCS/3RD - 1ST/CS 312/FINALS/final proj/w:bootstrap/res/font/CAZentrum/CAZentrumCondensed-Light.woff') format('woff');
+    src: url('font/CAZentrum/CAZentrumCondensed-Light.woff2') format('woff2'),
+         url('font/CAZentrum/CAZentrumCondensed-Light.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Curiosa ExtraBold';
-    src: url('/Users/kaizercyn/Documents/BSCS/3RD - 1ST/CS 312/FINALS/final proj/w:bootstrap/res/font/Curiosa/Curiosa-ExtraBold.woff2') format('woff2'),
-         url('/Users/kaizercyn/Documents/BSCS/3RD - 1ST/CS 312/FINALS/final proj/w:bootstrap/res/font/Curiosa/Curiosa-ExtraBold.woff') format('woff');
+    src: url('font/Curiosa/Curiosa-ExtraBold.woff2') format('woff2'),
+         url('font/Curiosa/Curiosa-ExtraBold.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Curiosa ExtraLight';
-    src: url('/Users/kaizercyn/Documents/BSCS/3RD - 1ST/CS 312/FINALS/final proj/webdevfinals/res/fonts/Curiosa/Curiosa-ExtraLight.woff') format('woff2'),
-         url('/Users/kaizercyn/Documents/BSCS/3RD - 1ST/CS 312/FINALS/final proj/webdevfinals/res/fonts/Curiosa/Curiosa-ExtraLight.woff') format('woff');
+    src: url('font/Curiosa/Curiosa-ExtraLight.woff2') format('woff2'),
+         url('font/Curiosa/Curiosa-ExtraLight.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
