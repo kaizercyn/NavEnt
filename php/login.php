@@ -1,22 +1,9 @@
 <?php
 session_start();
 require("dbconnection.php");
-if (isset($_POST['submit'])){
+if (isset($_POST['username'])){
     $username = $_POST['username'];
     $password = $_POST['password'];
-
-    // require("loginfuntions.php");
-
-    // if (emptyInputLogin($username, $password) !== false){
-    //     header("Location: ../login.php?error=emptyinput");
-    //     exit();
-    // }
-
-    // if (userNotFound($conn, $username) !== false){
-    //     header("Location: ../login.php?error=usernotfound");
-    //     exit();
-    // }
-
     $st = $conn -> prepare("SELECT * FROM ACCOUNTS WHERE User_ID=? and Password=?;");
     $st-> bind_param('ss', $username, $password);
     $st-> execute();
