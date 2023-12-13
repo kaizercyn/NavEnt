@@ -5,7 +5,7 @@ const dotenv = require('dotenv');
 const path = require('path');
 dotenv.config();
 
-const dbService = require('./dbservice');
+// const dbService = require('./dbservice');
 const { request } = require('http');
 
 
@@ -23,7 +23,4 @@ app.get('/', (request, response) => {
   response.render('index');
 });
 
-//createEvents
-app.post('/insert', (request, response) => {
-    cons
-})
+app.listen(process.env.PORT, () => console.log('app is running'))
