@@ -23,6 +23,14 @@
 }
 
 @font-face {
+    font-family: 'CAZentrum Medium';
+    src: url('font/CAZentrum/CAZentrumWide-Medium.woff2') format('woff2'),
+         url('font/CAZentrum/CAZentrumWide-Medium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
     font-family: 'Curiosa ExtraBold';
     src: url('font/Curiosa/Curiosa-ExtraBold.woff2') format('woff2'),
          url('font/Curiosa/Curiosa-ExtraBold.woff') format('woff');
@@ -115,8 +123,9 @@ h1 {
     color: #E4960E;
 }
 
-h4 {
-    font-family: 'Curiosa ExtraBold', 'San Serif';
+h5 {
+    font-family: 'CAZentrum Medium', 'San Serif';
+    color: #000e1e;
 }
 
 p {
