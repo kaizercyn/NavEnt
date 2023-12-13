@@ -26,8 +26,8 @@ CREATE TABLE `accounts` (
   `User_ID` int(11) NOT NULL,
   `First_Name` varchar(45) NOT NULL,
   `Last_Name` varchar(45) NOT NULL,
+  `Email_Address` varchar(255) NOT NULL,
   `Password` varchar(45) NOT NULL,
-  `Type` varchar(45) NOT NULL,
   PRIMARY KEY (`User_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -38,7 +38,7 @@ CREATE TABLE `accounts` (
 
 LOCK TABLES `accounts` WRITE;
 /*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
-INSERT INTO `accounts` VALUES (2212173,'Sofia','Surro','12345','Student'),(2221097,'Kaizer','Gura','12345','Student'),(2223144,'Ezrha','Dangilan','12345','Student'),(2223451,'Leovide','Bato','12345','Student'),(2224512,'Ava','Narag','12345','Student'),(2226098,'Geoff','Dulnuan','12345','Student'),(9000001,'Justine','Saw','12345','Guest'),(9000002,'Axella','Tulauan','12345','Guest'),(9000004,'Anthonette','Binuluan','12345','Guest'),(9000005,'Charles','Almazan','12345','Guest'),(9000006,'Cristoff','Estrada','12345','Guest');
+INSERT INTO `accounts` VALUES (2212173,'Sofia','Surro','','12345'),(2221097,'Kaizer','Gura','','12345'),(2223144,'Ezrha','Dangilan','','12345'),(2223451,'Leovide','Bato','','12345'),(2224512,'Ava','Narag','','12345'),(2226098,'Geoff','Dulnuan','','12345'),(9000001,'Justine','Saw','','12345'),(9000002,'Axella','Tulauan','','12345'),(9000004,'Anthonette','Binuluan','','12345'),(9000005,'Charles','Almazan','','12345'),(9000006,'Cristoff','Estrada','','12345');
 /*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -361,4 +361,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-12 12:30:51
+-- Dump completed on 2023-12-14  0:55:11

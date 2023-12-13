@@ -23,4 +23,13 @@ app.get('/', (request, response) => {
   response.render('index');
 });
 
+
+app.get('/admin_home.js', (request, response) => {
+    response.sendFile(path.join(__dirname, '/public/scripts/admin_home.js'), {
+      headers: {
+        'Content-Type': 'application/javascript'
+      }
+    });
+  });
+
 app.listen(process.env.PORT, () => console.log('app is running'))
