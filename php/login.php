@@ -8,7 +8,7 @@ if (isset($_POST['submit'])){
     $st-> execute();
     $result= $st->get_result();
     if ($result->num_rows !=0){
-        $row = $result->fetch_assoc();
+        $row = $result->fetch_assoc();  
         $firstName = $row['First_Name'];
         $_SESSION['username'] = $username;
         echo "logged in as: $firstName";
@@ -18,4 +18,4 @@ if (isset($_POST['submit'])){
     $st->close();
 }
 header('Location: ../index.php');
-?>
+?>la

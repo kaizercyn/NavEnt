@@ -44,6 +44,11 @@ header {
     padding: 20px;
 }
 
+header a {
+    text-decoration: none;
+    color: white;
+}
+
 .logo img {
     max-height: 90px;
     margin: 0;
