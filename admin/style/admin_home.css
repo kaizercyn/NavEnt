@@ -23,6 +23,14 @@
 }
 
 @font-face {
+    font-family: 'CAZentrum Medium';
+    src: url('font/CAZentrum/CAZentrumWide-Medium.woff2') format('woff2'),
+         url('font/CAZentrum/CAZentrumWide-Medium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
     font-family: 'Curiosa ExtraBold';
     src: url('font/Curiosa/Curiosa-ExtraBold.woff2') format('woff2'),
          url('font/Curiosa/Curiosa-ExtraBold.woff') format('woff');
@@ -39,7 +47,7 @@
 }
 
 body {
-    margin: 0;
+    background-color: #F1F5F8;
 }
 
 header {
@@ -54,35 +62,47 @@ header {
     padding: 0;
 }
 
-.profile-box {
-    display: flex;
-    align-items: center;
-}
-
 .pf {
     height: 40px;
     display: flex;
     cursor: pointer;
     padding: 10px;
-    border: 1px solid transparent;
-    border-radius: 8px;
     align-items: center;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-    transition: border-color 0.3s ease;
-}
-
-.pf:hover,
-.pf:active {
-    border-color: #F1F1F1; 
 }
 
 .profile-icon {
+    color: #F1F1F1;
     max-height: 30px;
     font-size: 24px;
     margin-right: 10px;
 }
 
+.pf-dropdown {
+    display: inline-block;
+    position: relative;
+}
+
+.pf-dropdown .btn {
+    border: 1px solid #F1F1F1;
+    border-radius: 8px;
+    padding: 10px;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    transition: border-color 0.3s ease;
+}
+
+.pf-dropdown .dropdown-menu a.dropdown-item {
+    font-family: 'CAZentrum Regular', sans-serif;
+    color: #000e1e;
+}
+
+.pf-dropdown .dropdown-menu a.dropdown-item:hover,
+.pf-dropdown .dropdown-menu a.dropdown-item:focus {
+    background-color: #71999B;
+}
+
 .username {
+    color: #F1F1F1;
     font-family: 'Curiosa ExtraLight', sans-serif;
     font-weight: 500;
     flex: 1;
@@ -93,80 +113,29 @@ header {
     align-items: center;
 }
 
-.create-button {
-    font-family: 'CAZentrum Condensed Black', sans-serif;
-    display: block;
-    margin: 20px auto;
-    padding: 8px 16px;
-    background-color: #153437;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-}
-
-.create-button:hover {
-    background-color: #71999B;
-}
-
-main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column; 
-    min-height: 100vh;
-}
-
-.event-card {
-    background-color: #E4960E;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+.container {
     padding: 20px;
-    margin: 10px;
-    max-width: 300px;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.card-header {
-    position: relative;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    overflow: hidden;
+.btn-primary {
+    background-color: #71999B; /* Set the default background color */
+    color: #F1F1F1; /* Set the default text color */
 }
 
-.card-header img {
-    width: 100%;
-    display: block;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:focus {
+    background-color: #486163; /* Set the background color on hover, click, and focus */
+    color: #ffffff; /* Set the text color on hover, click, and focus */
 }
 
-.event-card h2 {
-    font-family: 'Demine', sans-serif;
-    position: relative;
-    z-index: 2;
-    color: #000e1e; 
+/* Optionally, customize the icon color on hover, click, and focus */
+.btn-primary:hover i,
+.btn-primary:active i,
+.btn-primary:focus i {
+    color: #ffffff; /* Set the icon color on hover, click, and focus */
 }
 
-.event-card p {
-    font-size: 14px;
-    font-family: 'CAZentrum Condensed Light', sans-serif;
-}
-
-.edit-button {
-    font-family: 'CAZentrum Condensed Black', sans-serif;
-    display: inline-block;
-    padding: 8px 16px;
-    background-color: #153437;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    margin-top: 10px;
-}
-
-.edit-button:hover {
-    background-color: #71999B;
-}
 
 footer {
     position: relative;
