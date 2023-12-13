@@ -1,12 +1,15 @@
 const mysql = require('mysql');
 const dotenv = require('dotenv');
+const { resolve } = require('path');
+const { rejects } = require('assert');
+const { response } = require('express');
 let instance = null;
 dotenv.config();
 
 const connection = mysql.createConnection({
     host: process.env.HOST,
     user: process.env.USER,
-    password: process.env.PASSWORD,
+    password: '',
     database: process.env.DATABASE,
     port: process.env.DB_PORT
 });
@@ -23,4 +26,28 @@ class DbService {
     static getDbServiceInstance() {
         return instance ? instance : new DbService();
     }
+
+    async getEvents() {
+        let response;
+        try {
+            response = await new Promise ((resolve, reject) => {
+                const query = "SELECT * FROM webdev.events"
+                connection.query(query, (err, results) => {
+                    if (err) {
+                        reject(new Error(err.message))
+                    } else {
+                        console.log("Fetched data from DB:", results);
+                        resolve(results)
+                    }
+                })
+            }) 
+            console.log(response)
+            return response
+        } catch (error) {
+            console.log(error + ' Fetching events from DB failed.')
+        }
+    }
+    
 }
+
+module.exports = DbService;
