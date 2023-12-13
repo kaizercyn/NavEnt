@@ -1,6 +1,5 @@
 <?php 
 
-session_start();
 $userAccount = $_SESSION["username"];
 ?>
 
@@ -15,14 +14,14 @@ $userAccount = $_SESSION["username"];
   
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
 
-    <link rel="stylesheet" href="../client/style/logged_home.css">
+    <link rel="stylesheet" href="client/style/logged_home.css">
 </head>
   <body>
 
     <header>
       <div class="d-flex align-items-center justify-content-between">
         <div class="logo">
-            <img src="../res/imgs/navi-event-logo(3d).png" alt="Logo">
+            <img src="res/imgs/navi-event-logo(3d).png" alt="Logo">
         </div>
 
         <div class="pf-dropdown">
@@ -33,7 +32,7 @@ $userAccount = $_SESSION["username"];
                   <div class="profile-icon">
                     <i class="bi bi-person"></i>
                 </div>
-                <span class="username">John Doe</span>
+                <span class="username"><?php echo $_SESSION["username"] ?></span>
                 </div>
 
             </div>
@@ -74,7 +73,7 @@ $userAccount = $_SESSION["username"];
           
         <div class="carousel-inner">
           <div class="carousel-item active ev">
-            <img src="../res/imgs/event1.jpeg" class="d-block w-100 e-img" alt="event1">
+            <img src="res/imgs/event1.jpeg" class="d-block w-100 e-img" alt="event1">
             <div class="carousel-caption top-0 mt-4 d-none d-md-block">
                 <h2 class="mt-5c fs-3 text-uppercase">Tagline</h2>
                 <h1 class="display-1 fw-bolder text-capitalize">Event Name</h1>
@@ -82,7 +81,7 @@ $userAccount = $_SESSION["username"];
               </div>
         </div>
           <div class="carousel-item ev">
-            <img src="../res/imgs/event2.jpeg" class="d-block w-100 e-img" alt="event2">
+            <img src="res/imgs/event2.jpeg" class="d-block w-100 e-img" alt="event2">
             <div class="carousel-caption top-0 mt-4 d-none d-md-block">
                 <h2 class="mt-5c fs-3 text-uppercase">Tagline</h2>
                 <h1 class="display-1 fw-bolder text-capitalize">Event Name</h1>
@@ -90,7 +89,7 @@ $userAccount = $_SESSION["username"];
               </div>
         </div>
           <div class="carousel-item ev">
-            <img src="../res/imgs/event3.jpeg" class="d-block w-100 e-img" alt="event3">
+            <img src="res/imgs/event3.jpeg" class="d-block w-100 e-img" alt="event3">
             <div class="carousel-caption top-0 mt-4 d-none d-md-block">
                 <h2 class="mt-5c fs-3 text-uppercase">Tagline</h2>
                 <h1 class="display-1 fw-bolder text-capitalize">Event Name</h1>
@@ -323,7 +322,7 @@ $userAccount = $_SESSION["username"];
       <footer>
         <div class="footer-bottom">
             <div class="logo">
-                <img src="../res/imgs/navi-event-logo(3d).png" alt="Logo" class="footer-logo">
+                <img src="res/imgs/navi-event-logo(3d).png" alt="Logo" class="footer-logo">
             </div>
             <p>© 2023 NavEnt. A Saint Louis University Company. All Rights Reserved. CS Slot Org ™</p>
         </div>
