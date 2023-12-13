@@ -50,35 +50,47 @@ header {
     padding: 0;
 }
 
-.profile-box {
-    display: flex;
-    align-items: center;
-}
-
 .pf {
     height: 40px;
     display: flex;
     cursor: pointer;
     padding: 10px;
-    border: 1px solid transparent;
-    border-radius: 8px;
     align-items: center;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-    transition: border-color 0.3s ease;
-}
-
-.pf:hover,
-.pf:active {
-    border-color: #F1F1F1; 
 }
 
 .profile-icon {
+    color: #F1F1F1;
     max-height: 30px;
     font-size: 24px;
     margin-right: 10px;
 }
 
+.pf-dropdown {
+    display: inline-block;
+    position: relative;
+}
+
+.pf-dropdown .btn {
+    border: 1px solid #F1F1F1;
+    border-radius: 8px;
+    padding: 10px;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    transition: border-color 0.3s ease;
+}
+
+.pf-dropdown .dropdown-menu a.dropdown-item {
+    font-family: 'CAZentrum Regular', sans-serif;
+    color: #000e1e;
+}
+
+.pf-dropdown .dropdown-menu a.dropdown-item:hover,
+.pf-dropdown .dropdown-menu a.dropdown-item:focus {
+    background-color: #71999B;
+}
+
 .username {
+    color: #F1F1F1;
     font-family: 'Curiosa ExtraLight', sans-serif;
     font-weight: 500;
     flex: 1;
