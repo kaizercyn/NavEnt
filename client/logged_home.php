@@ -1,3 +1,9 @@
+<?php 
+
+session_start();
+$userAccount = $_SESSION["username"];
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
