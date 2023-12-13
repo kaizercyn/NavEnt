@@ -1,13 +1,9 @@
 <?php
 session_start();
 
-// include "php/header.php"
-
-if (!isset($_SESSION["username"])) {
-    include "html/userlogin.html";
-}else{
-    include "html/home.html";
+if (isset($_SESSION["username"])) {
+    include("client/logged_home.html");
+} else {
+    include("client/index.html");
 }
-
-//include "php/footer.php;
 ?>

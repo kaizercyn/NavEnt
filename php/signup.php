@@ -1,3 +1,31 @@
+<?php
+require("dbconnection.php");
+
+if($_SERVER["REQUEST_METHOD"] == "POST") {
+    $userFirstName = $_POST["fname"];
+    $userLastName = $_POST["lname"];
+    $password = $_POST["password"];
+    $email = $_POST["email"];
+
+    // Validate input (you should add more validation as needed)
+    if (empty($userFirstName) || empty($userLastName) || empty($password) || empty($email)) {
+        echo "All fields are required.";
+    } else {
+        // Insert user data into the database
+        $sql = "INSERT INTO accounts (fname, lname, password, email) VALUES ('$fname', '$lname', '$password', '$email')";
+
+        if ($conn->query($sql) === TRUE) {
+            echo "Registration successful!";
+        } else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
+    }
+}
+
+// Close the database connection
+$conn->close();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
