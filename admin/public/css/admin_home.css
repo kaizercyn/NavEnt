@@ -113,8 +113,34 @@ header {
     align-items: center;
 }
 
+.table-title {
+    font-family: 'Demine', sans-serif;
+    font-size: 30px; 
+    color: #1C3947; 
+    margin-bottom: 8px;
+  }
 .container {
-    padding: 20px;
+    padding: 8px;
+}
+
+.ev-th th {
+    background-color: #1C3947;
+    color: #fff; 
+}
+  
+.ev-th th {
+    font-family: 'CAZentrum Medium', sans-serif;
+    font-size: 14px;
+}
+  
+.ev-td td {
+    font-family: 'CAZentrum Regular', sans-serif;
+    font-size: 13px; 
+}
+
+.btn-group .btn {
+    font-family: 'Curiosa ExtraLight', sans-serif;
+    font-size: 13px;
 }
 
 .crt-btn {
@@ -136,19 +162,6 @@ header {
 .crt-btn:active {
     border: 1px solid #000e1e;
 }
-
-.ev-table {
-    background-color: #fff; /* Table background color */
-  }
-  
-  .ev-th {
-    background-color: #007bff; /* Table header background color */
-    color: #fff; /* Table header text color */
-  }
-  
-  .custom-td {
-    background-color: #f8f9fa; /* Table cell background color */
-  }
 
 footer {
     position: relative;

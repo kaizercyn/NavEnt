@@ -39,7 +39,7 @@
         
       </header>
 
-    <div class="container mt-3 mx-auto">
+    <div class="container mt-3 mx-auto px-0">
       <div class="d-grid">
         <a href="create_event.html" class="btn crt-btn" role="button">
           <i class="bi bi-plus-lg"></i> New Event
@@ -47,36 +47,52 @@
     </div>
   </div>
 
-  <div class="container mt-0 mx-auto">
-    <table class="table table-striped table-hover ev-table">
+  <div class="container mt-0 mx-auto px-0">
+    <h2 class="table-title">Event List</h2>
+    <table class="table table-striped table-hover list-con">
       <thead>
-        <tr>
-          <th scope="col">Event Name</th>
-          <th scope="col">#</th>
-          <th scope="col">Start Date</th>
-          <th scope="col">End Date</th>
-          <th scope="col">Type</th>
-          <th scope="col">Actions</th>
+        <tr class="ev-th">
+          <th scope="col" style="width: 20%;">Event Name</th>
+          <th scope="col" style="width: 15%;">Participants</th>
+          <th scope="col" style="width: 15%;">Start Date</th>
+          <th scope="col" style="width: 15%;">End Date</th>
+          <th scope="col" style="width: 15%;">Type</th>
+          <th scope="col" style="width: 20%;">Actions</th>
         </tr>
       </thead>
       <tbody>
-        <tr class="custom-td">
+        <tr class="ev-td">
           <td>Kindling</td>
           <td>99</td>
           <td>2023-12-01</td>
           <td>2023-12-23</td>
           <td>Series</td>
           <td>
-            <div class="btn-group custom-btn-group" role="group" aria-label="Basic mixed styles example">
-              <button type="button" class="btn custom-btn-danger">Edit</button>
-              <button type="button" class="btn custom-btn-warning">Announce</button>
-              <button type="button" class="btn custom-btn-success">Attendance</button>
+            <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+              <button type="button" class="btn btn-danger btn-sm">Edit</button>
+              <button type="button" class="btn btn-warning btn-sm">Announce</button>
+              <button type="button" class="btn btn-success btn-sm">Attendance</button>
+            </div>
+          </td>
+        </tr>
+        <tr class="ev-td">
+          <td>Kindling</td>
+          <td>99</td>
+          <td>2023-12-01</td>
+          <td>2023-12-23</td>
+          <td>Series</td>
+          <td>
+            <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+              <button type="button" class="btn btn-danger btn-sm">Edit</button>
+              <button type="button" class="btn btn-warning btn-sm">Announce</button>
+              <button type="button" class="btn btn-success btn-sm">Attendance</button>
             </div>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
+  
 
     <footer>
         <div class="footer-bottom">
