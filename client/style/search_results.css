@@ -220,6 +220,7 @@ p {
     position: relative;
     width: 300px;
     height: 200px;
+    margin-bottom: 20px;
 }
 
 .latest-event .card-img,
@@ -288,6 +289,14 @@ p {
 .events-container {
     margin-bottom: 30px;
     width: 100%;
+}
+
+.pagination .page-item.disabled .page-link,
+.pagination .page-item:not(.active) .page-link {
+    background-color: transparent;
+    color: #F1F1F1; 
+    border: none;
+    
 }
 
 footer {
