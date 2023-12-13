@@ -13,19 +13,19 @@ function load(data){
         return;
     }
     let tableHTML = "";
-    data.forEach(function ({Event_Name, Event_StartDate, Event_EndDate, Participants, Event_Type}) {
+    data.forEach(function ({Event_ID, Event_Name, Event_StartDate, Event_EndDate, Participants, Event_Type}) {
         const displayedParticipants = Participants !== undefined ? Participants : 0
         tableHTML += "<tr>"
         tableHTML += `<td>${Event_Name}</td>`
         tableHTML += `<td>${displayedParticipants}</td>`
-        tableHTML += `<td>${new Date(Event_StartDate).toLocaleString()}</td>`
-        tableHTML += `<td>${new Date(Event_EndDate).toLocaleString()}</td>`
+        tableHTML += `<td>${new Date(Event_StartDate).toLocaleDateString()}</td>`
+        tableHTML += `<td>${new Date(Event_EndDate).toLocaleDateString()}</td>`
         tableHTML += `<td>${Event_Type}</td>`
         tableHTML += `<td>
                         <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                        <button type="button" class="btn btn-danger btn-sm">Edit</button>
-                        <button type="button" class="btn btn-warning btn-sm">Announce</button>
-                        <button type="button" class="btn btn-success btn-sm">Attendance</button>
+                        <button type="button" class="btn_edit" data-id=${Event_ID}>Edit</button>
+                        <button type="button" class="btn_announce" data-id=${Event_ID}>Announce</button>
+                        <button type="button" class="btn_attendance" data-id=${Event_ID}>Attendance</button>
                         </div>
                      </td>`
         tableHTML += "</tr>"
