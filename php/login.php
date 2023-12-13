@@ -1,9 +1,11 @@
 <?php
 require("dbconnection.php");
+
+
 if (isset($_POST['submit'])){
     $username = $_POST['username'];
     $password = $_POST['password'];
-    $st = $conn -> prepare("SELECT * FROM ACCOUNTS WHERE User_ID=? and Password=?;");
+    $st = $conn -> prepare("SELECT * FROM ACCOUNTS WHERE Email_Address=? and Password=?;");
     $st-> bind_param('ss', $username, $password);
     $st-> execute();
     $result= $st->get_result();
