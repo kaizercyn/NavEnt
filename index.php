@@ -2,7 +2,7 @@
 session_start();
 
 if (isset($_SESSION["username"])) {
-    include("client/logged_home.html");
+    include("client/logged_home.php");
 } else {
     include("client/index.html");
 }

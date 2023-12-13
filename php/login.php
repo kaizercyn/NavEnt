@@ -1,8 +1,9 @@
 <?php
 require("dbconnection.php");
+session_start();
 
 
-if (isset($_POST['submit'])){
+if (isset($_POST['username'])){
     $username = $_POST['username'];
     $password = $_POST['password'];
     $st = $conn -> prepare("SELECT * FROM ACCOUNTS WHERE Email_Address=? and Password=?;");
