@@ -18,4 +18,4 @@ if (isset($_POST['submit'])){
     $st->close();
 }
 header('Location: ../index.php');
-?>la
+?>
