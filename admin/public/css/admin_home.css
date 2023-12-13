@@ -113,6 +113,49 @@ header {
     align-items: center;
 }
 
+nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #E4960E;
+    padding: 10px 20px;
+}
+
+.box {
+    height: 30px;
+    display: flex;
+    cursor: pointer;
+    padding: 10px 10px;
+    background: #F1F1F1;
+    border-radius: 30px;
+    align-items: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.box:hover input {
+    font-family: 'Curiosa ExtraLight', sans-serif;
+    width: 200px;
+}
+
+.box input {
+    font-family: 'Curiosa ExtraLight', sans-serif;
+    width: 0;
+    outline: none;
+    border: none;
+    font-weight: 500;
+    transition: 0.8s;
+    background: transparent;
+}
+
+.box a .fas {
+    color: #71999B;
+    font-size: 18px;
+}
+
+.search-icon {
+    color: #71999B;
+}
+
 .table-title {
     font-family: 'Demine', sans-serif;
     font-size: 30px; 
