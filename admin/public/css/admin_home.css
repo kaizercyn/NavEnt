@@ -117,25 +117,38 @@ header {
     padding: 20px;
 }
 
-.btn-primary {
-    background-color: #71999B; /* Set the default background color */
-    color: #F1F1F1; /* Set the default text color */
+.crt-btn {
+    font-family: 'Curiosa ExtraBold', sans-serif;
+    background-color: #000e1e;
+    color: #EDA92C;
+    border: none;
+    padding: 10px 20px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, border 0.3s ease;
+    outline: none;
+}
+  
+.crt-btn:hover {
+    background-color: #EDA92C;
+    color: #000e1e;
+}
+  
+.crt-btn:active {
+    border: 1px solid #000e1e;
 }
 
-.btn-primary:hover,
-.btn-primary:active,
-.btn-primary:focus {
-    background-color: #486163; /* Set the background color on hover, click, and focus */
-    color: #ffffff; /* Set the text color on hover, click, and focus */
-}
-
-/* Optionally, customize the icon color on hover, click, and focus */
-.btn-primary:hover i,
-.btn-primary:active i,
-.btn-primary:focus i {
-    color: #ffffff; /* Set the icon color on hover, click, and focus */
-}
-
+.ev-table {
+    background-color: #fff; /* Table background color */
+  }
+  
+  .ev-th {
+    background-color: #007bff; /* Table header background color */
+    color: #fff; /* Table header text color */
+  }
+  
+  .custom-td {
+    background-color: #f8f9fa; /* Table cell background color */
+  }
 
 footer {
     position: relative;
