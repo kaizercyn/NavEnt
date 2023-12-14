@@ -45,10 +45,24 @@ app.get('/getEvents', async (request, response) => {
     try {
         const db = dbService.getDbServiceInstance()
         const results = await db.getEvents()
-        console.log("app.js: ", results)
+        // console.log("app.js: ", results)
         response.json({data: results});
     } catch (error) {
         console.log(err + " Error getting events.");
+        response.status(500).json({ error: err.message });
+    }
+})
+
+app.get('/search/:Event_Name', async (request, response) => {
+    try {
+        const { Event_Name } = request.params
+        console.log({ Event_Name })
+        const db = dbService.getDbServiceInstance()
+        const results = await db.searchEvent(Event_Name)
+        console.log("app.js: ", results)
+        response.json({data: results});
+    } catch (error) {
+        console.log(error + " Error getting searched events");
         response.status(500).json({ error: err.message });
     }
 })
