@@ -11,8 +11,18 @@ document.addEventListener('DOMContentLoaded', function () {
         editBtn.addEventListener('click', function(e) {
             console.log('edit clicked')
             window.location.href = '/edit_event'
-    });
-})
+        });
+
+        announceBtn.addEventListener('click', function(e) {
+            console.log('announce clicked')
+            window.location.href = '/post_announce'
+        });
+
+        attendanceBtn.addEventListener('click', function(e) {
+            console.log('attendance clicked')
+            window.location.href = '/event_attendance'
+        });
+    })
 })
 
 const table = document.querySelector('table.events tbody')
