@@ -1,19 +1,23 @@
 document.addEventListener('DOMContentLoaded', function () {
     fetch('/getEvents')
     .then(response => response.json())
-    .then(data => load(data['data']));
+    .then(data => {
+        load(data['data'])
+
+        const editBtn = document.querySelector('.btn_edit')
+        const announceBtn = document.querySelector('.btn_announce')
+        const attendanceBtn = document.querySelector('.btn_attendance')
+        
+        editBtn.addEventListener('click', function(e) {
+            console.log('edit clicked')
+            window.location.href = '/edit_event'
+    });
+})
 })
 
 const table = document.querySelector('table.events tbody')
 const searchBtn = document.querySelector('nav.search a')
 const tableTitle = document.querySelector('.table-title')
-const editBtn = document.querySelector('.btn_edit')
-const announceBtn = document.querySelector('.btn_announce')
-const attendanceBtn = document.querySelector('.btn_attendance')
-
-editBtn.addEventListener('click', function(e) {
-
-})
 
 searchBtn.addEventListener('click', function(e) {
     e.preventDefault();

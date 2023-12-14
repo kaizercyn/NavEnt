@@ -23,6 +23,27 @@ app.get('/', (request, response) => {
   response.render('admin_home');
 });
 
+app.get('/edit_event', (request, response) => {
+    response.render('edit_event');
+});
+
+app.get('/post_announce', (request, response) => {
+    response.render('post_announce');
+});
+
+app.get('/admin_event', (request, response) => {
+    response.render('admin_event');
+});
+
+app.get('/admin_profile', (request, response) => {
+    response.render('admin_profile');
+});
+
+app.get('/create_event', (request, response) => {
+    response.render('create_event');
+});
+
+
 
 app.get('/admin_home.js', (request, response) => {
     response.sendFile(path.join(__dirname, '/public/scripts/admin_home.js'), {
