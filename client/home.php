@@ -1,5 +1,5 @@
 <?php
-
+require("dbconnection.php");
 ?>
 
 <!doctype html>
@@ -32,7 +32,7 @@
     <nav>
         <div class="nav-links"> 
             <a href="index.php">HOME</a>
-            <a href="client/announcement.html">ANNOUNCEMENTS</a>
+            <a href="announcement.html">ANNOUNCEMENTS</a>
         </div>
         <div class="box">
             <input type="text" placeholder="Search...">
@@ -50,10 +50,28 @@
           </div>
           
         <div class="carousel-inner">
+            <?php
+                $public = 1;
+                $open = 1;
+                $st = $conn -> prepare("SELECT * FROM EVENTS WHERE isPublic=? and isOpen=?;");
+                $st-> bind_param('ii', $public, $open);
+                $st-> execute();
+                $result= $st->get_result();
+                if ($result->num_rows !=0){
+                    foreach($result as $row){
+                        $rows [] = $row;
+                    }  
+                }
+
+                $st -> close();
+                $result -> close();
+                
+
+            ?>
           <div class="carousel-item active ev">
             <img src="res/imgs/event1.jpeg" class="d-block w-100 e-img" alt="event1">
             <div class="carousel-caption top-0 mt-4 d-none d-md-block">
-                <h2 class="mt-5c fs-3 text-uppercase">Tagline</h2>
+                <h2 class="mt-5c fs-3 text-uppercase"></h2>
                 <h1 class="display-1 fw-bolder text-capitalize">Event Name</h1>
                 <button class="btn btn-primary px-4 py-2 fs-5 mt-5">Read More</button>
               </div>

@@ -39,13 +39,13 @@ $userAccount = $_SESSION["username"];
           </button>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="account_details.html">Account Details</a></li>
-            <li><a class="dropdown-item" href="#">Bookmarks</a></li>
+            <li><a class="dropdown-item" href="bookmarked_events.html">Bookmarks</a></li>
             <li><a class="dropdown-item" href="#">Event History</a></li>
             <li><a class="dropdown-item" href="#">Pending Evaluations</a></li>
             <li><a class="dropdown-item" href="#">QR Code</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">
-            <form action="logout.php" method="post"><button type="submit" class="dropdown-item" onclick="return confirm('Are you sure you want to logout?')">Logout</button></form></a></li>
+            <li><a class="dropdown-item">
+            <form action="php/logoutfunctions.php" method="POST"><button type="submit" class="dropdown-item" onclick="return confirm('Are you sure you want to logout?')">Logout</button></form></a></li>
           </ul>
         </div>
       </div>
@@ -54,8 +54,8 @@ $userAccount = $_SESSION["username"];
 
     <nav>
         <div class="nav-links">
-            <a href="index.php">HOME</a>
-            <a href="client/announcement.html">ANNOUNCEMENTS</a>
+            <a href="home.php">HOME</a>
+            <a href="announcement.html">ANNOUNCEMENTS</a>
         </div>
         <div class="box">
             <input type="text" placeholder="Search...">
