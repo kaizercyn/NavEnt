@@ -23,14 +23,6 @@
 }
 
 @font-face {
-    font-family: 'CAZentrum Medium';
-    src: url('font/CAZentrum/CAZentrumWide-Medium.woff2') format('woff2'),
-         url('font/CAZentrum/CAZentrumWide-Medium.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
     font-family: 'Curiosa ExtraBold';
     src: url('font/Curiosa/Curiosa-ExtraBold.woff2') format('woff2'),
          url('font/Curiosa/Curiosa-ExtraBold.woff') format('woff');
@@ -46,10 +38,6 @@
     font-style: normal;
 }
 
-body {
-    background-color: #F1F5F8;
-}
-
 header {
     background-color: #000e1e;
     color: #F1F1F1;
@@ -61,7 +49,6 @@ header {
     margin: 0;
     padding: 0;
 }
-
 .pf {
     height: 40px;
     display: flex;
@@ -119,15 +106,41 @@ nav {
     align-items: center;
     background-color: #E4960E;
     padding: 10px 20px;
+    margin-bottom: 45px;
 }
 
-.toHome{
-    border: none;
-    background-color: transparent;
-    font-size: 14px;
+.nav-links {
+    font-size: medium;
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links a {
     color: #F1F1F1;
-    outline: none;
-    cursor: pointer;
+    text-decoration: none;
+    margin: 0 15px;
+    font-family: 'Curiosa ExtraBold', sans-serif;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-links a::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #71999B;
+    transition: width 0.5s;
+}
+
+.nav-links a:hover::before {
+    width: 100%;
 }
 
 .box {
@@ -143,7 +156,7 @@ nav {
 
 .box:hover input {
     font-family: 'Curiosa ExtraLight', sans-serif;
-    width: 200px;
+    width: 400px;
 }
 
 .box input {
@@ -165,54 +178,90 @@ nav {
     color: #71999B;
 }
 
-.table-title {
-    font-family: 'Demine', sans-serif;
-    font-size: 30px; 
-    color: #1C3947; 
-    margin-bottom: 8px;
-  }
-.container {
-    padding: 8px;
+h4,
+h5 {
+    font-family: 'Demine', 'San Serif';
 }
 
-.ev-th th {
-    background-color: #1C3947;
-    color: #fff; 
-}
-  
-.ev-th th {
-    font-family: 'CAZentrum Medium', sans-serif;
-    font-size: 14px;
-}
-  
-.ev-td td {
-    font-family: 'CAZentrum Regular', sans-serif;
-    font-size: 13px; 
+h2,
+p {
+    font-family: 'CAZentrum Regular', 'San Serif';
 }
 
-.btn-group .btn {
-    font-family: 'Curiosa ExtraLight', sans-serif;
-    font-size: 13px;
+.latest-event,
+.upcoming-event {
+    position: relative;
+    width: 300px;
+    height: 200px;
+    margin-bottom: 20px;
 }
 
-.crt-btn {
-    font-family: 'Curiosa ExtraBold', sans-serif;
-    background-color: #000e1e;
-    color: #EDA92C;
-    border: none;
-    padding: 10px 20px;
-    text-decoration: none;
-    transition: background-color 0.3s ease, border 0.3s ease;
-    outline: none;
+.latest-event .card-img,
+.upcoming-event .card-img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
 }
-  
-.crt-btn:hover {
+
+.latest-event .card-img-overlay, 
+.upcoming-event .card-img-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 1rem;
+    color: white;
+}
+
+.latest-event .btn,
+.upcoming-event .btn {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
     background-color: #EDA92C;
-    color: #000e1e;
+    border-color: #EDA92C;
+    font-family: 'CAZentrum Condensed Light', 'San Serif';
 }
-  
-.crt-btn:active {
-    border: 1px solid #000e1e;
+
+.latest-event .btn:hover,
+.upcoming-event .btn:hover {
+    background-color: #E4960E;
+    border-color: #E4960E;
+}
+
+.card-img {
+    filter: brightness(0.6);
+}
+
+.latest-event .card-title,
+.latest-event .card-text,
+.latest-event small {
+    color: white;
+}
+
+.ev {
+    height: 380px;
+}
+
+.e-img {
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.6);
+}
+
+.carousel-inner .btn {
+    background-color: #EDA92C;
+    border-color: #EDA92C;
+    font-family: 'CAZentrum Condensed Light', 'San Serif';
+}
+
+.carousel-inner .btn:hover {
+    background-color: #E4960E;
+    border-color: #E4960E;
+}
+
+.events-container {
+    margin-bottom: 30px;
+    width: 100%;
 }
 
 footer {
@@ -223,6 +272,7 @@ footer {
     font-size: 13px;
     text-align: center;
     word-spacing: 2px;
+    margin-top: 20px;
 }
 
 .footer-bottom {

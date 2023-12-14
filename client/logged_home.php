@@ -39,7 +39,7 @@ $userAccount = $_SESSION["username"];
           </button>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="account_details.html">Account Details</a></li>
-            <li><a class="dropdown-item" href="#">Bookmarks</a></li>
+            <li><a class="dropdown-item" href="bookmarked_events.html">Bookmarks</a></li>
             <li><a class="dropdown-item" href="#">Event History</a></li>
             <li><a class="dropdown-item" href="#">Pending Evaluations</a></li>
             <li><a class="dropdown-item" href="#">QR Code</a></li>
@@ -54,8 +54,8 @@ $userAccount = $_SESSION["username"];
 
     <nav>
         <div class="nav-links">
-            <a href="index.php">HOME</a>
-            <a href="client/announcement.html">ANNOUNCEMENTS</a>
+            <a href="home.php">HOME</a>
+            <a href="announcement.html">ANNOUNCEMENTS</a>
         </div>
         <div class="box">
             <input type="text" placeholder="Search...">
