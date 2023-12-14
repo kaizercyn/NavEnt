@@ -44,8 +44,8 @@ $userAccount = $_SESSION["username"];
             <li><a class="dropdown-item" href="#">Pending Evaluations</a></li>
             <li><a class="dropdown-item" href="#">QR Code</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">
-            <form action="logout.php" method="post"><button type="submit" class="dropdown-item" onclick="return confirm('Are you sure you want to logout?')">Logout</button></form></a></li>
+            <li><a class="dropdown-item">
+            <form action="php/logoutfunctions.php" method="POST"><button type="submit" class="dropdown-item" onclick="return confirm('Are you sure you want to logout?')">Logout</button></form></a></li>
           </ul>
         </div>
       </div>
