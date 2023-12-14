@@ -128,12 +128,63 @@ h5 {
     color: #000e1e;
 }
 
+h4 {
+    font-family: 'CAZentrum Medium', 'San Serif';
+    color: #000e1e;
+}
+
+label {
+    font-family: 'CAZentrum Condensed Light', 'San Serif';
+    color: #000e1e;
+}
+
+input {
+    font-family: 'CAZentrum Regular', 'San Serif';
+    color: #000e1e;
+}
+
 p {
     font-family: 'CAZentrum Regular', 'San Serif';
 }
 
 .btn-block {
     width: 100%;
+  }
+
+.button-save-draft {
+    background-color: #E4960E; 
+    color: #fff; 
+    font-size: 1.25rem; 
+    border-color: transparent; 
+  }
+  
+  .button-save-draft:hover {
+    background-color: #bc7b0b; 
+    border-color: transparent;
+  }
+  
+.button-save-draft:active {
+    background-color: transparent !important; 
+    border-color: #000e1e !important; 
+    color: #000e1e !important;
+  }
+  
+  .button-save-publish {
+    background-color: #71999B; 
+    color: #fff;
+    font-size: 1.25rem;
+    border-color: transparent; 
+  }
+  
+  .button-save-publish:hover {
+    background-color: #4d6769; 
+    border-color: transparent;
+  }
+  
+  .button-save-publish:active {
+    background-color: transparent !important;
+    border-color: #000e1e !important; 
+    color: #000e1e !important; 
   }
 
 footer {
