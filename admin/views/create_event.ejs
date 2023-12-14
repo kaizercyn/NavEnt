@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
 
     <link rel="stylesheet" href="../public/css/create_event.css">
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
   <body>
 
@@ -48,73 +50,139 @@
     </div>
 
     <div class="container mb-5">
-      
-      <h5 class="mb-3">Event Details</h5>
 
+      <h5 class="mb-3">Event Details</h5>
+    
       <!-- Event Name -->
       <label for="eventName" class="form-label">Event Name</label>
       <input type="text" class="form-control">
-
+    
       <!-- Description -->
       <div class="mt-3 col-12">
         <label for="description" class="form-label">Description</label>
         <div class="input-group">
-            <textarea id="description" class="form-control" rows="4"></textarea>
+          <textarea id="description" class="form-control" rows="4"></textarea>
         </div>
       </div>
     
       <hr class="my-4">
-      
+    
       <!-- Event Type -->
       <h4 class="mb-3">Event Type</h4>
       <div class="form-check">
-          <input type="radio" name="eventType" class="form-check-input" id="oneTime">
-          <label for="oneTime">One Time</label>
+        <input type="radio" name="eventType" class="form-check-input" id="oneTime">
+        <label for="oneTime">One Time</label>
       </div>
       <div class="form-check">
-          <input type="radio" name="eventType" class="form-check-input" id="ampm">
-          <label for="ampm">AM/PM</label>
+        <input type="radio" name="eventType" class="form-check-input" id="ampm">
+        <label for="ampm">AM/PM</label>
       </div>
       <div class="form-check">
-          <input type="radio" name="eventType" class="form-check-input" id="series">
-          <label for="series">Series</label>
+        <input type="radio" name="eventType" class="form-check-input" id="series">
+        <label for="series">Series</label>
+      </div>
+    
+            <!-- Dynamic sections based on event type -->
+      <div id="oneTimeSection" style="display: none; margin-top: 10px;">
+        <!-- Add one-time specific fields here -->
+        <label for="startDate">Start Date</label>
+        <input type="date" id="startDate" class="form-control">
+        <label for="endDate">End Date</label>
+        <input type="date" id="endDate" class="form-control">
       </div>
 
+      <div id="ampmSection" style="display: none; margin-top: 10px;">
+        <!-- Add AM/PM specific fields here -->
+        <!-- Start and end of AM -->
+        <label for="startAM">Start AM</label>
+        <input type="time" id="startAM" class="form-control">
+        <label for="endAM">End AM</label>
+        <input type="time" id="endAM" class="form-control">
+        <!-- Start and end of PM -->
+        <label for="startPM">Start PM</label>
+        <input type="time" id="startPM" class="form-control">
+        <label for="endPM">End PM</label>
+        <input type="time" id="endPM" class="form-control">
+      </div>
+
+      <div id="seriesSection" style="display: none; margin-top: 10px;">
+        <!-- Add series specific fields here -->
+        <label for="seriesNumber">Series Number</label>
+        <input type="number" id="seriesNumber" class="form-control">
+      </div>
+ 
       <hr class="my-4">
-
+    
       <div class="col-12">
-        <div class="form-check">
-          <input type="checkbox" id="form" class="form-check-input">
-          <label for="form" class="form-check-label">Create Registration Form</label>
-        </div>
         <div class="form-check">
           <input type="checkbox" id="link" class="form-check-input">
           <label for="link" class="form-check-label">Append Registration Link</label>
-        </div>    
+        </div>
       </div>
-
+      
+      <div id="registrationLinkSection" style="display: none;">
+        <!-- Input field for registration link -->
+        <label for="registrationLink">Registration Link</label>
+        <input type="text" id="registrationLink" class="form-control">
+      </div>
+    
       <hr class="my-4">
-
+    
       <h4 class="mb-3">Upload Image</h4>
-
+    
       <!-- Cover Image Upload -->
       <div class="mt-3 mb-3">
         <label for="eventImage" class="form-label">Cover Image</label>
         <input type="file" class="form-control" id="eventImage" accept="image/*">
       </div>
-
+    
       <hr class="my-4">
-
+    
       <!-- Buttons -->
       <div class="row">
         <div class="col-sm-6">
-          <button class="btn btn-primary btn-lg btn-block">Save as Draft</button>
+          <button class="btn btn-primary btn-lg btn-block button-save-draft">Save as Draft</button>
         </div>
         <div class="col-sm-6">
-          <button class="btn btn-primary btn-lg btn-block">Save and Publish</button>
+          <button class="btn btn-primary btn-lg btn-block button-save-publish">Save and Publish</button>
         </div>
       </div>
-    </div>
+      </div>
+
+    <script>
+      $(document).ready(function () {
+        $('input[name="eventType"]').change(function () {
+          // Hide all sections
+          $('#oneTimeSection, #ampmSection, #seriesSection').hide();
+    
+          // Show the relevant section based on the selected event type
+          if ($('#oneTime').prop('checked')) {
+            $('#oneTimeSection').show();
+          } else if ($('#ampm').prop('checked')) {
+            $('#ampmSection').show();
+          } else if ($('#series').prop('checked')) {
+            $('#seriesSection').show();
+          }
+        });
+      });
+    </script>
+
+<script>
+  $(document).ready(function () {
+    // Handle checkbox changes
+    $('input[type="checkbox"]').change(function () {
+      if ($('#link').prop('checked')) {
+        // Show the input field for registration link
+        $('#registrationLinkSection').show();
+      } else {
+        // Hide the section for registration link if the checkbox is unchecked
+        $('#registrationLinkSection').hide();
+      }
+    });
+  });
+</script>
+
+
     
     <footer>
       <div class="footer-bottom">

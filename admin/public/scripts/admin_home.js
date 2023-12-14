@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
 const table = document.querySelector('table.events tbody')
 const searchBtn = document.querySelector('nav.search a')
 const tableTitle = document.querySelector('.table-title')
+const newEventBtn = document.querySelector('.btn crt-btn')
 
 searchBtn.addEventListener('click', function(e) {
     e.preventDefault();
@@ -38,6 +39,13 @@ searchBtn.addEventListener('click', function(e) {
     fetch(`/search/${searchValue}`)
     .then(response => response.json())
     .then(data => load(data['data']))
+})
+
+newEventBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    console.log('attendance clicked')
+    window.location.href = '/create_event'
+        
 })
 
 function load(data){
