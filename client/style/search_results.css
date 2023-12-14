@@ -213,10 +213,6 @@ p {
     margin-right: 0;
 }
 
-.filter-box:hover {
-    background-color: #F1F1F1;
-}
-
 .latest-event,
 .upcoming-event {
     position: relative;
