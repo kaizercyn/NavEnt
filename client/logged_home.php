@@ -40,9 +40,9 @@ $userAccount = $_SESSION["username"];
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="account_details.html">Account Details</a></li>
             <li><a class="dropdown-item" href="bookmarked_events.html">Bookmarks</a></li>
-            <li><a class="dropdown-item" href="#">Event History</a></li>
-            <li><a class="dropdown-item" href="#">Pending Evaluations</a></li>
-            <li><a class="dropdown-item" href="#">QR Code</a></li>
+            <li><a class="dropdown-item" href="event_history.html">Event History</a></li>
+            <li><a class="dropdown-item" href="pending_evaluation.html">Pending Evaluations</a></li>
+            <li><a class="dropdown-item" href="qr_code.html">QR Code</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item">
             <form action="php/logoutfunctions.php" method="POST"><button type="submit" class="dropdown-item" onclick="return confirm('Are you sure you want to logout?')">Logout</button></form></a></li>
