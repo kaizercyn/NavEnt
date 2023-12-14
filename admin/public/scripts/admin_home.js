@@ -37,10 +37,10 @@ function load(data){
         return;
     }
     let tableHTML = "";
-    data.forEach(function ({Event_ID, Event_Name, Event_StartDate, Event_EndDate, Particpants, Event_Type}) {
+    data.forEach(function ({Event_ID, Event_Name, Event_StartDate, Event_EndDate, Participants, Event_Type}) {
         tableHTML += "<tr>"
         tableHTML += `<td>${Event_Name}</td>`
-        tableHTML += `<td>${String(Particpants)}</td>` //change in SQL
+        tableHTML += `<td>${String(Participants)}</td>` //change in SQL
         tableHTML += `<td>${new Date(Event_StartDate).toLocaleDateString()}</td>`
         tableHTML += `<td>${new Date(Event_EndDate).toLocaleDateString()}</td>`
         tableHTML += `<td>${Event_Type}</td>`
