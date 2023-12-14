@@ -19,11 +19,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/font', express.static(path.join(__dirname, 'public/css/font')));
 
+app.use('/res', express.static(path.join(__dirname, 'public/css/rest')));
 
 app.set('views', path.join(__dirname, 'views'));
 
 app.get('/', (request, response) => {
-  response.render('admin_home');
+  response.render('admin_login');
+});
+
+app.get('/admin_home', (request, response) => {
+    response.render('admin_home');
 });
 
 app.get('/edit_event', (request, response) => {
