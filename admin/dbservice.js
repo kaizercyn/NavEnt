@@ -36,12 +36,33 @@ class DbService {
                     if (err) {
                         reject(new Error(err.message))
                     } else {
-                        console.log("Fetched data from DB:", results);
+                        // console.log("Fetched data from DB:", results);
                         resolve(results)
                     }
                 })
             }) 
             console.log(response)
+            return response
+        } catch (error) {
+            console.log(error + ' Fetching events from DB failed.')
+        }
+    }
+
+    async searchEvent(Event_Name) {
+        let response;
+        try {
+            response = await new Promise ((resolve, reject) => {
+                const query = "SELECT * FROM webdev.events WHERE Event_Name LIKE ?"
+                connection.query(query, [`%${Event_Name}%`], (err, results) => {
+                    if (err) {
+                        reject(new Error(err.message))
+                    } else {
+                        console.log("Fetched data from DB:", results);
+                        resolve(results)
+                    }
+                })
+            }) 
+            console.log("Response: ", response)
             return response
         } catch (error) {
             console.log(error + ' Fetching events from DB failed.')

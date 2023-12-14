@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.33, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
 --
--- Host: localhost    Database: webdevdb
+-- Host: localhost    Database: webdev
 -- ------------------------------------------------------
--- Server version	8.2.0
+-- Server version	5.5.5-10.4.32-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -23,13 +23,13 @@ DROP TABLE IF EXISTS `accounts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `accounts` (
-  `User_ID` int NOT NULL,
+  `User_ID` int(11) NOT NULL,
   `First_Name` varchar(45) NOT NULL,
   `Last_Name` varchar(45) NOT NULL,
   `Email_Address` varchar(255) NOT NULL,
   `Password` varchar(45) NOT NULL,
   PRIMARY KEY (`User_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -53,7 +53,7 @@ CREATE TABLE `admin` (
   `Admin_ID` varchar(45) NOT NULL,
   `Password` varchar(45) NOT NULL,
   PRIMARY KEY (`Admin_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -81,7 +81,7 @@ CREATE TABLE `am/pm` (
   `PM_End` time DEFAULT NULL,
   PRIMARY KEY (`Event_ID`),
   KEY `EventID_AM/PM` (`Event_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -108,7 +108,7 @@ CREATE TABLE `announcements` (
   `Event_ID` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`Announcement_ID`),
   KEY `Event_ID_Announcement` (`Event_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -129,15 +129,15 @@ DROP TABLE IF EXISTS `attendance`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `attendance` (
-  `Attendance_ID` int NOT NULL,
+  `Attendance_ID` int(11) NOT NULL,
   `Date` varchar(45) NOT NULL,
-  `Series_Num` int DEFAULT NULL,
+  `Series_Num` int(11) DEFAULT NULL,
   `In_Time` time NOT NULL,
   `Out_Time` time NOT NULL,
-  `Event_ID` int NOT NULL,
+  `Event_ID` int(11) NOT NULL,
   PRIMARY KEY (`Attendance_ID`),
   CONSTRAINT `EventID_Attendance` FOREIGN KEY (`Attendance_ID`) REFERENCES `events` (`Event_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -157,16 +157,16 @@ DROP TABLE IF EXISTS `bookmarks`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `bookmarks` (
-  `Bookmark_ID` int NOT NULL,
+  `Bookmark_ID` int(11) NOT NULL,
   `Date_Bookmarked` date NOT NULL,
-  `User_ID` int DEFAULT NULL,
-  `Event_ID` int DEFAULT NULL,
+  `User_ID` int(11) DEFAULT NULL,
+  `Event_ID` int(11) DEFAULT NULL,
   PRIMARY KEY (`Bookmark_ID`),
   KEY `UserID_Bookmarks_idx` (`User_ID`),
   KEY `EventID_Bookmarks_idx` (`Event_ID`),
   CONSTRAINT `EventID_Bookmarks` FOREIGN KEY (`Event_ID`) REFERENCES `events` (`Event_ID`),
   CONSTRAINT `UserID_Bookmarks` FOREIGN KEY (`User_ID`) REFERENCES `accounts` (`User_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -186,18 +186,18 @@ DROP TABLE IF EXISTS `evaluations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `evaluations` (
-  `Evaluation_ID` int NOT NULL,
-  `isAccomplished` tinyint NOT NULL DEFAULT '0',
+  `Evaluation_ID` int(11) NOT NULL,
+  `isAccomplished` tinyint(4) NOT NULL DEFAULT 0,
   `Date_Accomplished` datetime DEFAULT NULL,
-  `User_ID` int NOT NULL,
-  `Event_ID` int NOT NULL,
-  `Evaluation_Link` text,
+  `User_ID` int(11) NOT NULL,
+  `Event_ID` int(11) NOT NULL,
+  `Evaluation_Link` text DEFAULT NULL,
   PRIMARY KEY (`Evaluation_ID`),
   KEY `UserID_Eval` (`User_ID`),
   KEY `EventID_Eval` (`Event_ID`),
   CONSTRAINT `EventID_Eval` FOREIGN KEY (`Event_ID`) REFERENCES `events` (`Event_ID`),
   CONSTRAINT `UserID_Eval` FOREIGN KEY (`User_ID`) REFERENCES `accounts` (`User_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -217,17 +217,20 @@ DROP TABLE IF EXISTS `events`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `events` (
-  `Event_ID` int NOT NULL,
+  `Event_ID` int(11) NOT NULL,
   `Event_Name` varchar(255) NOT NULL,
+  `Event_Description` text NOT NULL,
   `Event_StartDate` date NOT NULL,
   `Event_EndDate` date NOT NULL,
-  `isOpen` tinyint NOT NULL DEFAULT '0',
-  `Particpants` int DEFAULT '0',
+  `isOpen` tinyint(4) NOT NULL DEFAULT 0,
+  `Participants` int(11) DEFAULT 0,
   `Event_Type` varchar(255) NOT NULL,
-  `Event_Description` text NOT NULL,
-  `isPublic` tinyint DEFAULT '0',
+  `Event_Tagline` varchar(255) NOT NULL,
+  `isPublic` tinyint(4) DEFAULT 0,
+  `Event_PicFileName` varchar(255) DEFAULT NULL,
+  `Event_PicFilePath` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`Event_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -236,7 +239,7 @@ CREATE TABLE `events` (
 
 LOCK TABLES `events` WRITE;
 /*!40000 ALTER TABLE `events` DISABLE KEYS */;
-INSERT INTO `events` VALUES (10001,'Academic Odessey: Exploring Minds','2023-11-26','2023-11-26',0,45,'OneTime','Embark on a journey through the realms of knowledge! Join us for a day filled with captivating lectures, interactive workshops, and thought-provoking discussions led by experts in various fields. Dive deep into the wonders of science, humanities, and technology, fostering curiosity and a thirst for learning.',1),(10002,'Cultural Mosaic Festival','2023-11-28','2023-11-28',0,67,'AM/PM','Celebrate diversity and unity in our vibrant school community! Experience a colorful tapestry of traditions, music, dance, and cuisine from around the world. Engage in cultural exchanges, participate in interactive displays, and embrace the rich tapestry of global heritage that unites us all.',1),(10003,'STEMpalooza: Innovation Showcase','2023-11-30','2023-12-02',1,59,'Series','Unleash your inner innovator! Get ready for an exhilarating exhibition showcasing groundbreaking projects and cutting-edge technology. Dive into hands-on demonstrations, competitions, and presentations highlighting the wonders of science, technology, engineering, and mathematics. Explore, create, and inspire the future!',1),(10004,'\"Future of AI: Ethical Implications Summit','2023-12-10','2023-12-12',0,95,'Series',' Deliberate the ethical considerations shaping the future of artificial intelligence.',1),(10005,'Quantum Computing Conference ','2023-12-15','2023-12-15',1,63,'AM/PM','Delve into the revolutionary world of quantum computing. Engage with experts, witness demos, and explore the potential applications of quantum technologies.',0),(10006,'Artificial Intelligence in Sports Analytics Symposium','2023-12-20','2023-12-20',0,84,'OneTime','Explore the transformative role of AI in redefining sports analytics and strategy.',1),(10007,'Sustainability Summit  ','2023-12-28','2023-12-30',1,52,'OneTime','Explore innovative approaches to sustainability and environmental conservation. Join discussions, workshops, and presentations on green initiatives.',1),(10008,'HealthTech Expo   ','2023-12-29','2023-12-29',1,61,'Series','Discover the latest advancements in healthcare technology. Experience demos, attend seminars, and interact with pioneers in the HealthTech industry.',1),(10009,'Business Innovation Forum','2024-01-05','2024-01-07',0,42,'OneTime','Foster creativity and strategize innovation in the business landscape. Engage in discussions, case studies, and workshops led by industry leaders.',0),(10010,'Music and Technology Conference','2024-01-10','2024-01-12',1,76,'AM/PM','Explore the intersection of music and technology. Experience live demonstrations, discussions, and performances showcasing technological advancements in music.',1);
+INSERT INTO `events` VALUES (10001,'Academic Odessey: Exploring Minds','Embark on a journey through the realms of knowledge! Join us for a day filled with captivating lectures, interactive workshops, and thought-provoking discussions led by experts in various fields. Dive deep into the wonders of science, humanities, and technology, fostering curiosity and a thirst for learning.','2023-11-26','2023-11-26',0,45,'OneTime','',1,NULL,NULL),(10002,'Cultural Mosaic Festival','Celebrate diversity and unity in our vibrant school community! Experience a colorful tapestry of traditions, music, dance, and cuisine from around the world. Engage in cultural exchanges, participate in interactive displays, and embrace the rich tapestry of global heritage that unites us all.','2023-11-28','2023-11-28',0,67,'AM/PM','',1,NULL,NULL),(10003,'STEMpalooza: Innovation Showcase','Unleash your inner innovator! Get ready for an exhilarating exhibition showcasing groundbreaking projects and cutting-edge technology. Dive into hands-on demonstrations, competitions, and presentations highlighting the wonders of science, technology, engineering, and mathematics. Explore, create, and inspire the future!','2023-11-30','2023-12-02',1,59,'Series','',1,NULL,NULL),(10004,'\"Future of AI: Ethical Implications Summit',' Deliberate the ethical considerations shaping the future of artificial intelligence.','2023-12-10','2023-12-12',0,95,'Series','',1,NULL,NULL),(10005,'Quantum Computing Conference ','Delve into the revolutionary world of quantum computing. Engage with experts, witness demos, and explore the potential applications of quantum technologies.','2023-12-15','2023-12-15',1,63,'AM/PM','',0,NULL,NULL),(10006,'Artificial Intelligence in Sports Analytics Symposium','Explore the transformative role of AI in redefining sports analytics and strategy.','2023-12-20','2023-12-20',0,84,'OneTime','',1,NULL,NULL),(10007,'Sustainability Summit  ','Explore innovative approaches to sustainability and environmental conservation. Join discussions, workshops, and presentations on green initiatives.','2023-12-28','2023-12-30',1,52,'OneTime','',1,NULL,NULL),(10008,'HealthTech Expo   ','Discover the latest advancements in healthcare technology. Experience demos, attend seminars, and interact with pioneers in the HealthTech industry.','2023-12-29','2023-12-29',1,61,'Series','',1,NULL,NULL),(10009,'Business Innovation Forum','Foster creativity and strategize innovation in the business landscape. Engage in discussions, case studies, and workshops led by industry leaders.','2024-01-05','2024-01-07',0,42,'OneTime','',0,NULL,NULL),(10010,'Music and Technology Conference','Explore the intersection of music and technology. Experience live demonstrations, discussions, and performances showcasing technological advancements in music.','2024-01-10','2024-01-12',1,76,'AM/PM','',1,NULL,NULL);
 /*!40000 ALTER TABLE `events` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -248,13 +251,13 @@ DROP TABLE IF EXISTS `onetime`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `onetime` (
-  `Event_ID` int NOT NULL,
+  `Event_ID` int(11) NOT NULL,
   `Start_Time` time DEFAULT NULL,
   `End_Time` time DEFAULT NULL,
   PRIMARY KEY (`Event_ID`),
   KEY `EventID_OneTime` (`Event_ID`),
   CONSTRAINT `EventID_OneTime` FOREIGN KEY (`Event_ID`) REFERENCES `events` (`Event_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -275,15 +278,15 @@ DROP TABLE IF EXISTS `regisdetails`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `regisdetails` (
-  `User_ID` int NOT NULL,
-  `Event_ID` int NOT NULL,
-  `QR_Code` longtext,
+  `User_ID` int(11) NOT NULL,
+  `Event_ID` int(11) NOT NULL,
+  `QR_Code` longtext DEFAULT NULL,
   PRIMARY KEY (`User_ID`,`Event_ID`),
   KEY `EventID_RegisDetails_idx` (`Event_ID`),
   KEY `UserID_RegisDetails` (`User_ID`),
   CONSTRAINT `EventID_RegisDetails` FOREIGN KEY (`Event_ID`) REFERENCES `events` (`Event_ID`),
   CONSTRAINT `UserID_RegisDetails` FOREIGN KEY (`User_ID`) REFERENCES `accounts` (`User_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -303,16 +306,16 @@ DROP TABLE IF EXISTS `registration`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `registration` (
-  `Registration_ID` int NOT NULL,
+  `Registration_ID` int(11) NOT NULL,
   `Name` varchar(45) NOT NULL,
-  `Age` int NOT NULL,
+  `Age` int(11) NOT NULL,
   `Course` varchar(255) NOT NULL,
-  `Year` int NOT NULL,
-  `User_ID` int DEFAULT NULL,
+  `Year` int(11) NOT NULL,
+  `User_ID` int(11) DEFAULT NULL,
   PRIMARY KEY (`Registration_ID`),
   KEY `UserID_Registration` (`User_ID`),
   CONSTRAINT `UserID_Regis` FOREIGN KEY (`User_ID`) REFERENCES `accounts` (`User_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -332,14 +335,14 @@ DROP TABLE IF EXISTS `series`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `series` (
-  `Event_ID` int NOT NULL,
-  `Series_Num` int NOT NULL,
+  `Event_ID` int(11) NOT NULL,
+  `Series_Num` int(11) NOT NULL,
   `Start_Time` time DEFAULT NULL,
   `End_Time` time DEFAULT NULL,
   PRIMARY KEY (`Event_ID`,`Series_Num`),
   KEY `EventID_Series` (`Event_ID`),
   CONSTRAINT `Event_ID` FOREIGN KEY (`Event_ID`) REFERENCES `events` (`Event_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -361,4 +364,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-14  3:46:17
+-- Dump completed on 2023-12-14  9:47:05
