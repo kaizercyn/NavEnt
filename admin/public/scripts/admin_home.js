@@ -28,7 +28,8 @@ document.addEventListener('DOMContentLoaded', function () {
 const table = document.querySelector('table.events tbody')
 const searchBtn = document.querySelector('nav.search a')
 const tableTitle = document.querySelector('.table-title')
-const newEventBtn = document.querySelector('.btn crt-btn')
+// const newEventBtn = document.querySelector('.btn crt-btn')
+const toHomeBtn = document.querySelector('.toHome')
 
 searchBtn.addEventListener('click', function(e) {
     e.preventDefault();
@@ -41,11 +42,15 @@ searchBtn.addEventListener('click', function(e) {
     .then(data => load(data['data']))
 })
 
-newEventBtn.addEventListener('click', function(e) {
-    e.preventDefault();
-    console.log('attendance clicked')
-    window.location.href = '/create_event'
+// newEventBtn.addEventListener('click', function(e) {
+//     console.log('attendance clicked')
+//     window.location.href = '/create_event'
         
+// })
+
+toHomeBtn.addEventListener('click', function(e) {
+    console.log('home clicked')
+    window.location.reload();
 })
 
 function load(data){

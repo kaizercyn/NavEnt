@@ -121,6 +121,15 @@ nav {
     padding: 10px 20px;
 }
 
+.toHome{
+    border: none;
+    background-color: transparent;
+    font-size: 14px;
+    color: #F1F1F1;
+    outline: none;
+    cursor: pointer;
+}
+
 .box {
     height: 30px;
     display: flex;
