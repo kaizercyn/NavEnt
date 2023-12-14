@@ -43,7 +43,9 @@ app.get('/create_event', (request, response) => {
     response.render('create_event');
 });
 
-
+app.get('/event_attendance', (request, response) => {
+    response.render('event_attendance');
+});
 
 app.get('/admin_home.js', (request, response) => {
     response.sendFile(path.join(__dirname, '/public/scripts/admin_home.js'), {
