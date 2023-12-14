@@ -11,22 +11,36 @@
 <body>
     <header>
         <div class="d-flex align-items-center justify-content-between">
-            <div class="logo">
-                <img src="../res/imgs/navi-event-logo(3d).png" alt="Logo">
-            </div>
-            <div class="d-flex align-items-center">
-              <div class="profile-box">
-                <div class="pf">
-                  <div class="profile-icon">
-                    <i class="bi bi-person"></i>
-                </div>
-                <span class="username">John Doe</span>
-                
-                </div>
-            </div>
+          <div class="logo">
+              <img src="../res/imgs/navi-event-logo(3d).png" alt="Logo">
+          </div>
+      
+          <div class="pf-dropdown">
+            <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <div class="d-flex align-items-center">
+                  <div class="profile-box">
+                      <div class="pf">
+                        <div class="profile-icon">
+                          <i class="bi bi-person"></i>
+                      </div>
+                      <span class="username">John Doe</span>
+                      
+                      </div>
+              </div>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Account Details</a></li>
+              <li><a class="dropdown-item" href="#">Bookmarks</a></li>
+              <li><a class="dropdown-item" href="#">Event History</a></li>
+              <li><a class="dropdown-item" href="#">Pending Evaluations</a></li>
+              <li><a class="dropdown-item" href="#">QR Code</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Logout</a></li>
+            </ul>
+          </div>
         </div>
-        </div>
-    </header>
+        
+      </header>
 
     <nav>
         <div class="nav-links">
