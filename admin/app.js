@@ -17,6 +17,9 @@ app.set("view engine", "ejs");
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/font', express.static(path.join(__dirname, 'public/css/font')));
+
+
 app.set('views', path.join(__dirname, 'views'));
 
 app.get('/', (request, response) => {
