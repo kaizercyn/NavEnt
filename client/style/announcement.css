@@ -178,6 +178,15 @@ nav {
     color: #71999B;
 }
 
+#sidebar .nav-link {
+    color: #000; 
+}
+
+#sidebar .nav-link.active {
+    color: #fff; 
+    background-color: #EDA92C; 
+}
+
 footer {
     position: relative;
     width: 100%;

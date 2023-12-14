@@ -53,14 +53,14 @@ toHomeBtn.addEventListener('click', function(e) {
     window.location.reload();
 })
 
-function load(data){
+function load(data) {
     console.log("Received data:", data);
     if (!data || data.length === 0) {
         table.innerHTML = "<tr><td class='no-data' colspan='6'>No Data</td></tr>";
         return;
     }
     let tableHTML = "";
-    data.forEach(function ({Event_ID, Event_Name, Event_StartDate, Event_EndDate, Participants, Event_Type}) {
+    data.forEach(function ({ Event_ID, Event_Name, Event_StartDate, Event_EndDate, Participants, Event_Type }) {
         tableHTML += "<tr>"
         tableHTML += `<td>${Event_Name}</td>`
         tableHTML += `<td>${String(Participants)}</td>` //change in SQL
@@ -69,15 +69,13 @@ function load(data){
         tableHTML += `<td>${Event_Type}</td>`
         tableHTML += `<td>
                         <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                        <button type="button" class="btn_edit" data-id=${Event_ID}>Edit</button>
-                        <button type="button" class="btn_announce" data-id=${Event_ID}>Announce</button>
-                        <button type="button" class="btn_attendance" data-id=${Event_ID}>Attendance</button>
+                            <button type="button" class="btn_edit crt-btn" data-id=${Event_ID}>Edit</button>
+                            <button type="button" class="btn_announce crt-btn" data-id=${Event_ID}>Announce</button>
+                            <button type="button" class="btn_attendance crt-btn" data-id=${Event_ID}>Attendance</button>
                         </div>
                      </td>`
         tableHTML += "</tr>"
-    }) 
+    })
 
     table.innerHTML = tableHTML;
 }
-
-
