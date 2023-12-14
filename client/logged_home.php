@@ -39,7 +39,7 @@ $userAccount = $_SESSION["username"];
           </button>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="account_details.html">Account Details</a></li>
-            <li><a class="dropdown-item" href="#">Bookmarks</a></li>
+            <li><a class="dropdown-item" href="bookmarked_events.html">Bookmarks</a></li>
             <li><a class="dropdown-item" href="#">Event History</a></li>
             <li><a class="dropdown-item" href="#">Pending Evaluations</a></li>
             <li><a class="dropdown-item" href="#">QR Code</a></li>
