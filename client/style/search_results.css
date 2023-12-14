@@ -182,7 +182,7 @@ p {
 
 .sort {
     background-color: #E4960E;
-    color: white;
+    color: #F1F1F1;
     padding: 10px;
     max-width: 1295px;
     margin: 0 auto;
@@ -199,8 +199,10 @@ p {
 }
 
 .filter-box {
-    background-color: #F5F5F5;
-    color: #010E1F;
+    background-color: transparent;
+    border: 1px solid #F1F1F1;
+    color: #F1F1F1;
+    font-weight: bold;
     padding: 8px;
     border-radius: 5px;
     cursor: pointer;
@@ -212,7 +214,7 @@ p {
 }
 
 .filter-box:hover {
-    background-color: #ccc;
+    background-color: #F1F1F1;
 }
 
 .latest-event,
@@ -291,12 +293,28 @@ p {
     width: 100%;
 }
 
+.page-navi{
+    background-color: transparent;
+}
+
 .pagination .page-item.disabled .page-link,
 .pagination .page-item:not(.active) .page-link {
     background-color: transparent;
-    color: #F1F1F1; 
+    color: #010E1F; 
     border: none;
     
+}
+
+.pagination .page-item.active .page-link,
+.pagination .page-item.active .page-link:hover,
+.pagination .page-item.active .page-link:focus,
+.pagination .page-item.active .page-link:active,
+.pagination .page-item:not(.active) .page-link:hover,
+.pagination .page-item:not(.active) .page-link:focus {
+    background-color: transparent;
+    color: #010E1F;
+    border: none;
+    outline: none;
 }
 
 footer {
