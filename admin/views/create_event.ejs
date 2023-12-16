@@ -56,6 +56,12 @@
       <!-- Event Name -->
       <label for="eventName" class="form-label">Event Name</label>
       <input type="text" class="form-control">
+
+      <!-- Tagline -->
+      <div class="mt-3 col-12">
+        <label for="tagline" class="form-label">Tagline</label>
+        <input type="text" class="form-control">
+      </div>
     
       <!-- Description -->
       <div class="mt-3 col-12">
@@ -68,7 +74,7 @@
       <hr class="my-4">
     
       <!-- Event Type -->
-      <h4 class="mb-3">Event Type</h4>
+      <h4 class="mb-3">Event Attendance Type</h4>
       <div class="form-check">
         <input type="radio" name="eventType" class="form-check-input" id="oneTime">
         <label for="oneTime">One Time</label>
@@ -82,50 +88,102 @@
         <label for="series">Series</label>
       </div>
     
-            <!-- Dynamic sections based on event type -->
+      <!-- Dynamic sections based on event type -->
       <div id="oneTimeSection" style="display: none; margin-top: 10px;">
         <!-- Add one-time specific fields here -->
-        <label for="startDate">Start Date</label>
-        <input type="date" id="startDate" class="form-control">
-        <label for="endDate">End Date</label>
-        <input type="date" id="endDate" class="form-control">
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+
+          <!-- Start Date -->
+          <label for="startDate">Start Date</label>
+          <input type="date" id="startDate" class="form-control">
+
+          <div style="display: flex; gap: 10px;">
+            <!-- Start Time Container -->
+            <div style="flex: 1;">
+              <label for="startTime">Start Time</label>
+              <input type="time" id="startTime" class="form-control">
+            </div>
+
+            <!-- End Time Container -->
+            <div style="flex: 1;">
+              <label for="endTime">End Time</label>
+              <input type="time" id="endTime" class="form-control">
+            </div>
+          </div>
+        </div>
       </div>
 
       <div id="ampmSection" style="display: none; margin-top: 10px;">
         <!-- Add AM/PM specific fields here -->
-        <!-- Start and end of AM -->
-        <label for="startAM">Start AM</label>
-        <input type="time" id="startAM" class="form-control">
-        <label for="endAM">End AM</label>
-        <input type="time" id="endAM" class="form-control">
-        <!-- Start and end of PM -->
-        <label for="startPM">Start PM</label>
-        <input type="time" id="startPM" class="form-control">
-        <label for="endPM">End PM</label>
-        <input type="time" id="endPM" class="form-control">
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+      
+          <!-- AM/PM Date -->
+          <label for="ampmDate"> Date</label>
+          <input type="date" id="ampmDate" class="form-control">
+      
+          <!-- AM Time Container -->
+          <h6 class="mb-0">AM</h6>
+          <div style="display: flex; gap: 10px;">
+            <div style="flex: 1;">
+              <label for="startAM">Start</label>
+              <input type="time" id="startAM" class="form-control">
+            </div>
+      
+            <div style="flex: 1;">
+              <label for="endAM">End</label>
+              <input type="time" id="endAM" class="form-control">
+            </div>
+          </div>
+      
+          <!-- PM Time Container -->
+          <h6 class="mb-0">PM</h6>
+          <div style="display: flex; gap: 10px;">
+            <div style="flex: 1;">
+              <label for="startPM">Start</label>
+              <input type="time" id="startPM" class="form-control">
+            </div>
+      
+            <div style="flex: 1;">
+              <label for="endPM">End</label>
+              <input type="time" id="endPM" class="form-control">
+            </div>
+          </div>
+        </div>
       </div>
-
+      
       <div id="seriesSection" style="display: none; margin-top: 10px;">
         <!-- Add series specific fields here -->
         <label for="seriesNumber">Series Number</label>
-        <input type="number" id="seriesNumber" class="form-control">
-      </div>
+        <input type="number" id="seriesNumber" class="form-control" style="margin-bottom: 10px;">
+      
+        <!-- Container for dynamically generated series fields -->
+        <div id="seriesFieldsContainer"></div>
+      </div>        
  
       <hr class="my-4">
     
       <div class="col-12">
         <div class="form-check">
-          <input type="checkbox" id="link" class="form-check-input">
-          <label for="link" class="form-check-label">Append Registration Link</label>
+          <input type="checkbox" id="reg-link" class="form-check-input">
+          <label for="reg-link" class="form-check-label">Append Registration Link</label>
         </div>
+        <div id="registrationLinkSection" style="display: none; margin-top: 7px; margin-bottom: 10px;">
+          <!-- Input field for registration link -->
+          <label for="registrationLink">Registration Link</label>
+          <input type="text" id="registrationLink" class="form-control">
+        </div>
+        <div class="form-check">
+          <input type="checkbox" id="eval-link" class="form-check-input">
+          <label for="eval-link" class="form-check-label">Append Evaluation Link</label>
+        </div>
+        <div id="evaluationLinkSection" style="display: none; margin-top: 7px; margin-bottom: 10px;">
+          <!-- Input field for registration link -->
+          <label for="evaluationLink">Evaluation Link</label>
+          <input type="text" id="evaluationLink" class="form-control">
+        </div>
+      
       </div>
       
-      <div id="registrationLinkSection" style="display: none;">
-        <!-- Input field for registration link -->
-        <label for="registrationLink">Registration Link</label>
-        <input type="text" id="registrationLink" class="form-control">
-      </div>
-    
       <hr class="my-4">
     
       <h4 class="mb-3">Upload Image</h4>
@@ -138,6 +196,22 @@
     
       <hr class="my-4">
     
+      <h4 class="mb-3">Publish Event</h4>
+      <div class="form-check">
+        <input type="radio" name="pub-ev" class="form-check-input" id="pub">
+        <label for="pub">Public Event</label>
+      </div>
+      <div class="form-check">
+        <input type="radio" name="pub-ev" class="form-check-input" id="pub">
+        <label for="priv">Private Event</label>
+      </div>
+      <div class="form-check mt-3">
+        <input type="checkbox" id="reg-open" class="form-check-input">
+        <label for="reg-open" class="form-check-label">Open for Registration</label>
+      </div>
+
+      <hr class="my-4">
+
       <!-- Buttons -->
       <div class="row">
         <div class="col-sm-6">
@@ -168,15 +242,81 @@
     </script>
 
 <script>
+  // Function to generate series-specific fields based on the number entered
+  function generateSeriesFields() {
+    // Get the series number entered by the user
+    var seriesNumber = document.getElementById('seriesNumber').value;
+
+    // Get the container where the series fields will be added
+    var seriesContainer = document.getElementById('seriesFieldsContainer');
+    
+    // Clear any existing fields
+    seriesContainer.innerHTML = '';
+
+    // Generate new input fields based on the series number
+    for (var i = 1; i <= seriesNumber; i++) {
+      // Create container for each series with flex display
+      var seriesContainerDiv = document.createElement('div');
+      seriesContainerDiv.style.display = 'flex';
+      seriesContainerDiv.style.gap = '10px';
+
+      var startContainerDiv = document.createElement('div');
+      startContainerDiv.style.flex = '1';
+
+      var startLabel = document.createElement('label');
+      startLabel.innerHTML = 'Start Time for Series ' + i;
+
+      var startInput = document.createElement('input');
+      startInput.type = 'time';
+      startInput.className = 'form-control';
+
+      var endContainerDiv = document.createElement('div');
+      endContainerDiv.style.flex = '1';
+
+      var endLabel = document.createElement('label');
+      endLabel.innerHTML = 'End Time for Series ' + i;
+
+      var endInput = document.createElement('input');
+      endInput.type = 'time';
+      endInput.className = 'form-control';
+
+      // Add the new fields to the container
+      startContainerDiv.appendChild(startLabel);
+      startContainerDiv.appendChild(startInput);
+      endContainerDiv.appendChild(endLabel);
+      endContainerDiv.appendChild(endInput);
+
+      // Add start and end containers to the series container
+      seriesContainerDiv.appendChild(startContainerDiv);
+      seriesContainerDiv.appendChild(endContainerDiv);
+
+      // Add the series container to the main container
+      seriesContainer.appendChild(seriesContainerDiv);
+    }
+  }
+
+  // Attach the function to the input event of the seriesNumber field
+  document.getElementById('seriesNumber').addEventListener('input', generateSeriesFields);
+</script>
+
+<script>
   $(document).ready(function () {
     // Handle checkbox changes
     $('input[type="checkbox"]').change(function () {
-      if ($('#link').prop('checked')) {
+      if ($('#reg-link').prop('checked')) {
         // Show the input field for registration link
         $('#registrationLinkSection').show();
       } else {
         // Hide the section for registration link if the checkbox is unchecked
         $('#registrationLinkSection').hide();
+      }
+
+      if ($('#eval-link').prop('checked')) {
+        // Show the input field for evaluation link
+        $('#evaluationLinkSection').show();
+      } else {
+        // Hide the section for evaluation link if the checkbox is unchecked
+        $('#evaluationLinkSection').hide();
       }
     });
   });
