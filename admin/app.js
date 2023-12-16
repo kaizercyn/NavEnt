@@ -19,12 +19,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/font', express.static(path.join(__dirname, 'public/css/font')));
 
-app.use('/res', express.static(path.join(__dirname, 'public/css/rest')));
+app.use('/res', express.static(path.join(__dirname, 'public/css/res')));
 
 app.set('views', path.join(__dirname, 'views'));
 
 app.get('/', (request, response) => {
-  response.render('admin_login');
+  response.render('admin_home');
 });
 
 app.get('/admin_home', (request, response) => {
@@ -63,6 +63,21 @@ app.get('/admin_home.js', (request, response) => {
     });
 });
 
+app.get('/admin_login.js', (request, response) => {
+    response.sendFile(path.join(__dirname, '/public/scripts/admin_login.js'), {
+      headers: {
+        'Content-Type': 'application/javascript'
+        }
+    });
+});
+
+app.get('/admin_login.css', (request, response) => {
+    response.sendFile(path.join(__dirname, '/public/css/admin_login.css'), {
+        headers: {
+            'Content-Type': 'text/css'
+        }
+    });
+});
 app.get('/admin_home.css', (request, response) => {
     response.sendFile(path.join(__dirname, '/public/css/admin_home.css'), {
         headers: {
