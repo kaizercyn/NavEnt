@@ -94,6 +94,7 @@ app.get('/admin_login.css', (request, response) => {
         }
     });
 });
+
 app.get('/admin_home.css', (request, response) => {
     response.sendFile(path.join(__dirname, '/public/css/admin_home.css'), {
         headers: {
@@ -102,6 +103,21 @@ app.get('/admin_home.css', (request, response) => {
     });
 });
 
+app.get('/admin_event.css', (request, response) => {
+    response.sendFile(path.join(__dirname, '/public/css/admin_event.css'), {
+        headers: {
+            'Content-Type': 'text/css'
+        }
+    });
+});
+
+app.get('/create_event.css', (request, response) => {
+    response.sendFile(path.join(__dirname, '/public/css/create_event.css'), {
+        headers: {
+            'Content-Type': 'text/css'
+        }
+    });
+});
 
 app.get('/getEvents', async (request, response) => {
     try {

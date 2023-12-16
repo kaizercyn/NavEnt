@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
 const table = document.querySelector('table.events tbody')
 const searchBtn = document.querySelector('nav.search a')
 const tableTitle = document.querySelector('.table-title')
-// const newEventBtn = document.querySelector('.btn crt-btn')
+const newEventBtn = document.querySelector('.crt-btn')
 const toHomeBtn = document.querySelector('.toHome')
 const logoutBtn = document.querySelector('.logout-btn');
 
@@ -36,7 +36,7 @@ logoutBtn.addEventListener('click', function(e) {
   e.preventDefault();
   fetch('/logout', {
     method: 'GET',
-    credentials: 'same-origin' // Include credentials (cookies) in the request
+    credentials: 'same-origin'
   })
   .then(response => {
     if (response.ok) {
@@ -62,11 +62,11 @@ searchBtn.addEventListener('click', function(e) {
     .then(data => load(data['data']))
 })
 
-// newEventBtn.addEventListener('click', function(e) {
-//     console.log('attendance clicked')
-//     window.location.href = '/create_event'
-        
-// })
+newEventBtn.addEventListener('click', function(e) {
+    e.preventDefault()
+    console.log('attendance clicked')
+    window.location.href = '/create_event'
+})
 
 toHomeBtn.addEventListener('click', function(e) {
     console.log('home clicked')
@@ -89,9 +89,9 @@ function load(data) {
         tableHTML += `<td>${Event_Type}</td>`
         tableHTML += `<td>
                         <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                            <button type="button" class="btn_edit crt-btn" data-id=${Event_ID}>Edit</button>
-                            <button type="button" class="btn_announce crt-btn" data-id=${Event_ID}>Announce</button>
-                            <button type="button" class="btn_attendance crt-btn" data-id=${Event_ID}>Attendance</button>
+                            <button type="button" class="btn_edit" data-id=${Event_ID}>Edit</button>
+                            <button type="button" class="btn_announce" data-id=${Event_ID}>Announce</button>
+                            <button type="button" class="btn_attendance" data-id=${Event_ID}>Attendance</button>
                         </div>
                      </td>`
         tableHTML += "</tr>"
