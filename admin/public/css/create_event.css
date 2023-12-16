@@ -152,6 +152,7 @@ p {
   }
 
 .button-save-draft {
+    font-family: 'CAZentrum Medium', sans serif;
     background-color: #E4960E; 
     color: #fff; 
     font-size: 1.25rem; 
@@ -170,6 +171,7 @@ p {
   }
   
   .button-save-publish {
+    font-family: 'CAZentrum Medium', sans serif;
     background-color: #71999B; 
     color: #fff;
     font-size: 1.25rem;
