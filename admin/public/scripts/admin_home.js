@@ -30,6 +30,26 @@ const searchBtn = document.querySelector('nav.search a')
 const tableTitle = document.querySelector('.table-title')
 // const newEventBtn = document.querySelector('.btn crt-btn')
 const toHomeBtn = document.querySelector('.toHome')
+const logoutBtn = document.querySelector('.logout-btn');
+
+logoutBtn.addEventListener('click', function(e) {
+  e.preventDefault();
+  fetch('/logout', {
+    method: 'GET',
+    credentials: 'same-origin' // Include credentials (cookies) in the request
+  })
+  .then(response => {
+    if (response.ok) {
+      console.log('Logout successful');
+      window.location.href = '/';
+    } else {
+      console.error('Logout failed');
+    }
+  })
+  .catch(error => {
+    console.error('Error during logout:', error);
+  });
+});
 
 searchBtn.addEventListener('click', function(e) {
     e.preventDefault();
@@ -54,7 +74,7 @@ toHomeBtn.addEventListener('click', function(e) {
 })
 
 function load(data) {
-    console.log("Received data:", data);
+    // console.log("Received data:", data);
     if (!data || data.length === 0) {
         table.innerHTML = "<tr><td class='no-data' colspan='6'>No Data</td></tr>";
         return;
@@ -63,7 +83,7 @@ function load(data) {
     data.forEach(function ({ Event_ID, Event_Name, Event_StartDate, Event_EndDate, Participants, Event_Type }) {
         tableHTML += "<tr>"
         tableHTML += `<td>${Event_Name}</td>`
-        tableHTML += `<td>${String(Participants)}</td>` //change in SQL
+        tableHTML += `<td>${String(Participants)}</td>` 
         tableHTML += `<td>${new Date(Event_StartDate).toLocaleDateString()}</td>`
         tableHTML += `<td>${new Date(Event_EndDate).toLocaleDateString()}</td>`
         tableHTML += `<td>${Event_Type}</td>`

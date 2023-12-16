@@ -41,7 +41,7 @@ class DbService {
                     }
                 })
             }) 
-            console.log(response)
+            // console.log(response)
             return response
         } catch (error) {
             console.log(error + ' Fetching events from DB failed.')
@@ -57,7 +57,7 @@ class DbService {
                     if (err) {
                         reject(new Error(err.message))
                     } else {
-                        console.log("Fetched data from DB:", results);
+                    
                         resolve(results)
                     }
                 })
@@ -66,6 +66,27 @@ class DbService {
             return response
         } catch (error) {
             console.log(error + ' Fetching events from DB failed.')
+        }
+    }
+
+    async verifyUser(username, password) {
+        let response;
+        try {
+            const query = "SELECT * FROM webdev.admin WHERE Admin_ID = ? AND Password = ?"
+            const results = await new Promise((resolve, reject) => {
+                connection.query(query, [username, password], (err, results) => {
+                    if (err) {
+                        reject(new Error (err.message))
+                    } else {
+                        console.log("Fethed data from DB: ", results)
+                        resolve(results)
+                    }
+                })
+            })
+            console.log("Response: ", results)
+            return results
+        } catch (error) {
+            console.log(error + ' Verification of admin credentials failed.')
         }
     }
     

@@ -91,13 +91,13 @@ header {
     transition: border-color 0.3s ease;
 }
 
-.pf-dropdown .dropdown-menu a.dropdown-item {
+.pf-dropdown .dropdown-menu a.logout-btn {
     font-family: 'CAZentrum Regular', sans-serif;
     color: #000e1e;
 }
 
-.pf-dropdown .dropdown-menu a.dropdown-item:hover,
-.pf-dropdown .dropdown-menu a.dropdown-item:focus {
+.pf-dropdown .dropdown-menu a.logout-btn:hover,
+.pf-dropdown .dropdown-menu a.logout-btn:focus {
     background-color: #71999B;
 }
 
