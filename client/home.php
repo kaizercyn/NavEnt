@@ -1,7 +1,5 @@
 <?php
-require("dbconnection.php");
 ?>
-
 <!doctype html>
 <html lang="en">
   <head>
@@ -51,6 +49,7 @@ require("dbconnection.php");
           
         <div class="carousel-inner">
             <?php
+                require("php/dbconnection.php");
                 $public = 1;
                 $open = 1;
                 $st = $conn -> prepare("SELECT * FROM EVENTS WHERE isPublic=? and isOpen=?;");

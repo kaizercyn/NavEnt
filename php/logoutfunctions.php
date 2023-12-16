@@ -1,7 +1,7 @@
 <?php
 require("dbconnection.php");
 
-if(isset($_POST["SUBMIT"])) {
+if(isset($_SESSION["username"])) {
 session_destroy();
 }
 header('Location: ../index.php');
