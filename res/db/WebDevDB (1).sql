@@ -135,8 +135,11 @@ CREATE TABLE `attendance` (
   `In_Time` time NOT NULL,
   `Out_Time` time NOT NULL,
   `Event_ID` int(11) NOT NULL,
+  `User_ID` int(11) NOT NULL,
   PRIMARY KEY (`Attendance_ID`),
-  CONSTRAINT `EventID_Attendance` FOREIGN KEY (`Attendance_ID`) REFERENCES `events` (`Event_ID`)
+  KEY `UserID_Attendance_idx` (`User_ID`),
+  CONSTRAINT `EventID_Attendance` FOREIGN KEY (`Attendance_ID`) REFERENCES `events` (`Event_ID`),
+  CONSTRAINT `UserID_Attendance` FOREIGN KEY (`User_ID`) REFERENCES `accounts` (`User_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -368,4 +371,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-18  0:45:01
+-- Dump completed on 2023-12-18  1:49:08
