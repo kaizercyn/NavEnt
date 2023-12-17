@@ -87,6 +87,14 @@ app.get('/admin_login.js', (request, response) => {
     });
 });
 
+app.get('/create_event.js', (request, response) => {
+    response.sendFile(path.join(__dirname, '/public/scripts/create_event.js'), {
+      headers: {
+        'Content-Type': 'application/javascript'
+        }
+    });
+});
+
 app.get('/admin_login.css', (request, response) => {
     response.sendFile(path.join(__dirname, '/public/css/admin_login.css'), {
         headers: {
