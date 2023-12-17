@@ -1,5 +1,4 @@
 <?php 
-session_start();
 $userAccount = $_SESSION["username"];
 ?>
 
