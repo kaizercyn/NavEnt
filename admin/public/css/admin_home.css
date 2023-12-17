@@ -82,7 +82,7 @@ header {
     position: relative;
 }
 
-.pf-dropdown .btn {
+.pf-dropdown .btn{
     border: 1px solid #F1F1F1;
     border-radius: 8px;
     padding: 10px;
@@ -91,15 +91,24 @@ header {
     transition: border-color 0.3s ease;
 }
 
-.pf-dropdown .dropdown-menu a.dropdown-item {
-    font-family: 'CAZentrum Regular', sans-serif;
-    color: #000e1e;
+
+.logout-btn{
+    text-decoration: none;
+    /* padding-left: 30px; */
 }
 
-.pf-dropdown .dropdown-menu a.dropdown-item:hover,
-.pf-dropdown .dropdown-menu a.dropdown-item:focus {
+.pf-dropdown .dropdown-menu a.logout-btn {
+    font-family: 'CAZentrum Regular', sans-serif;
+    color: #000e1e;
+    display: flex;
+    justify-content: center;
+}
+
+.pf-dropdown .dropdown-menu :hover,
+.pf-dropdown .dropdown-menu a.logout-btn:focus {
     background-color: #71999B;
 }
+
 
 .username {
     color: #F1F1F1;
@@ -179,20 +188,35 @@ nav {
     background-color: #1C3947;
     color: #fff; 
 }
-  
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
 .ev-th th {
     font-family: 'CAZentrum Medium', sans-serif;
     font-size: 14px;
+    text-align: center;
+    vertical-align: middle;
 }
   
-.ev-td td {
+td {
     font-family: 'CAZentrum Regular', sans-serif;
     font-size: 13px; 
+    text-align: center;
+    vertical-align: middle;
 }
 
-.btn-group .btn {
+/* .ev-td tr {
+    font-family: 'CAZentrum Regular', sans-serif;
+    font-size: 13px; 
+    text-align: center;
+    vertical-align: middle;
+} */
+.btn-group {
     font-family: 'Curiosa ExtraLight', sans-serif;
-    font-size: 13px;
+    font-size: 18px;
 }
 
 .crt-btn {
@@ -211,7 +235,7 @@ nav {
     color: #000e1e;
 }
   
-.crt-btn:active {
+.crt-btn .btn_announce:active {
     border: 1px solid #000e1e;
 }
 
@@ -225,6 +249,26 @@ footer {
     word-spacing: 2px;
 }
 
+
+.btn_edit {
+    background-color: #EDA92C;
+    color: #000e1e;
+    border: none;
+    border-radius: 10px 0px 0px 10px;
+}
+
+.btn_announce {
+    background-color: #e8822e;
+    color: #000e1e;
+    border: none;
+}
+
+.btn_attendance {
+    background-color: #71999B;
+    color: #000e1e;
+    border: none;
+    border-radius: 0 10px 10px 0;
+}
 .footer-bottom {
     background: #000e1e;
     padding: 10px 0;
