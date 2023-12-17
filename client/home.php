@@ -11,18 +11,18 @@
   
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
 
-    <link rel="stylesheet" href="client/style/home.css">
+    <link rel="stylesheet" href="style/home.css">
 </head>
   <body>
 
     <header>
         <div class="d-flex align-items-center justify-content-between">
             <div class="logo">
-                <img src="res/imgs/navi-event-logo(3d).png" alt="Logo">
+                <img src="../res/imgs/navi-event-logo(3d).png" alt="Logo">
             </div>
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <button class="btn me-md-2 text-light h-btn" type="button"><a href="client/user_login.html">Login</a></button>
-                <button class="btn text-light h-btn" type="button"><a href="client/user_signup.html">Signup</a></button>
+                <button class="btn me-md-2 text-light h-btn" type="button"><a href="user_login.html">Login</a></button>
+                <button class="btn text-light h-btn" type="button"><a href="user_signup.html">Signup</a></button>
               </div>
         </div>
     </header>
@@ -49,7 +49,7 @@
           
         <div class="carousel-inner">
             <?php
-                require("php/dbconnection.php");
+                require("../php/dbconnection.php");
                 $public = 1;
                 $open = 1;
                 $st = $conn -> prepare("SELECT * FROM EVENTS WHERE isPublic=? and isOpen=?;");
@@ -68,7 +68,7 @@
 
             ?>
           <div class="carousel-item active ev">
-            <img src="res/imgs/event1.jpeg" class="d-block w-100 e-img" alt="event1">
+            <img src="../res/imgs/event1.jpeg" class="d-block w-100 e-img" alt="event1">
             <div class="carousel-caption top-0 mt-4 d-none d-md-block">
                 <h2 class="mt-5c fs-3 text-uppercase"></h2>
                 <h1 class="display-1 fw-bolder text-capitalize">Event Name</h1>
@@ -76,7 +76,7 @@
               </div>
         </div>
           <div class="carousel-item ev">
-            <img src="res/imgs/event2.jpeg" class="d-block w-100 e-img" alt="event2">
+            <img src="../res/imgs/event2.jpeg" class="d-block w-100 e-img" alt="event2">
             <div class="carousel-caption top-0 mt-4 d-none d-md-block">
                 <h2 class="mt-5c fs-3 text-uppercase">Tagline</h2>
                 <h1 class="display-1 fw-bolder text-capitalize">Event Name</h1>
@@ -84,7 +84,7 @@
               </div>
         </div>
           <div class="carousel-item ev">
-            <img src="res/imgs/event2.jpeg" class="d-block w-100 e-img" alt="event3">
+            <img src="../res/imgs/event2.jpeg" class="d-block w-100 e-img" alt="event3">
             <div class="carousel-caption top-0 mt-4 d-none d-md-block">
                 <h2 class="mt-5c fs-3 text-uppercase">Tagline</h2>
                 <h1 class="display-1 fw-bolder text-capitalize">Event Name</h1>
@@ -317,7 +317,7 @@
       <footer>
         <div class="footer-bottom">
             <div class="logo">
-                <img src="res/imgs/navi-event-logo(3d).png" alt="Logo" class="footer-logo">
+                <img src="../res/imgs/navi-event-logo(3d).png" alt="Logo" class="footer-logo">
             </div>
             <p>© 2023 NavEnt. A Saint Louis University Company. All Rights Reserved. CS Slot Org ™</p>
         </div>
