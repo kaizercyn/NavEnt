@@ -11,14 +11,14 @@
   
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
 
-    <link rel="stylesheet" href="style/home.css">
+    <link rel="stylesheet" href="client/style/home.css">
 </head>
   <body>
 
     <header>
         <div class="d-flex align-items-center justify-content-between">
             <div class="logo">
-                <img src="../res/imgs/navi-event-logo(3d).png" alt="Logo">
+                <img src="res/imgs/navi-event-logo(3d).png" alt="Logo">
             </div>
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 <button class="btn me-md-2 text-light h-btn" type="button"><a href="user_login.html">Login</a></button>
