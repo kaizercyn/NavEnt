@@ -21,7 +21,7 @@
                 <img src="res/imgs/navi-event-logo(3d).png" alt="Logo">
             </div>
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <button class="btn me-md-2 text-light h-btn" type="button"><a href="user_login.html">Login</a></button>
+                <button class="btn me-md-2 text-light h-btn" type="button"><a href="user_login.php">Login</a></button>
                 <button class="btn text-light h-btn" type="button"><a href="user_signup.html">Signup</a></button>
               </div>
         </div>
