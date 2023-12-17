@@ -1,8 +1,8 @@
 <?php
 require("dbconnection.php");
+include("loginfunctions.php");
+
 session_start();
-
-
 if (isset($_POST['username'])){
     $username = $_POST['username'];
     $password = $_POST['password'];
@@ -15,11 +15,11 @@ if (isset($_POST['username'])){
         $firstName = $row['First_Name'];
         $_SESSION['username'] = $username;
         echo "logged in as: $firstName";
+        header("Location: ../index.php");
     }else{
         echo "wrong login credentials";
     }
     $st->close();
 }
-header('Location: ../index.php');
 exit();
 ?>
