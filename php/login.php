@@ -1,5 +1,6 @@
 <?php
 require("dbconnection.php");
+include("loginfunctions.php");
 session_start();
 
 
