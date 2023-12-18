@@ -26,6 +26,7 @@
               </div>
         </div>
     </header>
+
    
     <nav>
         <div class="nav-links"> 
@@ -39,6 +40,22 @@
                 <i class="fas fa-search"></i>
             </a>
     </nav>
+    <?php
+    require("php/dbconnection.php");
+    $public = 1;
+    $open = 1;
+    $live = 1;
+    $st = $conn -> prepare("SELECT * FROM EVENTS WHERE isPublic=? and isOpen=? and isLive=?;");
+    $st-> bind_param('iii', $public, $open, $live);
+    $st-> execute();
+    $result= $st->get_result();
+    if ($result->num_rows !=0){
+    $events = $result->fetch_all(MYSQLI_ASSOC);
+    }
+    $st -> close();
+    $result -> close();      
+ ?>  
+
 
     <div id="featured-events" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
@@ -46,59 +63,42 @@
             <button type="button" data-bs-target="#featured-events" data-bs-slide-to="1" aria-label="Slide 2"></button>
             <button type="button" data-bs-target="#featured-events" data-bs-slide-to="2" aria-label="Slide 3"></button>
           </div>
-          
         <div class="carousel-inner">
-            <?php
-                require("php/dbconnection.php");
-                $public = 1;
-                $open = 1;
-                $live = 1;
-                $st = $conn -> prepare("SELECT * FROM EVENTS WHERE isPublic=? and isOpen=? and isLive=?;");
-                $st-> bind_param('iii', $public, $open, $live);
-                $st-> execute();
-                $result= $st->get_result();
-                if ($result->num_rows !=0){
-                  $counter = 0;
-                $events = $result->fetch_all(MYSQLI_ASSOC);
-                    foreach ($events as $moment){ 
-                      $name = $moment['Event_Name'];
-                      $tagline = $moment['Event_Tagline'];
-                      $name1 = $moment['Event_Name'];
-                      $tagline1 = $moment['Event_Tagline'];
-                      $name2 = $moment['Event_Name'];
-                      $tagline2 = $moment['Event_Tagline'];
-                      
-                }
-             }
-             $st -> close();
-             $result -> close();
-            ?>
+          <?php
+          $moment = array_shift( $events );
+          ?>
           <div class="carousel-item active ev">
             <img src="res/imgs/event1.jpeg" class="d-block w-100 e-img" alt="event1">
             <div class="carousel-caption top-0 mt-4 d-none d-md-block">
-                <h2 class="mt-5c fs-3 text-uppercase"><?php echo $tagline;?></h2>
-                <h1 class="display-1 fw-bolder text-capitalize"><?php echo $name; ?></h1>
+                <h2 class="mt-5c fs-3 text-uppercase"><?php echo $moment['Event_Tagline'];?></h2>
+                <h1 class="display-1 fw-bolder text-capitalize"><?php echo $moment['Event_Name']; ?></h1>
                 <button class="btn btn-primary px-4 py-2 fs-5 mt-5">Read More</button>
               </div>
-        </div>
+              </div>
           <div class="carousel-item ev">
+            <?php
+            $moment1 = array_shift( $events );
+            ?>
             <img src="res/imgs/event2.jpeg" class="d-block w-100 e-img" alt="event2">
             <div class="carousel-caption top-0 mt-4 d-none d-md-block">
-                <h2 class="mt-5c fs-3 text-uppercase"><?php echo $tagline1;?></h2>
-                <h1 class="display-1 fw-bolder text-capitalize"><?php echo $name1;?></h1>
+                <h2 class="mt-5c fs-3 text-uppercase"><?php echo $moment1['Event_Tagline'];?></h2>
+                <h1 class="display-1 fw-bolder text-capitalize"><?php echo $moment1['Event_Name'];?></h1>
                 <button class="btn btn-primary px-4 py-2 fs-5 mt-5">Read More</button>
               </div>
-        </div>
+        <  /div>
           <div class="carousel-item ev">
+            <?php
+            $moment2 = array_shift( $events );
+            ?>
             <img src="res/imgs/event2.jpeg" class="d-block w-100 e-img" alt="event3">
             <div class="carousel-caption top-0 mt-4 d-none d-md-block">
-                <h2 class="mt-5c fs-3 text-uppercase"><?php echo $tagline2;?></h2>
-                <h1 class="display-1 fw-bolder text-capitalize"><?php echo $name2;?></h1>
+                <h2 class="mt-5c fs-3 text-uppercase"><?php echo $moment2['Event_Tagline'];?></h2>
+                <h1 class="display-1 fw-bolder text-capitalize"><?php echo $moment2['Event_Name'];?></h1>
                 <button class="btn btn-primary px-4 py-2 fs-5 mt-5">Read More</button>
               </div>
         </div>
-        </div>
-
+      </div>
+     
         <button class="carousel-control-prev" type="button" data-bs-target="#featured-events" data-bs-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Previous</span>
@@ -108,7 +108,7 @@
           <span class="visually-hidden">Next</span>
         </button>
       </div>
-      
+    
       <div class="container events-container">
     <section id="packages" class="pt-3 pb-3">
         <h1 class="text-center my-3">Latest Events</h1>
