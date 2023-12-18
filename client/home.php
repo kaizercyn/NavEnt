@@ -21,8 +21,8 @@
                 <img src="res/imgs/navi-event-logo(3d).png" alt="Logo">
             </div>
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <button class="btn me-md-2 text-light h-btn" type="button"><a href="user_login.html">Login</a></button>
-                <button class="btn text-light h-btn" type="button"><a href="user_signup.html">Signup</a></button>
+                <button class="btn me-md-2 text-light h-btn" type="button"><a href="client/user_login.php">Login</a></button>
+                <button class="btn text-light h-btn" type="button"><a href="client/user_signup.html">Signup</a></button>
               </div>
         </div>
     </header>
@@ -49,45 +49,51 @@
           
         <div class="carousel-inner">
             <?php
-                require("../php/dbconnection.php");
+                require("php/dbconnection.php");
                 $public = 1;
                 $open = 1;
-                $st = $conn -> prepare("SELECT * FROM EVENTS WHERE isPublic=? and isOpen=?;");
-                $st-> bind_param('ii', $public, $open);
+                $live = 1;
+                $st = $conn -> prepare("SELECT * FROM EVENTS WHERE isPublic=? and isOpen=? and isLive=?;");
+                $st-> bind_param('iii', $public, $open, $live);
                 $st-> execute();
                 $result= $st->get_result();
                 if ($result->num_rows !=0){
-                    foreach($result as $row){
-                        $rows [] = $row;
-                    }  
+                  $counter = 0;
+                $events = $result->fetch_all(MYSQLI_ASSOC);
+                    foreach ($events as $moment){ 
+                      $name = $moment['Event_Name'];
+                      $tagline = $moment['Event_Tagline'];
+                      $name1 = $moment['Event_Name'];
+                      $tagline1 = $moment['Event_Tagline'];
+                      $name2 = $moment['Event_Name'];
+                      $tagline2 = $moment['Event_Tagline'];
+                      
                 }
-
-                $st -> close();
-                $result -> close();
-                
-
+             }
+             $st -> close();
+             $result -> close();
             ?>
           <div class="carousel-item active ev">
-            <img src="../res/imgs/event1.jpeg" class="d-block w-100 e-img" alt="event1">
+            <img src="res/imgs/event1.jpeg" class="d-block w-100 e-img" alt="event1">
             <div class="carousel-caption top-0 mt-4 d-none d-md-block">
-                <h2 class="mt-5c fs-3 text-uppercase"></h2>
-                <h1 class="display-1 fw-bolder text-capitalize">Event Name</h1>
+                <h2 class="mt-5c fs-3 text-uppercase"><?php echo $tagline;?></h2>
+                <h1 class="display-1 fw-bolder text-capitalize"><?php echo $name; ?></h1>
                 <button class="btn btn-primary px-4 py-2 fs-5 mt-5">Read More</button>
               </div>
         </div>
           <div class="carousel-item ev">
-            <img src="../res/imgs/event2.jpeg" class="d-block w-100 e-img" alt="event2">
+            <img src="res/imgs/event2.jpeg" class="d-block w-100 e-img" alt="event2">
             <div class="carousel-caption top-0 mt-4 d-none d-md-block">
-                <h2 class="mt-5c fs-3 text-uppercase">Tagline</h2>
-                <h1 class="display-1 fw-bolder text-capitalize">Event Name</h1>
+                <h2 class="mt-5c fs-3 text-uppercase"><?php echo $tagline1;?></h2>
+                <h1 class="display-1 fw-bolder text-capitalize"><?php echo $name1;?></h1>
                 <button class="btn btn-primary px-4 py-2 fs-5 mt-5">Read More</button>
               </div>
         </div>
           <div class="carousel-item ev">
-            <img src="../res/imgs/event2.jpeg" class="d-block w-100 e-img" alt="event3">
+            <img src="res/imgs/event2.jpeg" class="d-block w-100 e-img" alt="event3">
             <div class="carousel-caption top-0 mt-4 d-none d-md-block">
-                <h2 class="mt-5c fs-3 text-uppercase">Tagline</h2>
-                <h1 class="display-1 fw-bolder text-capitalize">Event Name</h1>
+                <h2 class="mt-5c fs-3 text-uppercase"><?php echo $tagline2;?></h2>
+                <h1 class="display-1 fw-bolder text-capitalize"><?php echo $name2;?></h1>
                 <button class="btn btn-primary px-4 py-2 fs-5 mt-5">Read More</button>
               </div>
         </div>
@@ -317,7 +323,7 @@
       <footer>
         <div class="footer-bottom">
             <div class="logo">
-                <img src="../res/imgs/navi-event-logo(3d).png" alt="Logo" class="footer-logo">
+                <img src="res/imgs/navi-event-logo(3d).png" alt="Logo" class="footer-logo">
             </div>
             <p>© 2023 NavEnt. A Saint Louis University Company. All Rights Reserved. CS Slot Org ™</p>
         </div>
