@@ -31,13 +31,13 @@ $userAccount = $_SESSION["username"];
                   <div class="profile-icon">
                     <i class="bi bi-person"></i>
                 </div>
-                <span class="username"><?php echo $_SESSION["username"] ?></span>
+                <span class="username"><?php echo $userAccount ?></span>
                 </div>
 
             </div>
           </button>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="account_details.html">Account Details</a></li>
+            <li><a class="dropdown-item" href="client/account_details.html">Account Details</a></li>
             <li><a class="dropdown-item" href="bookmarked_events.html">Bookmarks</a></li>
             <li><a class="dropdown-item" href="event_history.html">Event History</a></li>
             <li><a class="dropdown-item" href="pending_evaluation.html">Pending Evaluations</a></li>
@@ -53,7 +53,7 @@ $userAccount = $_SESSION["username"];
 
     <nav>
         <div class="nav-links">
-            <a href="home.php">HOME</a>
+            <a href="index.php">HOME</a>
             <a href="announcement.html">ANNOUNCEMENTS</a>
         </div>
         <div class="box">
@@ -63,6 +63,20 @@ $userAccount = $_SESSION["username"];
                 <i class="fas fa-search"></i>
             </a>
     </nav>
+    <?php
+    require("php/dbconnection.php");
+    $public = 1;
+    $open = 1;
+    $st = $conn -> prepare("SELECT * FROM EVENTS WHERE isPublic=? and isOpen=?");
+    $st-> bind_param('ii', $public, $open);
+    $st-> execute();
+    $result= $st->get_result();
+    if ($result->num_rows !=0){
+    $events = $result->fetch_all(MYSQLI_ASSOC);
+    }
+    $st -> close();
+    $result -> close();      
+ ?>  
 
     <div id="featured-events" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
@@ -73,26 +87,35 @@ $userAccount = $_SESSION["username"];
           
         <div class="carousel-inner">
           <div class="carousel-item active ev">
+            <?php
+            $event = array_shift($events);
+            ?>
             <img src="res/imgs/event1.jpeg" class="d-block w-100 e-img" alt="event1">
             <div class="carousel-caption top-0 mt-4 d-none d-md-block">
-                <h2 class="mt-5c fs-3 text-uppercase">Tagline</h2>
-                <h1 class="display-1 fw-bolder text-capitalize">Event Name</h1>
+                <h2 class="mt-5c fs-3 text-uppercase"><?php echo $event['Event_Tagline']; ?></h2>
+                <h1 class="display-1 fw-bolder text-capitalize"><?php echo $event['Event_Name']; ?></h1>
                 <button class="btn btn-primary px-4 py-2 fs-5 mt-5">Read More</button>
               </div>
         </div>
           <div class="carousel-item ev">
+            <?php 
+            $event1 = array_shift($events);
+            ?>
             <img src="res/imgs/event2.jpeg" class="d-block w-100 e-img" alt="event2">
             <div class="carousel-caption top-0 mt-4 d-none d-md-block">
-                <h2 class="mt-5c fs-3 text-uppercase">Tagline</h2>
-                <h1 class="display-1 fw-bolder text-capitalize">Event Name</h1>
+                <h2 class="mt-5c fs-3 text-uppercase"><?php echo $event1['Event_Tagline']; ?></h2>
+                <h1 class="display-1 fw-bolder text-capitalize"><?php echo $event1['Event_Name']; ?></h1>
                 <button class="btn btn-primary px-4 py-2 fs-5 mt-5">Read More</button>
               </div>
         </div>
           <div class="carousel-item ev">
+            <?php
+            $event2 = array_shift($events);
+            ?>
             <img src="res/imgs/event3.jpeg" class="d-block w-100 e-img" alt="event3">
             <div class="carousel-caption top-0 mt-4 d-none d-md-block">
-                <h2 class="mt-5c fs-3 text-uppercase">Tagline</h2>
-                <h1 class="display-1 fw-bolder text-capitalize">Event Name</h1>
+                <h2 class="mt-5c fs-3 text-uppercase"><?php echo $event2['Event_Tagline']; ?></h2>
+                <h1 class="display-1 fw-bolder text-capitalize"><?php echo $event2['Event_Name']; ?></h1>
                 <button class="btn btn-primary px-4 py-2 fs-5 mt-5">Read More</button>
               </div>
         </div>
