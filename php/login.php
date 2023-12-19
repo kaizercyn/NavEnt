@@ -16,6 +16,7 @@ if (isset($_POST['username'])){
         $lastName = $row['Last_Name'];
         $email = $row['Email_Address'];
         $userId = $row['User_ID'];
+        $password = $row['Password'];
         $_SESSION['username'] = $firstName . " " . $lastName;
         $_SESSION['userId'] = $userId;
         $_SESSION['email'] = $email;

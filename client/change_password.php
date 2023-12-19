@@ -72,7 +72,7 @@ session_start();
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Change Password</h5>
-                        <form action="changepasswordfunctions.php" method="POST">
+                        <form action="php/changepassword.php" method="POST">
                             <div class="mb-3">
                                 <label for="currentPassword" class="form-label">Current Password</label>
                                 <input type="password" class="form-control" id="currentPassword" required>
@@ -85,7 +85,7 @@ session_start();
                                 <label for="confirmNewPassword" class="form-label">Confirm New Password</label>
                                 <input type="password" class="form-control" id="confirmNewPassword" required>
                             </div>
-                            <button type="submit" class="btn btn-primary">Change Password</button>
+                            <button type="button" class="btn btn-primary">Change Password</button>
                         </form>
                     </div>
                 </div>
