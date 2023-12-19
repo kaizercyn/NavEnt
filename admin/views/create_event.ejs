@@ -9,7 +9,7 @@
   
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
 
-    <link rel="stylesheet" href="/admin/public/css/create_event.css">
+    <link rel="stylesheet" href="/create_event.css">
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
@@ -55,12 +55,12 @@
     
       <!-- Event Name -->
       <label for="eventName" class="form-label">Event Name</label>
-      <input type="text" class="form-control">
+      <input id="eventName" type="text" class="form-control">
 
       <!-- Tagline -->
       <div class="mt-3 col-12">
         <label for="tagline" class="form-label">Tagline</label>
-        <input type="text" class="form-control">
+        <input id="tagline" type="text" class="form-control">
       </div>
     
       <!-- Description -->
@@ -198,11 +198,11 @@
     
       <h4 class="mb-3">Publish Event</h4>
       <div class="form-check">
-        <input type="radio" name="pub-ev" class="form-check-input" id="pub">
+        <input type="radio" name="isPub" class="form-check-input" id="true">
         <label for="pub">Public Event</label>
       </div>
       <div class="form-check">
-        <input type="radio" name="pub-ev" class="form-check-input" id="pub">
+        <input type="radio" name="isPub" class="form-check-input" id="false">
         <label for="priv">Private Event</label>
       </div>
       <div class="form-check mt-3">
@@ -222,105 +222,6 @@
         </div>
       </div>
       </div>
-
-    <script>
-      $(document).ready(function () {
-        $('input[name="eventType"]').change(function () {
-          // Hide all sections
-          $('#oneTimeSection, #ampmSection, #seriesSection').hide();
-    
-          // Show the relevant section based on the selected event type
-          if ($('#oneTime').prop('checked')) {
-            $('#oneTimeSection').show();
-          } else if ($('#ampm').prop('checked')) {
-            $('#ampmSection').show();
-          } else if ($('#series').prop('checked')) {
-            $('#seriesSection').show();
-          }
-        });
-      });
-    </script>
-
-<script>
-  // Function to generate series-specific fields based on the number entered
-  function generateSeriesFields() {
-    // Get the series number entered by the user
-    var seriesNumber = document.getElementById('seriesNumber').value;
-
-    // Get the container where the series fields will be added
-    var seriesContainer = document.getElementById('seriesFieldsContainer');
-    
-    // Clear any existing fields
-    seriesContainer.innerHTML = '';
-
-    // Generate new input fields based on the series number
-    for (var i = 1; i <= seriesNumber; i++) {
-      // Create container for each series with flex display
-      var seriesContainerDiv = document.createElement('div');
-      seriesContainerDiv.style.display = 'flex';
-      seriesContainerDiv.style.gap = '10px';
-
-      var startContainerDiv = document.createElement('div');
-      startContainerDiv.style.flex = '1';
-
-      var startLabel = document.createElement('label');
-      startLabel.innerHTML = 'Start Time for Series ' + i;
-
-      var startInput = document.createElement('input');
-      startInput.type = 'time';
-      startInput.className = 'form-control';
-
-      var endContainerDiv = document.createElement('div');
-      endContainerDiv.style.flex = '1';
-
-      var endLabel = document.createElement('label');
-      endLabel.innerHTML = 'End Time for Series ' + i;
-
-      var endInput = document.createElement('input');
-      endInput.type = 'time';
-      endInput.className = 'form-control';
-
-      // Add the new fields to the container
-      startContainerDiv.appendChild(startLabel);
-      startContainerDiv.appendChild(startInput);
-      endContainerDiv.appendChild(endLabel);
-      endContainerDiv.appendChild(endInput);
-
-      // Add start and end containers to the series container
-      seriesContainerDiv.appendChild(startContainerDiv);
-      seriesContainerDiv.appendChild(endContainerDiv);
-
-      // Add the series container to the main container
-      seriesContainer.appendChild(seriesContainerDiv);
-    }
-  }
-
-  // Attach the function to the input event of the seriesNumber field
-  document.getElementById('seriesNumber').addEventListener('input', generateSeriesFields);
-</script>
-
-<script>
-  $(document).ready(function () {
-    // Handle checkbox changes
-    $('input[type="checkbox"]').change(function () {
-      if ($('#reg-link').prop('checked')) {
-        // Show the input field for registration link
-        $('#registrationLinkSection').show();
-      } else {
-        // Hide the section for registration link if the checkbox is unchecked
-        $('#registrationLinkSection').hide();
-      }
-
-      if ($('#eval-link').prop('checked')) {
-        // Show the input field for evaluation link
-        $('#evaluationLinkSection').show();
-      } else {
-        // Hide the section for evaluation link if the checkbox is unchecked
-        $('#evaluationLinkSection').hide();
-      }
-    });
-  });
-</script>
     
     <footer>
       <div class="footer-bottom">
@@ -333,6 +234,6 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-  <script src="/create_event.ejs"></script>
+  <script src="/create_event.js"></script>
   </body>
 </html>

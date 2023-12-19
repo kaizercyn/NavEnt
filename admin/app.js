@@ -185,4 +185,8 @@ app.get('/logout', (request, response) => {
     response.redirect('/')
 })
 
+app.post('/addEvent', (request, response) => {
+    
+})
+
 app.listen(process.env.PORT, () => console.log('app is running'))

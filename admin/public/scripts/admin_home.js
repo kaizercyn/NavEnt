@@ -64,7 +64,7 @@ searchBtn.addEventListener('click', function(e) {
 
 newEventBtn.addEventListener('click', function(e) {
     e.preventDefault()
-    console.log('attendance clicked')
+    console.log('new clicked')
     window.location.href = '/create_event'
 })
 
