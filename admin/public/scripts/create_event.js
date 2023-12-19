@@ -42,15 +42,14 @@ $(document).ready(function () {
 $(document).ready(function () {
     $('input[type="checkbox"]').change(function () {
         if ($('#reg-link').prop('checked')) {
-        $('#registrationLinkSection').show();
+            $('#registrationLinkSection').show();
+            isOpen = true
+        console.log('Open for Registration checkbox is checked');
         } else {
-        $('#registrationLinkSection').hide();
-        }
-
-        if ($('#eval-link').prop('checked')) {
-        $('#evaluationLinkSection').show();
-        } else {
-        $('#evaluationLinkSection').hide();
+            $('#registrationLinkSection').hide();
+            isOpen = false
+            registrationLinkField.value = ''
+            console.log('Open for Registration checkbox is not checked');
         }
     });
 });
@@ -137,15 +136,6 @@ privateRadioButton.addEventListener('change', function() {
     }
 });
 
-registrationCheckbox.addEventListener('change', function () {
-    if (this.checked) {
-        isOpen = true
-        console.log('Open for Registration checkbox is checked');
-    } else {
-        isOpen = false
-        console.log('Open for Registration checkbox is not checked');
-    }
-});
 
 function getValidDate(dateString) {
     const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
@@ -175,6 +165,7 @@ saveDraftBtn.addEventListener('click', function(e) {
             eventStartDate = getValidDate(oneTimeDateField.value);
             eventEndDate = eventStartDate;
             eventType = "OneTime";
+            
             break;
         case "ampm":
             eventStartDate = getValidDate(amPmDateField.value);
@@ -196,7 +187,8 @@ saveDraftBtn.addEventListener('click', function(e) {
         return;
     }
 
-    const requestBody = {
+    if(registrationLinkField.value.trim() !== null) {var regisLink = registrationLinkField.value.trim()}
+    const eventBody = {
         name : eventNameField.value.trim(),
         tagline : eventTagField.value.trim(),
         desc : eventDescField.value.trim(),
@@ -205,11 +197,17 @@ saveDraftBtn.addEventListener('click', function(e) {
         type : eventType,
         open : isOpen,
         public : isPublic,
-        live : false
+        live : false,
+        regis : regisLink,
+        eval: evaluationLinkField.value.trim(),
     }
 
+    const oneTimeBody = {}
+    const amPmBody = {}
+    const seriesBody = {}
 
-    console.log(JSON.stringify(requestBody))
+
+    console.log(JSON.stringify(eventBody))
     // fetch('/addEvent', {
     //     headers: {
     //         'Content-type': 'application/json'
