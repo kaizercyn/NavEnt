@@ -186,96 +186,75 @@ nav {
     color: #71999B;
 }
 
-.imgcov {
-    background-size: cover;
-    background-position: center;
-    min-height: 60vh;
-    position: relative;
-    color: #F1F1F1;
-    text-shadow: 2px 2px 2px rgba(0, 0, 0, .2);
+.cb-icon {
+    font-size: 50px;
+    color:#71999B;
 }
 
-.bookmark-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 50px;
-    background: none;
-    border: none;
-    color: #FFF;
-    cursor: pointer;
+.container {
+    padding: 8px;
+}
+
+table {
+    border: 1px solid #ddd;
+    border-collapse: collapse;
+}
+
+.thead-light {
+    font-family: 'Curiosa ExtraBold', sans-serif;
+}
+
+tbody td {
+    font-family: 'Curiosa ExtraLight', sans-serif;
 }
 
 h1 {
-    font-family: 'Demine', sans-serif;
-    font-size: 4rem;
-    margin-bottom: -3px;
+    font-family: 'Demine', 'San Serif';
+    color: #E4960E;
 }
 
 h2 {
-    font-family: 'Curiosa ExtraBold', 'San Serif';
-    color: #000e1e;
-}
-
-p {
-    font-family: 'Curiosa ExtraLight', 'San Serif';
+    font-family: 'Demine', sans-serif;
+    color: #153437;
+    font-size: 3rem;
+    margin-bottom: -5px;
 }
 
 h3 {
-    font-family: 'CAZentrum Regular', 'San Serif';
-    margin: 0;
+    font-family: 'CAZentrum Condensed Light', sans-serif;
 }
 
-h5 {
-    font-family: 'Curiosa ExtraLight', 'San Serif';
-    margin-bottom: -8px;
+h4 {
+    font-family: 'CAZentrum Regular', sans-serif;
+    color: #1C3947;
 }
 
-label {
-    font-family: 'Curiosa ExtraLight', 'San Serif';
-    color: #000e1e;
+p {
+    font-family: 'Curiosa ExtraLight', sans-serif;
 }
 
-input {
-    font-family: 'Curiosa ExtraLight', 'San Serif';
-    color: #000e1e;
-}
-
-.color-overlay {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, .4);
-}
-
-@media (max-width: 768px) {
-    .imgcov {
-        min-height: 30vh;
-    }
-    h1 {
-        font-size: calc(1.525rem + 3.3vw);
-    }
-}
-
-.reg-btn .btn {
+.date {
     font-family: 'CAZentrum Medium', sans-serif;
-    background-color: #E4960E;
-    color: #fff;
-    font-size: 1.25rem;
-    border-color: transparent;
+    color: #000e1e;
 }
 
-.reg-btn .btn:hover {
-    background-color: #b5770d;
+.btn-scan-qr {
+    font-family: 'CAZentrum Medium', sans serif;
+    background-color: #E4960E; 
+    color: #fff; 
+    border-color: transparent; 
+  }
+  
+.btn-scan-qr:hover {
+    background-color: #ce870e; 
     border-color: transparent;
 }
-
-.reg-tbn .btn:active,
-.reg-btn .btn:focus {
-    background-color: transparent !important;
-    border-color: #71999B !important;
+  
+.btn-scan-qr:active {
+    background-color: transparent !important; 
+    border-color: #71999B !important; 
     color: #71999B !important;
-}
+  }
 
 footer {
     position: relative;
