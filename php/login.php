@@ -13,8 +13,14 @@ if (isset($_POST['username'])){
     if ($result->num_rows !=0){
         $row = $result->fetch_assoc();  
         $firstName = $row['First_Name'];
-        $_SESSION['username'] = $username;
-        echo "logged in as: $firstName";
+        $lastName = $row['Last_Name'];
+        $email = $row['Email_Address'];
+        $userId = $row['User_ID'];
+        $_SESSION['username'] = $firstName . " " . $lastName;
+        $_SESSION['userId'] = $userId;
+        $_SESSION['email'] = $email;
+        //echo "logged in as: $firstName";
+        //echo $_SESSION['email'] ."" . $_SESSION['userId'];
         header("Location: ../index.php");
     }else{
         echo "wrong login credentials";

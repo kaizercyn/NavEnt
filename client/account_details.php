@@ -1,15 +1,18 @@
+<?php
+session_start();
+?>
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Change Password</title>
+    <title>Account Details</title>
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
 
-    <link rel="stylesheet" href="style/change_password.css">
+    <link rel="stylesheet" href="style/account_details.css">
 </head>
   <body>
 
@@ -27,7 +30,7 @@
                       <div class="profile-icon">
                         <i class="bi bi-person"></i>
                     </div>
-                    <span class="username">John Doe</span>
+                    <span class="username"><?php echo $_SESSION['username']; ?> </span>
                     
                     </div>
             </div>
@@ -40,7 +43,7 @@
             <li><a class="dropdown-item" href="qr_code.html">QR Code</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#">
-                <form action="logout.php" method="post"><button type="submit" class="dropdown-item" onclick="return confirm('Are you sure you want to logout?')">Logout</button></form></a></li>
+              <form action="../php/logoutfunctions.php" method="post"><button type="submit" class="dropdown-item" onclick="return confirm('Are you sure you want to logout?')">Logout</button></form></a></li>
           </ul>
         </div>
       </div>
@@ -49,47 +52,36 @@
 
     <nav>
         <div class="nav-links">
-            <a href="home.php">HOME</a>
+            <a href="../index.php">HOME</a>
         </div>
     </nav>
 
     <div class="container mt-4">
         <div class="row">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            <i class="bi bi-person"></i> <a href="account_details.html">Account Details</a>
-                        </h5>
-                    </div>
-                </div>
+          
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <i class="bi bi-lock-fill"></i> <a href="change_password.php">Change Password</a>
+                </h5>
+              </div>
             </div>
-    
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Change Password</h5>
-                        <form>
-                            <div class="mb-3">
-                                <label for="currentPassword" class="form-label">Current Password</label>
-                                <input type="password" class="form-control" id="currentPassword" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="newPassword" class="form-label">New Password</label>
-                                <input type="password" class="form-control" id="newPassword" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="confirmNewPassword" class="form-label">Confirm New Password</label>
-                                <input type="password" class="form-control" id="confirmNewPassword" required>
-                            </div>
-                            <button type="button" class="btn btn-primary">Change Password</button>
-                        </form>
-                    </div>
-                </div>
+          </div>
+      
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Account Details</h5>
+      
+                <p><strong>Username:</strong><?php echo $_SESSION['username']; ?></p>
+                <p><strong>ID Number:</strong><?php echo $_SESSION['userId']; ?></p>
+                <p><strong>Email:</strong><?php echo $_SESSION['email']; ?></p>
+              </div>
             </div>
+          </div>
         </div>
-    </div>
-
+      </div>
 
     <footer>
         <div class="footer-bottom">

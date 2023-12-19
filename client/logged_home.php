@@ -37,11 +37,11 @@ $userAccount = $_SESSION["username"];
             </div>
           </button>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="client/account_details.html">Account Details</a></li>
-            <li><a class="dropdown-item" href="bookmarked_events.html">Bookmarks</a></li>
-            <li><a class="dropdown-item" href="event_history.html">Event History</a></li>
-            <li><a class="dropdown-item" href="pending_evaluation.html">Pending Evaluations</a></li>
-            <li><a class="dropdown-item" href="qr_code.html">QR Code</a></li>
+            <li><a class="dropdown-item" href="client/account_details.php">Account Details</a></li>
+            <li><a class="dropdown-item" href="client/bookmarked_events.html">Bookmarks</a></li>
+            <li><a class="dropdown-item" href="client/event_history.html">Event History</a></li>
+            <li><a class="dropdown-item" href="client/pending_evaluation.html">Pending Evaluations</a></li>
+            <li><a class="dropdown-item" href="client/qr_code.html">QR Code</a></li>
             <li><hr class="dropdown-divider"></li>
             <li>
             <form action="php\logoutfunctions.php" method="POST"><button type="submit" class="dropdown-item" onclick="return confirm('Are you sure you want to logout?')">Logout</button></form></li>
