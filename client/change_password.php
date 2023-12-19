@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -27,7 +30,7 @@
                       <div class="profile-icon">
                         <i class="bi bi-person"></i>
                     </div>
-                    <span class="username">John Doe</span>
+                    <span class="username"><?php echo $_SESSION['username']; ?></span>
                     
                     </div>
             </div>
@@ -40,7 +43,7 @@
             <li><a class="dropdown-item" href="qr_code.html">QR Code</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#">
-                <form action="logout.php" method="post"><button type="submit" class="dropdown-item" onclick="return confirm('Are you sure you want to logout?')">Logout</button></form></a></li>
+                <form action="php/logoutfunctions.php" method="post"><button type="submit" class="dropdown-item" onclick="return confirm('Are you sure you want to logout?')">Logout</button></form></a></li>
           </ul>
         </div>
       </div>
@@ -49,7 +52,7 @@
 
     <nav>
         <div class="nav-links">
-            <a href="home.php">HOME</a>
+            <a href="index.php">HOME</a>
         </div>
     </nav>
 
@@ -59,31 +62,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">
-                            <i class="bi bi-person"></i> <a href="account_details.html">Account Details</a>
-                        </h5>
-                    </div>
-                </div>
-    
-                <div class="card mt-3">
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            <i class="bi bi-gear"></i> <a href="#">Privacy Settings</a>
-                        </h5>
-                    </div>
-                </div>
-    
-                <div class="card mt-3">
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            <i class="bi bi-bell"></i> <a href="#">Notification Preferences</a>
-                        </h5>
-                    </div>
-                </div>
-    
-                <div class="card mt-3">
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            <i class="bi bi-trash"></i> <a href="#">Account Deactivation/Deletion</a>
+                            <i class="bi bi-person"></i> <a href="account_details.php">Account Details</a>
                         </h5>
                     </div>
                 </div>
@@ -93,7 +72,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Change Password</h5>
-                        <form>
+                        <form action="php/changepassword.php" method="POST">
                             <div class="mb-3">
                                 <label for="currentPassword" class="form-label">Current Password</label>
                                 <input type="password" class="form-control" id="currentPassword" required>

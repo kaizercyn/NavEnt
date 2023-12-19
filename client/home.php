@@ -21,11 +21,12 @@
                 <img src="res/imgs/navi-event-logo(3d).png" alt="Logo">
             </div>
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <button class="btn me-md-2 text-light h-btn" type="button"><a href="user_login.php">Login</a></button>
-                <button class="btn text-light h-btn" type="button"><a href="user_signup.html">Signup</a></button>
+                <button class="btn me-md-2 text-light h-btn" type="button"><a href="client/user_login.php">Login</a></button>
+                <button class="btn text-light h-btn" type="button"><a href="client/user_signup.html">Signup</a></button>
               </div>
         </div>
     </header>
+
    
     <nav>
         <div class="nav-links"> 
@@ -39,6 +40,22 @@
                 <i class="fas fa-search"></i>
             </a>
     </nav>
+    <?php
+    require("php/dbconnection.php");
+    $public = 1;
+    $open = 1;
+    $live = 1;
+    $st = $conn -> prepare("SELECT * FROM EVENTS WHERE isPublic=? and isOpen=? and isLive=?;");
+    $st-> bind_param('iii', $public, $open, $live);
+    $st-> execute();
+    $result= $st->get_result();
+    if ($result->num_rows !=0){
+    $events = $result->fetch_all(MYSQLI_ASSOC);
+    }
+    $st -> close();
+    $result -> close();      
+ ?>  
+
 
     <div id="featured-events" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
@@ -46,53 +63,42 @@
             <button type="button" data-bs-target="#featured-events" data-bs-slide-to="1" aria-label="Slide 2"></button>
             <button type="button" data-bs-target="#featured-events" data-bs-slide-to="2" aria-label="Slide 3"></button>
           </div>
-          
         <div class="carousel-inner">
-            <?php
-                require("../php/dbconnection.php");
-                $public = 1;
-                $open = 1;
-                $st = $conn -> prepare("SELECT * FROM EVENTS WHERE isPublic=? and isOpen=?;");
-                $st-> bind_param('ii', $public, $open);
-                $st-> execute();
-                $result= $st->get_result();
-                if ($result->num_rows !=0){
-                    foreach($result as $row){
-                        $rows [] = $row;
-                    }  
-                }
-
-                $st -> close();
-                $result -> close();
-                
-
-            ?>
+          <?php
+          $moment = array_shift( $events );
+          ?>
           <div class="carousel-item active ev">
-            <img src="../res/imgs/event1.jpeg" class="d-block w-100 e-img" alt="event1">
+            <img src="res/imgs/event1.jpeg" class="d-block w-100 e-img" alt="event1">
             <div class="carousel-caption top-0 mt-4 d-none d-md-block">
-                <h2 class="mt-5c fs-3 text-uppercase"></h2>
-                <h1 class="display-1 fw-bolder text-capitalize">Event Name</h1>
+                <h2 class="mt-5c fs-3 text-uppercase"><?php echo $moment['Event_Tagline'];?></h2>
+                <h1 class="display-1 fw-bolder text-capitalize"><?php echo $moment['Event_Name']; ?></h1>
                 <button class="btn btn-primary px-4 py-2 fs-5 mt-5">Read More</button>
               </div>
-        </div>
+              </div>
           <div class="carousel-item ev">
-            <img src="../res/imgs/event2.jpeg" class="d-block w-100 e-img" alt="event2">
+            <?php
+            $moment1 = array_shift( $events );
+            ?>
+            <img src="res/imgs/event2.jpeg" class="d-block w-100 e-img" alt="event2">
             <div class="carousel-caption top-0 mt-4 d-none d-md-block">
-                <h2 class="mt-5c fs-3 text-uppercase">Tagline</h2>
-                <h1 class="display-1 fw-bolder text-capitalize">Event Name</h1>
+                <h2 class="mt-5c fs-3 text-uppercase"><?php echo $moment1['Event_Tagline'];?></h2>
+                <h1 class="display-1 fw-bolder text-capitalize"><?php echo $moment1['Event_Name'];?></h1>
                 <button class="btn btn-primary px-4 py-2 fs-5 mt-5">Read More</button>
               </div>
-        </div>
+        <  /div>
           <div class="carousel-item ev">
-            <img src="../res/imgs/event2.jpeg" class="d-block w-100 e-img" alt="event3">
+            <?php
+            $moment2 = array_shift( $events );
+            ?>
+            <img src="res/imgs/event2.jpeg" class="d-block w-100 e-img" alt="event3">
             <div class="carousel-caption top-0 mt-4 d-none d-md-block">
-                <h2 class="mt-5c fs-3 text-uppercase">Tagline</h2>
-                <h1 class="display-1 fw-bolder text-capitalize">Event Name</h1>
+                <h2 class="mt-5c fs-3 text-uppercase"><?php echo $moment2['Event_Tagline'];?></h2>
+                <h1 class="display-1 fw-bolder text-capitalize"><?php echo $moment2['Event_Name'];?></h1>
                 <button class="btn btn-primary px-4 py-2 fs-5 mt-5">Read More</button>
               </div>
         </div>
-        </div>
-
+      </div>
+     
         <button class="carousel-control-prev" type="button" data-bs-target="#featured-events" data-bs-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Previous</span>
@@ -102,7 +108,7 @@
           <span class="visually-hidden">Next</span>
         </button>
       </div>
-      
+    
       <div class="container events-container">
     <section id="packages" class="pt-3 pb-3">
         <h1 class="text-center my-3">Latest Events</h1>
@@ -317,7 +323,7 @@
       <footer>
         <div class="footer-bottom">
             <div class="logo">
-                <img src="../res/imgs/navi-event-logo(3d).png" alt="Logo" class="footer-logo">
+                <img src="res/imgs/navi-event-logo(3d).png" alt="Logo" class="footer-logo">
             </div>
             <p>© 2023 NavEnt. A Saint Louis University Company. All Rights Reserved. CS Slot Org ™</p>
         </div>

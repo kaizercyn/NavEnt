@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -27,7 +30,7 @@
                       <div class="profile-icon">
                         <i class="bi bi-person"></i>
                     </div>
-                    <span class="username">John Doe</span>
+                    <span class="username"><?php echo $_SESSION['username']; ?> </span>
                     
                     </div>
             </div>
@@ -40,7 +43,7 @@
             <li><a class="dropdown-item" href="qr_code.html">QR Code</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#">
-              <form action="logout.php" method="post"><button type="submit" class="dropdown-item" onclick="return confirm('Are you sure you want to logout?')">Logout</button></form></a></li>
+              <form action="../php/logoutfunctions.php" method="post"><button type="submit" class="dropdown-item" onclick="return confirm('Are you sure you want to logout?')">Logout</button></form></a></li>
           </ul>
         </div>
       </div>
@@ -49,7 +52,7 @@
 
     <nav>
         <div class="nav-links">
-            <a href="home.php">HOME</a>
+            <a href="../index.php">HOME</a>
         </div>
     </nav>
 
@@ -60,31 +63,7 @@
             <div class="card">
               <div class="card-body">
                 <h5 class="card-title">
-                  <i class="bi bi-gear"></i> <a href="#">Privacy Settings</a>
-                </h5>
-              </div>
-            </div>
-      
-            <div class="card mt-3 mb-3">
-              <div class="card-body">
-                <h5 class="card-title">
-                  <i class="bi bi-lock-fill"></i> <a href="change_password.html">Change Password</a>
-                </h5>
-              </div>
-            </div>
-      
-            <div class="card mt-3 mb-3">
-              <div class="card-body">
-                <h5 class="card-title">
-                  <i class="bi bi-bell"></i> <a href="#">Notification Preferences</a>
-                </h5>
-              </div>
-            </div>
-      
-            <div class="card mt-3">
-              <div class="card-body">
-                <h5 class="card-title">
-                  <i class="bi bi-trash"></i> <a href="#">Account Deactivation/Deletion</a>
+                  <i class="bi bi-lock-fill"></i> <a href="change_password.php">Change Password</a>
                 </h5>
               </div>
             </div>
@@ -95,9 +74,9 @@
               <div class="card-body">
                 <h5 class="card-title">Account Details</h5>
       
-                <p><strong>Username:</strong> John Doe</p>
-                <p><strong>ID Number:</strong> 2221234  </p>
-                <p><strong>Email:</strong> your.email@example.com</p>
+                <p><strong>Username:</strong><?php echo $_SESSION['username']; ?></p>
+                <p><strong>ID Number:</strong><?php echo $_SESSION['userId']; ?></p>
+                <p><strong>Email:</strong><?php echo $_SESSION['email']; ?></p>
               </div>
             </div>
           </div>
