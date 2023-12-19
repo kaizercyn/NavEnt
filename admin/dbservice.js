@@ -57,7 +57,6 @@ class DbService {
                     if (err) {
                         reject(new Error(err.message))
                     } else {
-                    
                         resolve(results)
                     }
                 })
@@ -89,6 +88,28 @@ class DbService {
             console.log(error + ' Verification of admin credentials failed.')
         }
     }
+
+    async lastEventID() {
+        let response;
+        try {
+            response = await new Promise ((resolve, reject) => {
+                const query = "SELECT Event_ID FROM webdev.events ORDER BY Event_ID DESC LIMIT 1"
+                connection.query(query, (err, results) => {
+                    if (err) {
+                        reject(new Error(err.message))
+                    } else {
+                        resolve(results)
+                    }
+                })
+            }) 
+            console.log("Response: ", response)
+            return response
+        } catch (error) {
+            console.log(error + ' Fetching events from DB failed.')
+        }
+    }
+    
+    
     
 }
 

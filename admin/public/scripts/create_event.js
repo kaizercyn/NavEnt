@@ -13,6 +13,8 @@ const endAMField = document.querySelector('.form-control#endAM')
 const startPMField = document.querySelector('.form-control#startPM')
 const endPMField = document.querySelector('.form-control#endPM')
 const seriesNumberField = document.querySelector('.form-control#seriesNumber')
+const eventImgForm = document.getElementById('uploadForm')
+const uploadBtn = document.querySelector('.button-upload')
 const publicRadioButton = document.getElementById('true');
 const privateRadioButton = document.getElementById('false');
 const registrationLinkField = document.querySelector('.form-control#registrationLink')
@@ -23,7 +25,7 @@ const registrationCheckbox = document.getElementById('reg-open')
 var selectedEventType = ''
 var isPublic = ''
 var isOpen = ''
-
+var hasUploaded = ''
 document.getElementById('seriesNumber').addEventListener('input', generateSeriesFields);
 
 $(document).ready(function () {
@@ -155,6 +157,11 @@ function getValidDate(dateString) {
     return null; // Invalid date
 }
 
+eventImgForm.addEventListener('submit', async function(e) {
+    uploadBtn.disabled = true;
+    uploadBtn.innerHTML = "File uploaded"
+})
+
 saveDraftBtn.addEventListener('click', function(e) {
     let eventStartDate;
     let eventEndDate;
@@ -165,7 +172,7 @@ saveDraftBtn.addEventListener('click', function(e) {
             eventStartDate = getValidDate(oneTimeDateField.value);
             eventEndDate = eventStartDate;
             eventType = "OneTime";
-            
+
             break;
         case "ampm":
             eventStartDate = getValidDate(amPmDateField.value);

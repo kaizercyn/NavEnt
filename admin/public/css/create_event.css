@@ -189,6 +189,31 @@ p {
     color: #000e1e !important; 
   }
 
+  .button-upload {
+    font-family: 'CAZentrum Medium', sans serif;
+    background-color: #71999B; 
+    color: #fff;
+    font-size: 1.25rem;
+    border-color: transparent; 
+  }
+  
+  .button-upload:hover {
+    background-color: #4d6769; 
+    border-color: transparent;
+  }
+  
+  .button-upload:active {
+    background-color: transparent !important;
+    border-color: #000e1e !important; 
+    color: #000e1e !important; 
+  }
+
+  .button-upload:disabled {
+    background-color: transparent;
+    border-color: #000e1e !important; 
+    color: #000e1e !important; 
+  }
+
 footer {
     position: relative;
     width: 100%;

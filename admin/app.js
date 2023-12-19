@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const multer = require('multer');
 const session = require('express-session')
 const cors = require('cors');
 const dotenv = require('dotenv');
@@ -9,6 +10,18 @@ dotenv.config();
 const dbService = require('./dbservice');
 const { request } = require('http');
 
+const storage = multer.diskStorage({
+    destination: (request, file, cb) => {
+        cb(null, './uploads')
+    },
+    filename: async (request, file, cb) => {
+        console.log(file)
+        const fileName = await createFileName();
+        cb(null, fileName + path.extname(file.originalname));
+    }
+});
+
+const upload = multer({ storage: storage })
 
 app.use(cors())
 app.use(express.json())
@@ -22,6 +35,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/font', express.static(path.join(__dirname, 'public/css/font')));
 
 app.use('/res', express.static(path.join(__dirname, 'public/css/res')));
+
+app.use('uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.set('views', path.join(__dirname, 'views'));
 
@@ -188,5 +203,32 @@ app.get('/logout', (request, response) => {
 app.post('/addEvent', (request, response) => {
     
 })
+
+app.post('/upload', upload.single("eventImage"), (req, res) => {
+      res.send('File uploaded');
+      //const filePath = req.file.path;
+});
+
+async function createFileName () {
+    try {
+        const db = dbService.getDbServiceInstance();
+        const results = await db.lastEventID();
+        console.log("Create filename", results);
+
+        if (results && results.length > 0) {
+            const eventId = parseInt(results[0].Event_ID, 10);
+            if (!isNaN(eventId)) {
+                console.log("Response: ", eventId);
+                return `${eventId + 1}`;
+            }
+        }
+
+        // Default case if there is an issue getting the event ID
+        return "defaultFileName";
+    } catch (error) {
+        console.error("Error creating filename:", error);
+        return "defaultFileName"; // Return a default value in case of an error
+    }
+}
 
 app.listen(process.env.PORT, () => console.log('app is running'))
