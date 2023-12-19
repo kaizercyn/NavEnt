@@ -1,5 +1,5 @@
 <?php
-require_once("../php/changepassword.php");
+require("../php/changepassword.php");
 ?>
 <!doctype html>
 <html lang="en">
@@ -43,7 +43,7 @@ require_once("../php/changepassword.php");
             <li><a class="dropdown-item" href="qr_code.html">QR Code</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#">
-                <form action="php/logoutfunctions.php" method="post"><button type="submit" class="dropdown-item" onclick="return confirm('Are you sure you want to logout?')">Logout</button></form></a></li>
+                <form action="../php/logoutfunctions.php" method="POST"><button type="submit" class="dropdown-item" onclick="return confirm('Are you sure you want to logout?')">Logout</button></form></a></li>
           </ul>
         </div>
       </div>
@@ -52,7 +52,7 @@ require_once("../php/changepassword.php");
 
     <nav>
         <div class="nav-links">
-            <a href="index.php">HOME</a>
+            <a href="../index.php">HOME</a>
         </div>
     </nav>
 
@@ -75,15 +75,15 @@ require_once("../php/changepassword.php");
                         <form action="../php/changepassword.php" method="POST">
                             <div class="mb-3">
                                 <label for="currentPassword" class="form-label">Current Password</label>
-                                <input type="password" class="form-control" id="currentPassword" name="password" required>
+                                <input type="password" class="form-control" id="currentPassword" name="password" placeholder="<?php echo $errors['password']; ?>" required>
                             </div>
                             <div class="mb-3">
                                 <label for="newPassword" class="form-label" name="newpassword">New Password</label>
-                                <input type="password" class="form-control" name="newpassword" required>
+                                <input type="password" class="form-control" name="newpassword" placeholder="<?php echo $errors['newPassword']; ?>" required>
                             </div>
                             <div class="mb-3">
                                 <label for="confirmNewPassword" class="form-label">Confirm New Password</label>
-                                <input type="password" class="form-control" name="confirm" required>
+                                <input type="password" class="form-control" name="confirm" placeholder="<?php echo $errors['confirm']; ?>" required>
                             </div>
                             <button type="submit" class="btn btn-primary" id="change">Change Password</button>
                         </form>

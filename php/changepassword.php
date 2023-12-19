@@ -5,24 +5,28 @@ $errors = array('password'=> '', 'newPassword' => '', 'confirm' => '');
 if (isset($_POST['password'] )) {
 if($_POST['password'] == $_SESSION['Password']){
     if($_POST['newpassword'] == $_POST['confirm']){
-        $newPassword = $_POST['newPassword'];
+        $newPassword = $_POST['newpassword'];
         $email = $_SESSION['email'];
-    $st = $conn ->prepare("UPDATE 'ACCOUNTS' SET 'Password' = ?, WHERE Email_Address=?;");
+    $st = $conn ->prepare("UPDATE ACCOUNTS SET Password = ? WHERE Email_Address=?;");
     $st -> bind_param("ss", $newPassword, $email);
-    $st -> execute();
+    $result = $st -> execute();
     if ($result) {
         // Update successful
         $msg = "password has been updated!";
+        
     } else {
         // Update failed
         $errors['password'] = "Error updating password: " . $st->error;
+        
     }
     }else{
         $errors['confirm'] = "did not match!";
         $errors['newPassword'] = "did not match!";
+        
     }
 }else{
     $errors["password"] = "Incorrect Password";
+    
 }
 }
 ?>
