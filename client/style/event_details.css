@@ -231,6 +231,16 @@ h5 {
     margin-bottom: -8px;
 }
 
+label {
+    font-family: 'Curiosa ExtraLight', 'San Serif';
+    color: #000e1e;
+}
+
+input {
+    font-family: 'Curiosa ExtraLight', 'San Serif';
+    color: #000e1e;
+}
+
 .color-overlay {
     position: absolute;
     width: 100%;
@@ -247,13 +257,7 @@ h5 {
     }
 }
 
-.detcon {
-    padding-top: 20px;
-    padding-left: 30px;
-    padding-right: 30px;
-}
-
-.detcon .btn {
+.reg-btn .btn {
     font-family: 'CAZentrum Medium', sans-serif;
     background-color: #E4960E;
     color: #fff;
@@ -261,13 +265,13 @@ h5 {
     border-color: transparent;
 }
 
-.detcon .btn:hover {
+.reg-btn .btn:hover {
     background-color: #b5770d;
     border-color: transparent;
 }
 
-.detcon .btn:active,
-.detcon .btn:focus {
+.reg-tbn .btn:active,
+.reg-btn .btn:focus {
     background-color: transparent !important;
     border-color: #71999B !important;
     color: #71999B !important;
