@@ -20,6 +20,7 @@ if (isset($_POST['username'])){
         $_SESSION['username'] = $firstName . " " . $lastName;
         $_SESSION['userId'] = $userId;
         $_SESSION['email'] = $email;
+        $_SESSION['Password'] = $pasword;
         //echo "logged in as: $firstName";
         //echo $_SESSION['email'] ."" . $_SESSION['userId'];
         header("Location: ../index.php");
