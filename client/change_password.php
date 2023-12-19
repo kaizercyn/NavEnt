@@ -1,5 +1,5 @@
 <?php
-session_start();
+require("../php/changepassword.php");
 ?>
 <!doctype html>
 <html lang="en">
@@ -43,7 +43,7 @@ session_start();
             <li><a class="dropdown-item" href="qr_code.html">QR Code</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#">
-                <form action="php/logoutfunctions.php" method="post"><button type="submit" class="dropdown-item" onclick="return confirm('Are you sure you want to logout?')">Logout</button></form></a></li>
+                <form action="../php/logoutfunctions.php" method="POST"><button type="submit" class="dropdown-item" onclick="return confirm('Are you sure you want to logout?')">Logout</button></form></a></li>
           </ul>
         </div>
       </div>
@@ -52,7 +52,7 @@ session_start();
 
     <nav>
         <div class="nav-links">
-            <a href="index.php">HOME</a>
+            <a href="../index.php">HOME</a>
         </div>
     </nav>
 
@@ -72,20 +72,20 @@ session_start();
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Change Password</h5>
-                        <form action="php/changepassword.php" method="POST">
+                        <form action="../php/changepassword.php" method="POST">
                             <div class="mb-3">
                                 <label for="currentPassword" class="form-label">Current Password</label>
-                                <input type="password" class="form-control" id="currentPassword" required>
+                                <input type="password" class="form-control" id="currentPassword" name="password" placeholder="<?php echo $errors['password']; ?>" required>
                             </div>
                             <div class="mb-3">
-                                <label for="newPassword" class="form-label">New Password</label>
-                                <input type="password" class="form-control" id="newPassword" required>
+                                <label for="newPassword" class="form-label" name="newpassword">New Password</label>
+                                <input type="password" class="form-control" name="newpassword" placeholder="<?php echo $errors['newPassword']; ?>" required>
                             </div>
                             <div class="mb-3">
                                 <label for="confirmNewPassword" class="form-label">Confirm New Password</label>
-                                <input type="password" class="form-control" id="confirmNewPassword" required>
+                                <input type="password" class="form-control" name="confirm" placeholder="<?php echo $errors['confirm']; ?>" required>
                             </div>
-                            <button type="button" class="btn btn-primary">Change Password</button>
+                            <button type="submit" class="btn btn-primary" id="change">Change Password</button>
                         </form>
                     </div>
                 </div>
