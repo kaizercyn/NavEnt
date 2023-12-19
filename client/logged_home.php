@@ -94,7 +94,7 @@ $userAccount = $_SESSION["username"];
             <div class="carousel-caption top-0 mt-4 d-none d-md-block">
                 <h2 class="mt-5c fs-3 text-uppercase"><?php echo $event['Event_Tagline']; ?></h2>
                 <h1 class="display-1 fw-bolder text-capitalize"><?php echo $event['Event_Name']; ?></h1>
-                <button class="btn btn-primary px-4 py-2 fs-5 mt-5">Read More</button>
+                <button class="btn btn-primary px-4 py-2 fs-5 mt-5" >Read More</button>
               </div>
         </div>
           <div class="carousel-item ev">

@@ -1,5 +1,29 @@
 <?php
-require("../php/changepassword.php");
+//require("../php/changepassword.php");
+session_start();
+require("../php/dbconnection.php");
+$errors = array('password'=> '', 'newPassword' => '', 'confirm' => '');
+if (isset($_POST['change'] )) {
+if($_POST['password'] == $_SESSION['Password']){
+    if($_POST['newpassword'] == $_POST['confirm']){
+        $newPassword = $_POST['newpassword'];
+        $email = $_SESSION['email'];
+    $st = $conn ->prepare("UPDATE ACCOUNTS SET Password = ? WHERE Email_Address=?;");
+    $st -> bind_param("ss", $newPassword, $email);
+    $result = $st -> execute();
+    $msg = 'successfully changed password!';
+    $errors ['password'] = $msg;
+    }else{
+        $errors['confirm'] = "did not match!";
+        $errors['newPassword'] = "did not match!";
+        
+    }
+}else{
+    $errors["password"] = "Incorrect Password";
+    
+}
+}
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -36,7 +60,7 @@ require("../php/changepassword.php");
             </div>
           </button>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="account_details.html">Account Details</a></li>
+            <li><a class="dropdown-item" href="account_details.php">Account Details</a></li>
             <li><a class="dropdown-item" href="bookmarked_events.html">Bookmarks</a></li>
             <li><a class="dropdown-item" href="event_history.html">Event History</a></li>
             <li><a class="dropdown-item" href="pending_evaluation.html">Pending Evaluations</a></li>
@@ -72,7 +96,7 @@ require("../php/changepassword.php");
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Change Password</h5>
-                        <form action="../php/changepassword.php" method="POST">
+                        <form action="change_password.php" method="POST">
                             <div class="mb-3">
                                 <label for="currentPassword" class="form-label">Current Password</label>
                                 <input type="password" class="form-control" id="currentPassword" name="password" placeholder="<?php echo $errors['password']; ?>" required>
@@ -85,7 +109,7 @@ require("../php/changepassword.php");
                                 <label for="confirmNewPassword" class="form-label">Confirm New Password</label>
                                 <input type="password" class="form-control" name="confirm" placeholder="<?php echo $errors['confirm']; ?>" required>
                             </div>
-                            <button type="submit" class="btn btn-primary" id="change">Change Password</button>
+                            <button type="submit" class="btn btn-primary" name="change">Change Password</button>
                         </form>
                     </div>
                 </div>

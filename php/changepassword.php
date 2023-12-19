@@ -2,7 +2,7 @@
 session_start();
 require("dbconnection.php");
 $errors = array('password'=> '', 'newPassword' => '', 'confirm' => '');
-if (isset($_POST['password'] )) {
+if (isset($_POST['change'] )) {
 if($_POST['password'] == $_SESSION['Password']){
     if($_POST['newpassword'] == $_POST['confirm']){
         $newPassword = $_POST['newpassword'];
