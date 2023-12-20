@@ -1,5 +1,4 @@
-const publishBtn = document.querySelector('.button-save-publish')
-const saveDraftBtn = document.querySelector('.button-save-draft')
+const nextBtn = document.querySelector('.button-next')
 const eventNameField = document.querySelector('.form-control#eventName')
 const eventTagField = document.querySelector('.form-control#tagline')
 const eventDescField = document.querySelector('.form-control#description')
@@ -13,8 +12,6 @@ const endAMField = document.querySelector('.form-control#endAM')
 const startPMField = document.querySelector('.form-control#startPM')
 const endPMField = document.querySelector('.form-control#endPM')
 const seriesNumberField = document.querySelector('.form-control#seriesNumber')
-const eventImgForm = document.getElementById('uploadForm')
-const uploadBtn = document.querySelector('.button-upload')
 const publicRadioButton = document.getElementById('true');
 const privateRadioButton = document.getElementById('false');
 const registrationLinkField = document.querySelector('.form-control#registrationLink')
@@ -45,13 +42,11 @@ $(document).ready(function () {
     $('input[type="checkbox"]').change(function () {
         if ($('#reg-link').prop('checked')) {
             $('#registrationLinkSection').show();
-            isOpen = true
-        console.log('Open for Registration checkbox is checked');
+            console.log('External Registration checkbox is checked');
         } else {
             $('#registrationLinkSection').hide();
-            isOpen = false
             registrationLinkField.value = ''
-            console.log('Open for Registration checkbox is not checked');
+            console.log('External Registration checkbox is not checked');
         }
     });
 });
@@ -97,7 +92,7 @@ function generateSeriesFields() {
         var endInput = document.createElement('input');
         endInput.type = 'time';
         endInput.className = 'form-control';
-        startInput.id = `endTime${i}`
+        endInput.id = `endTime${i}`
 
         startDateContainerDiv.appendChild(startDateLabel)
         startDateContainerDiv.appendChild(startDateInput)
@@ -138,13 +133,23 @@ privateRadioButton.addEventListener('change', function() {
     }
 });
 
+registrationCheckbox.addEventListener('change', function() {
+    if (registrationCheckbox.checked) {
+      isOpen = true
+      console.log('Checkbox is checked. Open for Registration!');
+    } else {
+      isOpen = false
+      console.log('Checkbox is unchecked. Registration closed.');
+    }
+})
+
 
 function getValidDate(dateString) {
     const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
     if (dateRegex.test(dateString)) {
         const dateParts = dateString.split('-');
         const year = parseInt(dateParts[0]);
-        const month = parseInt(dateParts[1]) - 1; // Months are zero-based in JS Date
+        const month = parseInt(dateParts[1]) - 1; 
         const day = parseInt(dateParts[2]);
 
         if (!isNaN(year) && !isNaN(month) && !isNaN(day)) {
@@ -154,35 +159,52 @@ function getValidDate(dateString) {
             }
         }
     }
-    return null; // Invalid date
+    return null;
 }
 
-eventImgForm.addEventListener('submit', async function(e) {
-    uploadBtn.disabled = true;
-    uploadBtn.innerHTML = "File uploaded"
-})
 
-saveDraftBtn.addEventListener('click', function(e) {
+nextBtn.addEventListener('click', function(e) {
     let eventStartDate;
     let eventEndDate;
     let eventType;
+    let oneTimeStart
+    let oneTimeEnd
+    let startAM
+    let endAM
+    let startPM
+    let endPM
+    let seriesStart = []
+    let seriesEnd = []
 
     switch (selectedEventType) {
         case "oneTime":
             eventStartDate = getValidDate(oneTimeDateField.value);
             eventEndDate = eventStartDate;
             eventType = "OneTime";
-
+            oneTimeStart = oneTimeStartField.value
+            oneTimeEnd = oneTimeEndField.value
+            console.log(oneTimeStart, oneTimeEnd)
             break;
         case "ampm":
             eventStartDate = getValidDate(amPmDateField.value);
             eventEndDate = eventStartDate;
             eventType = "AM/PM";
+            startAM = startAMField.value
+            endAM = endAMField.value
+            startPM = startPMField.value
+            endPM = endPMField.value
+            console.log(startAM, endAM, startPM, endPM)
             break;
         case "series":
             eventStartDate = getValidDate(document.getElementById('startDate1').value);
             eventEndDate = getValidDate(document.getElementById(`startDate${seriesNumberField.value.trim()}`).value);
             eventType = "Series";
+            for (var i = 1; i <= seriesNumberField.value; i++){
+                seriesStart.push(document.getElementById(`startTime${i}`).value)
+                seriesEnd.push(document.getElementById(`endTime${i}`).value)
+            }
+            console.log(seriesStart)
+            console.log(seriesEnd)
             break;
         default:
             console.log("No type selected")
@@ -195,6 +217,7 @@ saveDraftBtn.addEventListener('click', function(e) {
     }
 
     if(registrationLinkField.value.trim() !== null) {var regisLink = registrationLinkField.value.trim()}
+
     const eventBody = {
         name : eventNameField.value.trim(),
         tagline : eventTagField.value.trim(),
@@ -204,22 +227,99 @@ saveDraftBtn.addEventListener('click', function(e) {
         type : eventType,
         open : isOpen,
         public : isPublic,
-        live : false,
         regis : regisLink,
         eval: evaluationLinkField.value.trim(),
     }
-
-    const oneTimeBody = {}
-    const amPmBody = {}
-    const seriesBody = {}
-
-
     console.log(JSON.stringify(eventBody))
-    // fetch('/addEvent', {
-    //     headers: {
-    //         'Content-type': 'application/json'
-    //     },
-    //     method: 'POST',
-    //     body: JSON.stringify(requestBody)
-    // })
+    
+    fetch('/addEvent', {
+        headers: {
+            'Content-type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify(eventBody)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        switch (selectedEventType) {
+            case "oneTime":
+                const oneTimeBody = {
+                    startTime: oneTimeStart,
+                    endTime: oneTimeEnd
+                }
+                fetch('/oneTime', {
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    method: 'POST',
+                    body: JSON.stringify(oneTimeBody)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    window.location.href = '/create_event_img'
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+                break;
+            case "ampm":
+                const amPmBody = {
+                    amStart : startAM,
+                    amEnd: endPM,
+                    pmStart: startPM,
+                    pmEnd: endPM
+                }
+                fetch('/amPm', {
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    method: 'POST',
+                    body: JSON.stringify(amPmBody)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    window.location.href = '/create_event_img'
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+                break;
+            case "series":
+                for (var i = 1; i <= seriesNumberField.value; i++){
+                    const seriesBody = {
+                        seriesNum: i,
+                        startTime: seriesStart[`${i-1}`],
+                        endTime: seriesEnd[`${i-1}`]
+                    }
+                    fetch('/series', {
+                        headers: {
+                            'Content-type': 'application/json'
+                        },
+                        method: 'POST',
+                        body: JSON.stringify(seriesBody)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                        window.location.href = '/create_event_img'
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                }
+                break;
+            default:
+                console.log("No type selected")
+                break;
+        }
+        
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+
+   
 })
