@@ -1,3 +1,22 @@
+<?php
+session_start();
+require("../php/dbconnection.php");
+if(isset($_POST['readMore'] )){
+    $eventid = $_POST['event'];
+    $st = $conn ->prepare("SELECT * FROM EVENTS WHERE Event_id=?");
+    $st -> bind_param("i", $eventid);
+    $st -> execute();
+    $result = $st -> get_result();
+        if($result->num_rows > 0) {
+            $activeevent = $result->fetch_assoc();
+            $_SESSION['name'] = $activeevent['Event_Name'];
+            $_SESSION['tagline'] =  $activeevent['Event_Tagline'];
+            $_SESSION['desc'] = $activeevent['Event_Description'];
+            $_SESSION['start'] = $activeevent['Event_StartDate'];
+            $_SESSION['end'] = $activeevent['Event_EndDate'];
+        }
+    }
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -16,7 +35,7 @@
     <header>
       <div class="d-flex align-items-center justify-content-between">
         <div class="logo">
-            <img src="/res/imgs/navi-event-logo(3d).png" alt="Logo">
+            <img src="../res/imgs/navi-event-logo(3d).png" alt="Logo">
         </div>
 
         <div class="pf-dropdown">
@@ -27,13 +46,13 @@
                   <div class="profile-icon">
                     <i class="bi bi-person"></i>
                 </div>
-                <span class="username"><Username></span>
+                <span class="username"><?php echo $_SESSION['username']; ?><Username></span>
                 </div>
 
             </div>
           </button>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Account Details</a></li>
+            <li><a class="dropdown-item" href="acount_details.php">Account Details</a></li>
             <li><a class="dropdown-item" href="#">Bookmarks</a></li>
             <li><a class="dropdown-item" href="event_history.html">Event History</a></li>
             <li><a class="dropdown-item" href="pending_evaluation.html">Pending Evaluations</a></li>
@@ -48,7 +67,7 @@
 
     <nav>
         <div class="nav-links">
-            <a href="home.php">HOME</a>
+            <a href="../index.php">HOME</a>
             <a href="announcement.html">ANNOUNCEMENTS</a>
         </div>
         <div class="box">
@@ -61,9 +80,9 @@
 
     <div class="imgcov" style="background-image: url(https://images.unsplash.com/photo-1523580494863-6f3031224c94?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);">
       <div class="color-overlay d-flex flex-column justify-content-end align-items-start" style="padding: 20px;">
-        <h5>Date</h5>
-        <h1>Event Title</h1>
-        <h3>Tagline</h3>
+        <h5><?php echo $_SESSION['start'];?></h5>
+        <h1><?php echo $_SESSION['name'];?></h1>
+        <h3><?php echo $_SESSION['tagline'];?></h3>
         <button class="bookmark-button">&#128278;</button>
       </div>
     </div>
@@ -72,7 +91,7 @@
       <div class="detcon mt-3">
           <div class="event-details">
               <h2>Description</h2>
-              <p>Your event description goes here.</p>
+              <p><?php echo $_SESSION['desc']; ?></p>
           </div>
       </div>
   
@@ -118,7 +137,7 @@
       <footer>
         <div class="footer-bottom">
             <div class="logo">
-                <img src="/res/imgs/navi-event-logo(3d).png" alt="Logo" class="footer-logo">
+                <img src="../res/imgs/navi-event-logo(3d).png" alt="Logo" class="footer-logo">
             </div>
             <p>© 2023 NavEnt. A Saint Louis University Company. All Rights Reserved. CS Slot Org ™</p>
         </div>

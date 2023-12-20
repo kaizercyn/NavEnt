@@ -53,7 +53,7 @@ $userAccount = $_SESSION["username"];
 
     <nav>
         <div class="nav-links">
-            <a href="index.php">HOME</a>
+            <a href="../index.php">HOME</a>
             <a href="announcement.html">ANNOUNCEMENTS</a>
         </div>
         <div class="box">
@@ -94,7 +94,10 @@ $userAccount = $_SESSION["username"];
             <div class="carousel-caption top-0 mt-4 d-none d-md-block">
                 <h2 class="mt-5c fs-3 text-uppercase"><?php echo $event['Event_Tagline']; ?></h2>
                 <h1 class="display-1 fw-bolder text-capitalize"><?php echo $event['Event_Name']; ?></h1>
-                <button class="btn btn-primary px-4 py-2 fs-5 mt-5" >Read More</button>
+                <form action="client/event_details.php" method="POST">
+                <input type="hidden" name="event" value="<?php echo $event['Event_ID'];  ?>">
+                <button type="submit" class="btn btn-primary px-4 py-2 fs-5 mt-5" name="readMore">Read More</button>
+                </form>
               </div>
         </div>
           <div class="carousel-item ev">
@@ -105,7 +108,10 @@ $userAccount = $_SESSION["username"];
             <div class="carousel-caption top-0 mt-4 d-none d-md-block">
                 <h2 class="mt-5c fs-3 text-uppercase"><?php echo $event1['Event_Tagline']; ?></h2>
                 <h1 class="display-1 fw-bolder text-capitalize"><?php echo $event1['Event_Name']; ?></h1>
-                <button class="btn btn-primary px-4 py-2 fs-5 mt-5">Read More</button>
+                <form action="client/event_details.php" method="POST">
+                <input type="hidden" name="event" value="<?php echo $event1['Event_ID'];  ?>">
+                <button type="submit" class="btn btn-primary px-4 py-2 fs-5 mt-5" name="readMore">Read More</button>
+                </form>
               </div>
         </div>
           <div class="carousel-item ev">
@@ -116,7 +122,10 @@ $userAccount = $_SESSION["username"];
             <div class="carousel-caption top-0 mt-4 d-none d-md-block">
                 <h2 class="mt-5c fs-3 text-uppercase"><?php echo $event2['Event_Tagline']; ?></h2>
                 <h1 class="display-1 fw-bolder text-capitalize"><?php echo $event2['Event_Name']; ?></h1>
-                <button class="btn btn-primary px-4 py-2 fs-5 mt-5">Read More</button>
+                <form action="client/event_details.php" method="POST">
+                <input type="hidden" name="event" value="<?php echo $event2['Event_ID'];  ?>">
+                <button type="submit" class="btn btn-primary px-4 py-2 fs-5 mt-5" name="readMore">Read More</button>
+                </form>
               </div>
         </div>
         </div>
