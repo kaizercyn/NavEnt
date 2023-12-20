@@ -16,6 +16,8 @@ if(isset($_POST['readMore'] )){
             $_SESSION['end'] = $activeevent['Event_EndDate'];
         }
     }
+    $result -> close();
+    $st -> close();
 ?>
 <!doctype html>
 <html lang="en">
@@ -98,20 +100,20 @@ if(isset($_POST['readMore'] )){
       <hr class="my-4">
   
       <h2 class="mb-3">Registration</h2>
-  
+      <form action="../php/register.php"method="POST">
       <label for="name" class="form-label">Name</label>
-      <input id="name" type="text" class="form-control mb-3">
+      <input type="text" class="form-control mb-3" name="uname" required>
   
       <div class="row">
   
           <div class="col-md-6">
               <label for="course" class="form-label">Course</label>
-              <input id="course" type="text" class="form-control mb-3">
+              <input id="course" type="text" class="form-control mb-3" name="course" required>
           </div>
   
           <div class="col-md-6">
               <label for="year" class="form-label">Year</label>
-              <input id="year" type="text" class="form-control mb-3">
+              <input id="year" type="text" class="form-control mb-3" name="year" required>
           </div>
       </div>
   
@@ -119,17 +121,18 @@ if(isset($_POST['readMore'] )){
   
           <div class="col-md-6">
               <label for="age" class="form-label">Age</label>
-              <input id="age" type="text" class="form-control mb-3">
+              <input id="age" type="text" class="form-control mb-3" name="age" required>
           </div>
   
           <div class="col-md-6">
               <label for="id" class="form-label">Student ID Number</label>
-              <input id="id" type="text" class="form-control mb-3">
+              <input id="id" type="text" class="form-control mb-3" name="IDnum" required>
           </div>
       </div>
 
       <div class="reg-btn mt-3">
-        <button type="button" class="btn">REGISTER</button>
+        <input type="hidden" name="eventid" value="<?php echo $eventid; ?>"> 
+        <button type="submit" class="btn" name="register">REGISTER</button>
       </div>
   </div>
   

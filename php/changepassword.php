@@ -29,4 +29,7 @@ if($_POST['password'] == $_SESSION['Password']){
     
 }
 }
+$result -> close();
+$st -> close();
+exit();
 ?>
