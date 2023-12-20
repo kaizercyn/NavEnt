@@ -65,7 +65,7 @@ searchBtn.addEventListener('click', function(e) {
 newEventBtn.addEventListener('click', function(e) {
     e.preventDefault()
     console.log('new clicked')
-    window.location.href = '/create_event'
+    window.location.href = '/create_event_details'
 })
 
 toHomeBtn.addEventListener('click', function(e) {
