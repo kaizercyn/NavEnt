@@ -42,12 +42,10 @@ header {
     background-color: #000e1e;
     color: #F1F1F1;
     padding: 20px;
-}
-
-header a {
     text-decoration: none;
     color: white;
 }
+
 
 .logo img {
     max-height: 90px;

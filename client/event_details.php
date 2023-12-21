@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once("../php/dbconnection.php");
+require("../php/dbconnection.php");
 if(isset($_POST['readMore'] )){
     $eventid = $_POST['event'];
     $st = $conn ->prepare("SELECT * FROM EVENTS WHERE Event_id=?");
@@ -39,6 +39,9 @@ if(isset($_POST['readMore'] )){
         <div class="logo">
             <img src="../res/imgs/navi-event-logo(3d).png" alt="Logo">
         </div>
+        <?php
+        if(isset($_SESSION['username'])){
+        ?>
 
         <div class="pf-dropdown">
           <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -50,7 +53,6 @@ if(isset($_POST['readMore'] )){
                 </div>
                 <span class="username"><?php echo $_SESSION['username']; ?><Username></span>
                 </div>
-
             </div>
           </button>
           <ul class="dropdown-menu">
@@ -61,10 +63,21 @@ if(isset($_POST['readMore'] )){
             <li><a class="dropdown-item" href="qr_code.html">QR Code</a></li>
             <li><hr class="dropdown-divider"></li>
             <li>
-            <form action="php\logoutfunctions.php" method="POST"><button type="submit" class="dropdown-item" onclick="return confirm('Are you sure you want to logout?')">Logout</button></form></li>
+            <form action="../php/logoutfunctions.php" method="POST"><button type="submit" class="dropdown-item" onclick="return confirm('Are you sure you want to logout?')">Logout</button></form></li>
           </ul>
         </div>
       </div>
+      <?php
+        }else{
+          ?>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button class="btn me-md-2 text-light h-btn" type="button"><a href="user_login.php">Login</a></button>
+                <button class="btn text-light h-btn" type="button"><a href="user_signup.html">Signup</a></button>
+              </div>
+        </div>
+    <?php
+        }
+    ?>
       
     </header>
 
@@ -124,11 +137,21 @@ if(isset($_POST['readMore'] )){
               <label for="age" class="form-label">Age</label>
               <input id="age" type="text" class="form-control mb-3" name="age" required>
           </div>
-  
+          <?php
+          if(isset($_SESSION['username'])){
+          ?>
           <div class="col-md-6">
               <label for="id" class="form-label">Student ID Number</label>
               <input id="id" type="text" class="form-control mb-3" name="IDnum" required>
           </div>
+          <?php
+          }else{
+            ?>
+          <div class="col-md-6">
+          </div>
+          <?php
+          }
+          ?>
       </div>
 
       <div class="reg-btn mt-3">

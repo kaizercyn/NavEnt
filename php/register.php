@@ -11,20 +11,24 @@ if(isset($_POST["register"])) {
         $yearlevel = $_POST['year'];
         $eventiD = $_POST['eventid'];
         $uID = $_POST['IDnum'];
-
-        QRcode::png($nameUser,
+        $qrCode = $nameUser . $eventiD;
 
         $st = $conn->prepare('INSERT INTO registration (`Registration_ID`, `Name`, `Age`, `Course`, `Year`, `User_ID`) VALUES (?,?,?,?,?,?)');
         $st -> bind_param('issssi', $registerID, $nameUser, $age,$course, $yearlevel, $uID);
         $st -> execute();
         $st -> close();
+
         $st = $conn ->prepare('INSERT INTO regisdetails (`User_ID`, `Event_ID`) VALUES (?,?)');
         $st -> bind_param('ii', $uID,$eventiD);
         $st -> execute();
         $st -> close();
+
+        $path = "res/qr/";
+        $qr = $path.time().".png";
+        QRcode::png($qrCode, $qr, 'H',12,12);
     }
 
 
 }
-header('Location: ../index.php');
+//header('Location: ../index.php');
 ?>
