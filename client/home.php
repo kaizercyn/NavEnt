@@ -31,7 +31,7 @@
     <nav>
         <div class="nav-links"> 
             <a href="index.php">HOME</a>
-            <a href="announcement.html">ANNOUNCEMENTS</a>
+            <a href="client/announcement.html">ANNOUNCEMENTS</a>
         </div>
         <div class="box">
             <input type="text" placeholder="Search...">
