@@ -1,7 +1,11 @@
 <?php
 session_start();
 require("dbconnection.php");
-require("../phpqrcode/qrlib.php");
+require "../vendor/autoload.php";
+
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Writer\PngWriter;
+
 if(isset($_POST["register"])) {
     if($_POST["IDnum"] == $_SESSION['userId']) {
         $registerID = substr(uniqid(), 0,8);
@@ -23,9 +27,12 @@ if(isset($_POST["register"])) {
         $st -> execute();
         $st -> close();
 
-        $path = "res/qr/";
-        $qr = $path.time().".png";
-        QRcode::png($qrCode, $qr, 'H',12,12);
+        $qrData = $uID . $eventiD;
+        $qr_code = QrCode::create($qrData);
+        $writer = new PngWriter;
+        $qrGenerated = $writer -> write($qr_code);
+        header("Content-type: " . $qrGenerated -> getMimeType());
+        echo $qrGenerated -> getString();
     }
 
 
