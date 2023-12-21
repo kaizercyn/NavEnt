@@ -57,7 +57,7 @@ if(isset($_POST['readMore'] )){
           </button>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="acount_details.php">Account Details</a></li>
-            <li><a class="dropdown-item" href="#">Bookmarks</a></li>
+            <li><a class="dropdown-item" href="bookmarked_events.html">Bookmarks</a></li>
             <li><a class="dropdown-item" href="event_history.html">Event History</a></li>
             <li><a class="dropdown-item" href="pending_evaluation.html">Pending Evaluations</a></li>
             <li><a class="dropdown-item" href="qr_code.html">QR Code</a></li>
