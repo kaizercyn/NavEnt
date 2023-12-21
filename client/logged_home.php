@@ -274,9 +274,9 @@ $userAccount = $_SESSION["username"];
                         <div class="card upcoming-event w-100">
                             <!-- <img src="<?php //echo $row['Event_PicFilePath']; ?>" class="card-img" alt="<?php //echo $row['Event_Name']; ?>"> -->
                             <div class="card-img-overlay">
-                                <h5 class="card-title"><?php echo $row['Event_Name']; ?></h5>
-                                <p class="card-text"><?php echo $row['Event_Description']; ?></p>
-                                <p class="card-text"><small>Date of Event: <?php echo $row['Event_StartDate']; ?></small></p>
+                                <h5 class="card-title text-black"><?php echo $row['Event_Name']; ?></h5>
+                                <p class="card-text text-black"><?php echo $row['Event_Description']; ?></p>
+                                <p class="card-text text-black"><small>Date of Event: <?php echo $row['Event_StartDate']; ?></small></p>
                                 <button class="btn btn-primary">Read More</button>
                             </div>
                         </div>
