@@ -250,98 +250,58 @@ $userAccount = $_SESSION["username"];
     </section>
 
     <div id="upcomingEventsSlider" class="carousel slide" data-bs-ride="false">
-        <div class="carousel-inner">
-          <div class="carousel-item active">
+    <div class="carousel-inner">
+        <?php
+        require("php/dbconnection.php");
+        $public = 1;
+        $open = 1;
+        $st = $conn->prepare("SELECT * FROM events WHERE isPublic=? AND isOpen=?");
+        $st->bind_param('ii', $public, $open);
+        $st->execute();
+        $result = $st->get_result();
+        $firstEvent = true;
+        while ($row = $result->fetch_assoc()) {
+            if ($firstEvent) {
+                echo '<div class="carousel-item active">';
+                $firstEvent = false;
+            } else {
+                echo '<div class="carousel-item">';
+            }
+            ?>
             <div class="container">
-              <div class="row">
-                <div class="col-lg">
-                  <div class="card upcoming-event w-100">
-                    <img src="https://images.unsplash.com/photo-1560439514-07abbb294a86?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img" alt="event4">
-                    <div class="card-img-overlay">
-                        <h5 class="card-title">HealthTech Expo </h5>
-                        <p class="card-text">Discover the latest advancements in healthcare technology. Experience demos, attend seminars, and interact with pioneers in the HealthTech industry.</p>
-                        <p class="card-text"><small>2023-12-29</small></p>
-                        <button class="btn btn-primary">Read More</button>
+                <div class="row">
+                    <div class="col-lg">
+                        <div class="card upcoming-event w-100">
+                            <!-- <img src="<?php //echo $row['Event_PicFilePath']; ?>" class="card-img" alt="<?php //echo $row['Event_Name']; ?>"> -->
+                            <div class="card-img-overlay">
+                                <h5 class="card-title"><?php echo $row['Event_Name']; ?></h5>
+                                <p class="card-text"><?php echo $row['Event_Description']; ?></p>
+                                <p class="card-text"><small>Date of Event: <?php echo $row['Event_StartDate']; ?></small></p>
+                                <button class="btn btn-primary">Read More</button>
+                            </div>
+                        </div>
                     </div>
-                  </div>
                 </div>
-                <div class="col-lg">
-                  <div class="card upcoming-event w-100">
-                    <img src="https://images.unsplash.com/photo-1559223694-98ed5e272fef?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img" alt="event5">
-                    <div class="card-img-overlay">
-                        <h5 class="card-title">Business Innovation Forum</h5>
-                        <p class="card-text">Foster creativity and strategize innovation in the business landscape. Engage in discussions, case studies, and workshops led by industry leaders.</p>
-                        <p class="card-text"><small>2024-01-05</small></p>
-                        <button class="btn btn-primary">Read More</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg">
-                  <div class="card upcoming-event w-100">
-                    <img src="https://images.unsplash.com/photo-1563807894768-f28bee0d37b6?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img" alt="event6">
-                    <div class="card-img-overlay">
-                        <h5 class="card-title">Music and Technology Conference</h5>
-                        <p class="card-text">Explore the intersection of music and technology. Experience live demonstrations, discussions, and performances showcasing technological advancements in music.</p>
-                        <p class="card-text"><small>2024-01-10</small></p>
-                        <button class="btn btn-primary">Read More</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
-          </div>
-      
-          <div class="carousel-item">
-            <div class="container">
-              <div class="row">
-                <div class="col-lg">
-                  <div class="card upcoming-event w-100">
-                    <img src="https://images.unsplash.com/photo-1561489396-888724a1543d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img" alt="event4">
-                    <div class="card-img-overlay">
-                        <h5 class="card-title">Event Name</h5>
-                        <p class="card-text">Description</p>
-                        <p class="card-text"><small>Date of Event</small></p>
-                        <button class="btn btn-primary">Read More</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg">
-                  <div class="card upcoming-event w-100">
-                   <img src="https://images.unsplash.com/photo-1582192730841-2a682d7375f9?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img" alt="event5">
-                    <div class="card-img-overlay">
-                        <h5 class="card-title">Event Name</h5>
-                        <p class="card-text">Description</p>
-                        <p class="card-text"><small>Date of Event</small></p>
-                        <button class="btn btn-primary">Read More</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg">
-                  <div class="card upcoming-event w-100">
-                    <img src="https://plus.unsplash.com/premium_photo-1679547202141-82c80e5a99c1?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img" alt="event6">
-                    <div class="card-img-overlay">
-                        <h5 class="card-title">Event Name</h5>
-                        <p class="card-text">Description</p>
-                        <p class="card-text"><small>Date of Event</small></p>
-                        <button class="btn btn-primary">Read More</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
-          </div>
-      
-        </div>
-      
-        <button class="carousel-control-prev" type="button" data-bs-target="#upcomingEventsSlider" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#upcomingEventsSlider" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
-      </div>
+            <?php
+        }
+        $st->close();
+        $result->close();
+        ?>
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#upcomingEventsSlider" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#upcomingEventsSlider" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+
 
       <script>
         const upcomingEventsSlider = new bootstrap.Carousel(document.getElementById('upcomingEventsSlider'), {
