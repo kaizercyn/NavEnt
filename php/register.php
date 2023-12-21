@@ -3,7 +3,7 @@ session_start();
 require("dbconnection.php");
 if(isset($_POST["register"])) {
     if($_POST["IDnum"] == $_SESSION['userId']) {
-        $registerID = uniqid();
+        $registerID = substr(uniqid(), 0,8);
         $nameUser = $_POST['uname'];
         $age = $_POST['age'];
         $course = $_POST['course'];
