@@ -124,98 +124,51 @@
     </section>
       
     <div id="latestEventsSlider" class="carousel slide" data-bs-ride="false">
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <div class="container">
-              <div class="row">
-                <div class="col-lg">
-                  <div class="card latest-event w-100">
-                    <img src="https://images.unsplash.com/photo-1560439514-07abbb294a86?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img" alt="event4">
+    <div class="carousel-inner">
+        <?php
+        require("php/dbconnection.php");
+        $st = $conn->prepare("SELECT * FROM events ORDER BY Event_StartDate");
+        $st->execute();
+        $result = $st->get_result();
+        $eventCount = 0;
+        $eventsPerSlide = 3;
+        while ($row = $result->fetch_assoc()) {
+            if ($eventCount % $eventsPerSlide === 0) {
+                $active = ($eventCount === 0) ? 'active' : '';
+                echo '<div class="carousel-item ' . $active . '"><div class="container"><div class="row">';
+            }
+            ?>
+            <div class="col-lg">
+                <div class="card latest-event w-100">
+                    <!-- <img src="<?php //echo $row['Event_PicFilePath']; ?>" class="card-img" alt="<?php //echo $row['Event_Name']; ?>"> -->
                     <div class="card-img-overlay">
-                        <h5 class="card-title">Event Name</h5>
-                        <p class="card-text">Description</p>
-                        <p class="card-text"><small>Date of Event</small></p>
+                        <h5 class="card-title text-black"><?php echo $row['Event_Name']; ?></h5>
+                        <p class="card-text text-black"><?php echo $row['Event_Tagline']; ?></p>
+                        <p class="card-text"><small class="text-black">Date of Event: <?php echo $row['Event_StartDate']; ?></small></p>
                         <button class="btn btn-primary">Read More</button>
                     </div>
-                  </div>
                 </div>
-                <div class="col-lg">
-                  <div class="card latest-event w-100">
-                    <img src="https://images.unsplash.com/photo-1559223694-98ed5e272fef?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img" alt="event5">
-                    <div class="card-img-overlay">
-                        <h5 class="card-title">Event Name</h5>
-                        <p class="card-text">Description</p>
-                        <p class="card-text"><small>Date of Event</small></p>
-                        <button class="btn btn-primary">Read More</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg">
-                  <div class="card latest-event w-100">
-                    <img src="https://images.unsplash.com/photo-1563807894768-f28bee0d37b6?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img" alt="event6">
-                    <div class="card-img-overlay">
-                        <h5 class="card-title">Event Name</h5>
-                        <p class="card-text">Description</p>
-                        <p class="card-text"><small>Date of Event</small></p>
-                        <button class="btn btn-primary">Read More</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
-          </div>
-      
-          <div class="carousel-item">
-            <div class="container">
-              <div class="row">
-                <div class="col-lg">
-                  <div class="card latest-event w-100">
-                    <img src="https://images.unsplash.com/photo-1561489396-888724a1543d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img" alt="event4">
-                    <div class="card-img-overlay">
-                        <h5 class="card-title">Event Name</h5>
-                        <p class="card-text">Description</p>
-                        <p class="card-text"><small>Date of Event</small></p>
-                        <button class="btn btn-primary">Read More</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg">
-                  <div class="card latest-event w-100">
-                   <img src="https://images.unsplash.com/photo-1582192730841-2a682d7375f9?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img" alt="event5">
-                    <div class="card-img-overlay">
-                        <h5 class="card-title">Event Name</h5>
-                        <p class="card-text">Description</p>
-                        <p class="card-text"><small>Date of Event</small></p>
-                        <button class="btn btn-primary">Read More</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg">
-                  <div class="card latest-event w-100">
-                    <img src="https://plus.unsplash.com/premium_photo-1679547202141-82c80e5a99c1?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img" alt="event6">
-                    <div class="card-img-overlay">
-                        <h5 class="card-title">Event Name</h5>
-                        <p class="card-text">Description</p>
-                        <p class="card-text"><small>Date of Event</small></p>
-                        <button class="btn btn-primary">Read More</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-      
-        </div>
-      
-        <button class="carousel-control-prev" type="button" data-bs-target="#latestEventsSlider" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#latestEventsSlider" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
-      </div>
+            <?php
+            $eventCount++;
+            if ($eventCount % $eventsPerSlide === 0 || $eventCount === $result->num_rows) {
+                echo '</div></div></div>';
+            }
+        }
+        $st->close();
+        $result->close();
+        ?>
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#latestEventsSlider" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#latestEventsSlider" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
       
       <script>
         const latestEventsSlider = new bootstrap.Carousel(document.getElementById('latestEventsSlider'), {
@@ -228,98 +181,55 @@
     </section>
 
     <div id="upcomingEventsSlider" class="carousel slide" data-bs-ride="false">
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <div class="container">
-              <div class="row">
-                <div class="col-lg">
-                  <div class="card upcoming-event w-100">
-                    <img src="https://images.unsplash.com/photo-1560439514-07abbb294a86?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img" alt="event4">
+    <div class="carousel-inner">
+        <?php
+        require("php/dbconnection.php");
+        $public = 1;
+        $open = 1;
+        $st = $conn->prepare("SELECT * FROM events WHERE isPublic=? AND isOpen=? ORDER BY Event_StartDate DESC");
+        $st->bind_param('ii', $public, $open);
+        $st->execute();
+        $result = $st->get_result();
+        $eventCount = 0;
+        while ($row = $result->fetch_assoc()) {
+            if ($eventCount % 2 === 0) {
+                $active = ($eventCount === 0) ? 'active' : '';
+                echo '<div class="carousel-item ' . $active . '">';
+                echo '<div class="container"><div class="row">';
+            }
+            ?>
+            <div class="col-lg-6">
+                <div class="card upcoming-event w-100">
+                    <!-- <img src="<?php //echo $row['Event_PicFilePath']; ?>" class="card-img" alt="<?php //echo $row['Event_Name']; ?>"> -->
                     <div class="card-img-overlay">
-                        <h5 class="card-title">Event Name</h5>
-                        <p class="card-text">Description</p>
-                        <p class="card-text"><small>Date of Event</small></p>
+                        <h5 class="card-title text-black"><?php echo $row['Event_Name']; ?></h5>
+                        <p class="card-text text-black"><?php echo $row['Event_Description']; ?></p>
+                        <p class="card-text text-black"><small>Date of Event: <?php echo $row['Event_StartDate']; ?></small></p>
                         <button class="btn btn-primary">Read More</button>
                     </div>
-                  </div>
                 </div>
-                <div class="col-lg">
-                  <div class="card upcoming-event w-100">
-                    <img src="https://images.unsplash.com/photo-1559223694-98ed5e272fef?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img" alt="event5">
-                    <div class="card-img-overlay">
-                        <h5 class="card-title">Event Name</h5>
-                        <p class="card-text">Description</p>
-                        <p class="card-text"><small>Date of Event</small></p>
-                        <button class="btn btn-primary">Read More</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg">
-                  <div class="card upcoming-event w-100">
-                    <img src="https://images.unsplash.com/photo-1563807894768-f28bee0d37b6?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img" alt="event6">
-                    <div class="card-img-overlay">
-                        <h5 class="card-title">Event Name</h5>
-                        <p class="card-text">Description</p>
-                        <p class="card-text"><small>Date of Event</small></p>
-                        <button class="btn btn-primary">Read More</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
-          </div>
-      
-          <div class="carousel-item">
-            <div class="container">
-              <div class="row">
-                <div class="col-lg">
-                  <div class="card upcoming-event w-100">
-                    <img src="https://images.unsplash.com/photo-1561489396-888724a1543d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img" alt="event4">
-                    <div class="card-img-overlay">
-                        <h5 class="card-title">Event Name</h5>
-                        <p class="card-text">Description</p>
-                        <p class="card-text"><small>Date of Event</small></p>
-                        <button class="btn btn-primary">Read More</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg">
-                  <div class="card upcoming-event w-100">
-                   <img src="https://images.unsplash.com/photo-1582192730841-2a682d7375f9?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img" alt="event5">
-                    <div class="card-img-overlay">
-                        <h5 class="card-title">Event Name</h5>
-                        <p class="card-text">Description</p>
-                        <p class="card-text"><small>Date of Event</small></p>
-                        <button class="btn btn-primary">Read More</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg">
-                  <div class="card upcoming-event w-100">
-                    <img src="https://plus.unsplash.com/premium_photo-1679547202141-82c80e5a99c1?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img" alt="event6">
-                    <div class="card-img-overlay">
-                        <h5 class="card-title">Event Name</h5>
-                        <p class="card-text">Description</p>
-                        <p class="card-text"><small>Date of Event</small></p>
-                        <button class="btn btn-primary">Read More</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-      
-        </div>
-      
-        <button class="carousel-control-prev" type="button" data-bs-target="#upcomingEventsSlider" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#upcomingEventsSlider" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
-      </div>
+            <?php
+            $eventCount++;
+            if ($eventCount % 2 === 0 || $eventCount === $result->num_rows) {
+                echo '</div></div></div>';
+            }
+        }
+        $st->close();
+        $result->close();
+        ?>
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#upcomingEventsSlider" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#upcomingEventsSlider" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
 
       <script>
         const upcomingEventsSlider = new bootstrap.Carousel(document.getElementById('upcomingEventsSlider'), {

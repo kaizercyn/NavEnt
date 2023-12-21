@@ -212,32 +212,30 @@ $userAccount = $_SESSION["username"];
         $st->bind_param('ii', $public, $open);
         $st->execute();
         $result = $st->get_result();
-        $firstEvent = true;
+        $eventCount = 0;
         while ($row = $result->fetch_assoc()) {
-            if ($firstEvent) {
-                echo '<div class="carousel-item active">';
-                $firstEvent = false;
-            } else {
-                echo '<div class="carousel-item">';
+            if ($eventCount % 2 === 0) {
+                $active = ($eventCount === 0) ? 'active' : '';
+                echo '<div class="carousel-item ' . $active . '">';
+                echo '<div class="container"><div class="row">';
             }
             ?>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg">
-                        <div class="card upcoming-event w-100">
-                            <!-- <img src="<?php //echo $row['Event_PicFilePath']; ?>" class="card-img" alt="<?php //echo $row['Event_Name']; ?>"> -->
-                            <div class="card-img-overlay">
-                                <h5 class="card-title text-black"><?php echo $row['Event_Name']; ?></h5>
-                                <p class="card-text text-black"><?php echo $row['Event_Description']; ?></p>
-                                <p class="card-text text-black"><small>Date of Event: <?php echo $row['Event_StartDate']; ?></small></p>
-                                <button class="btn btn-primary">Read More</button>
-                            </div>
-                        </div>
+            <div class="col-lg-6">
+                <div class="card upcoming-event w-100">
+                    <!-- <img src="<?php //echo $row['Event_PicFilePath']; ?>" class="card-img" alt="<?php //echo $row['Event_Name']; ?>"> -->
+                    <div class="card-img-overlay">
+                        <h5 class="card-title text-black"><?php echo $row['Event_Name']; ?></h5>
+                        <p class="card-text text-black"><?php echo $row['Event_Description']; ?></p>
+                        <p class="card-text text-black"><small>Date of Event: <?php echo $row['Event_StartDate']; ?></small></p>
+                        <button class="btn btn-primary">Read More</button>
                     </div>
                 </div>
             </div>
-            </div>
             <?php
+            $eventCount++;
+            if ($eventCount % 2 === 0 || $eventCount === $result->num_rows) {
+                echo '</div></div></div>';
+            }
         }
         $st->close();
         $result->close();
@@ -253,6 +251,7 @@ $userAccount = $_SESSION["username"];
         <span class="visually-hidden">Next</span>
     </button>
 </div>
+
 
 
 
