@@ -1,6 +1,6 @@
 <?php
 session_start();
-require("../php/dbconnection.php");
+require_once("../php/dbconnection.php");
 if(isset($_POST['readMore'] )){
     $eventid = $_POST['event'];
     $st = $conn ->prepare("SELECT * FROM EVENTS WHERE Event_id=?");
@@ -60,7 +60,8 @@ if(isset($_POST['readMore'] )){
             <li><a class="dropdown-item" href="pending_evaluation.html">Pending Evaluations</a></li>
             <li><a class="dropdown-item" href="qr_code.html">QR Code</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Logout</a></li>
+            <li>
+            <form action="php\logoutfunctions.php" method="POST"><button type="submit" class="dropdown-item" onclick="return confirm('Are you sure you want to logout?')">Logout</button></form></li>
           </ul>
         </div>
       </div>
