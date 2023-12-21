@@ -1,6 +1,7 @@
 <?php
 session_start();
 require("dbconnection.php");
+require("../phpqrcode/qrlib.php");
 if(isset($_POST["register"])) {
     if($_POST["IDnum"] == $_SESSION['userId']) {
         $registerID = substr(uniqid(), 0,8);
@@ -10,6 +11,9 @@ if(isset($_POST["register"])) {
         $yearlevel = $_POST['year'];
         $eventiD = $_POST['eventid'];
         $uID = $_POST['IDnum'];
+
+        QRcode::png($nameUser,
+
         $st = $conn->prepare('INSERT INTO registration (`Registration_ID`, `Name`, `Age`, `Course`, `Year`, `User_ID`) VALUES (?,?,?,?,?,?)');
         $st -> bind_param('issssi', $registerID, $nameUser, $age,$course, $yearlevel, $uID);
         $st -> execute();

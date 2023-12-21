@@ -1,7 +1,7 @@
 <?php
 require("../php/dbconnection.php");
 include("../php/loginfunctions.php");
-$errors = array('username'=>'','pasword'=>'');
+$errors = array('username'=>'','password'=>'');
 session_start(); 
 if (isset($_POST['submit'])){
     $username = $_POST['username'];

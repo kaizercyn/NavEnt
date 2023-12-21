@@ -1,6 +1,6 @@
 <?php
 session_start();
-require("../php/dbconnection.php");
+require_once("../php/dbconnection.php");
 if(isset($_POST['readMore'] )){
     $eventid = $_POST['event'];
     $st = $conn ->prepare("SELECT * FROM EVENTS WHERE Event_id=?");
