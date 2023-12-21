@@ -258,9 +258,9 @@ $userAccount = $_SESSION["username"];
                   <div class="card upcoming-event w-100">
                     <img src="https://images.unsplash.com/photo-1560439514-07abbb294a86?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img" alt="event4">
                     <div class="card-img-overlay">
-                        <h5 class="card-title">Event Name</h5>
-                        <p class="card-text">Description</p>
-                        <p class="card-text"><small>Date of Event</small></p>
+                        <h5 class="card-title">HealthTech Expo </h5>
+                        <p class="card-text">Discover the latest advancements in healthcare technology. Experience demos, attend seminars, and interact with pioneers in the HealthTech industry.</p>
+                        <p class="card-text"><small>2023-12-29</small></p>
                         <button class="btn btn-primary">Read More</button>
                     </div>
                   </div>
@@ -269,9 +269,9 @@ $userAccount = $_SESSION["username"];
                   <div class="card upcoming-event w-100">
                     <img src="https://images.unsplash.com/photo-1559223694-98ed5e272fef?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img" alt="event5">
                     <div class="card-img-overlay">
-                        <h5 class="card-title">Event Name</h5>
-                        <p class="card-text">Description</p>
-                        <p class="card-text"><small>Date of Event</small></p>
+                        <h5 class="card-title">Business Innovation Forum</h5>
+                        <p class="card-text">Foster creativity and strategize innovation in the business landscape. Engage in discussions, case studies, and workshops led by industry leaders.</p>
+                        <p class="card-text"><small>2024-01-05</small></p>
                         <button class="btn btn-primary">Read More</button>
                     </div>
                   </div>
@@ -280,9 +280,9 @@ $userAccount = $_SESSION["username"];
                   <div class="card upcoming-event w-100">
                     <img src="https://images.unsplash.com/photo-1563807894768-f28bee0d37b6?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img" alt="event6">
                     <div class="card-img-overlay">
-                        <h5 class="card-title">Event Name</h5>
-                        <p class="card-text">Description</p>
-                        <p class="card-text"><small>Date of Event</small></p>
+                        <h5 class="card-title">Music and Technology Conference</h5>
+                        <p class="card-text">Explore the intersection of music and technology. Experience live demonstrations, discussions, and performances showcasing technological advancements in music.</p>
+                        <p class="card-text"><small>2024-01-10</small></p>
                         <button class="btn btn-primary">Read More</button>
                     </div>
                   </div>
