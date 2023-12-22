@@ -1,3 +1,12 @@
+<?php
+require("../php/dbconnection.php");
+require "../vendor/autoload.php";
+include "../php/register.php";
+session_start();
+$finalQREvent = $_SESSION['IDEvent'];
+$attendee = $_SESSION['userId'];
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -18,10 +27,7 @@
         <div class="logo">
             <img src="../res/imgs/navi-event-logo(3d).png" alt="Logo">
         </div>
-        <?php
-        if(isset($_SESSION['username'])){
-        ?>
-
+    
         <div class="pf-dropdown">
           <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             <div class="d-flex align-items-center">
@@ -69,7 +75,18 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4 mx-auto text-center">
-                    <img src="/res/imgs/prof_placeholder.png" alt="QR Code" class="img-fluid">
+                    <?php
+                    $st = $conn -> prepare("SELECT QR_Code FROM REGISDETAILS WHERE User_ID=? and Event_ID=?;");
+                    $st -> bind_param('ii',$attendee, $finalQREvent);
+                    $st -> execute();
+                    $QR_image = $st -> get_result();
+                    if($QR_image -> num_rows != 0){
+                        $real = $QR_image -> fetch_assoc();
+                        $attendeeQR = $real['QR_Code'];
+                        header("Content-type: " . $attendee -> getMimeType());
+                        echo $attendeeQR -> getString();
+                    }
+                    ?>
                 </div>
 
                 <div class="col-md-6 d-flex align-items-center justify-content-center">

@@ -1,8 +1,8 @@
 <?php
-require "../vendor/autoload.php";
-
-use Endroid\QrCode\QrCode;
-use Endroid\QrCode\Writer\PngWriter;
+session_start();
+echo '<pre>';
+var_dump($_SESSION);
+echo '</pre>';
 
 
 ?>
