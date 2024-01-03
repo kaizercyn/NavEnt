@@ -15,10 +15,11 @@ if(isset($_POST['readMore'] )){
             $_SESSION['start'] = $activeevent['Event_StartDate'];
             $_SESSION['end'] = $activeevent['Event_EndDate'];
         }
+      $result -> close();
+      $st -> close();
     }
-    $result -> close();
-    $st -> close();
 ?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -114,7 +115,7 @@ if(isset($_POST['readMore'] )){
       <hr class="my-4">
   
       <h2 class="mb-3">Registration</h2>
-      <form action="../php/register.php"method="POST">
+      <form action="event_details.php"method="POST">
       <label for="name" class="form-label">Name</label>
       <input type="text" class="form-control mb-3" name="uname" required>
   
@@ -159,7 +160,79 @@ if(isset($_POST['readMore'] )){
         <button type="submit" class="btn" name="register">REGISTER</button>
       </div>
   </div>
-  
+
+  <?php
+require "../vendor/autoload.php";
+
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Writer\PngWriter;
+
+if(isset($_POST["register"])) {
+    if($_POST["IDnum"] == $_SESSION['userId']) {
+        $nameUser = $_POST['uname'];
+        $age = $_POST['age'];
+        $course = $_POST['course'];
+        $yearlevel = $_POST['year'];
+        $eventiD = $_POST['eventid'];
+        $uID = $_POST['IDnum'];
+        $registerID = (int)$uID . $eventiD;
+        $_SESSION['IDEvent'] = $eventiD;
+        $_SESSION['temp'] = $registerID;
+        
+        
+        $st = $conn->prepare('INSERT INTO registration (`Registration_ID`, `Name`, `Age`, `Course`, `Year`, `User_ID`) VALUES (?,?,?,?,?,?)');
+        $st -> bind_param('issssi', $registerID, $nameUser, $age, $course, $yearlevel, $uID);
+        $st -> execute();
+        $st -> close();
+        $qrData = $uID . $eventiD;
+        $qr_code = QrCode::create($qrData);
+        $writer = new PngWriter; 
+        $qrGenerated = $writer -> write($qr_code);
+        $final = $qrGenerated -> getString();
+
+        $st = $conn ->prepare('INSERT INTO regisdetails (`User_ID`, `Event_ID`,`QR_Code`) VALUES (?,?,?)');
+        $st -> bind_param('iis', $uID,$eventiD,$final);
+        $st -> execute();
+        $st -> close();
+        
+        
+
+        
+        header("Content-type: " . $qrGenerated -> getMimeType());
+        //echo $qrGenerated -> getString();
+    }
+}
+?>
+ <div id="qrCodeContainer"></div>
+
+ <script>
+        document.getElementById('registrationForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            try {
+                // Fetch API to send a POST request to the server
+                const response = await fetch('your_server_script.php', {
+                    method: 'POST',
+                    body: new FormData(event.target),
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch QR code');
+                }
+
+                const qrCode = await response.text();
+
+                // Create a new div to display the QR code
+                const qrCodeContainer = document.getElementById('qrCodeContainer');
+                const qrCodeDiv = document.createElement('div');
+                qrCodeDiv.innerHTML = qrCode;
+                qrCodeContainer.appendChild(qrCodeDiv);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+    </script>
+</script>
 
       <footer>
         <div class="footer-bottom">

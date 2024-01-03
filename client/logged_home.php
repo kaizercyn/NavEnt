@@ -53,7 +53,7 @@ $userAccount = $_SESSION["username"];
 
     <nav>
         <div class="nav-links">
-            <a href="../index.php">HOME</a>
+            <a href="../webdevfinals/index.php">HOME</a>
             <a href="client/announcement.html">ANNOUNCEMENTS</a>
         </div>
         <div class="box">
@@ -167,7 +167,10 @@ $userAccount = $_SESSION["username"];
                         <h5 class="card-title text-black"><?php echo $row['Event_Name']; ?></h5>
                         <p class="card-text text-black"><?php echo $row['Event_Tagline']; ?></p>
                         <p class="card-text"><small class="text-black">Date of Event: <?php echo $row['Event_StartDate']; ?></small></p>
-                        <button class="btn btn-primary">Read More</button>
+                        <form action="client/event_details.php" method="POST">
+                          <input type="hidden" name="event" value="<?php echo $row['Event_ID'];  ?>">
+                          <button type="submit" class="btn btn-primary px-4 py-2 fs-5 mt-5" name="readMore">Read More</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -227,7 +230,10 @@ $userAccount = $_SESSION["username"];
                         <h5 class="card-title text-black"><?php echo $row['Event_Name']; ?></h5>
                         <p class="card-text text-black"><?php echo $row['Event_Description']; ?></p>
                         <p class="card-text text-black"><small>Date of Event: <?php echo $row['Event_StartDate']; ?></small></p>
-                        <button class="btn btn-primary">Read More</button>
+                        <form action="client/event_details.php" method="POST">
+                          <input type="hidden" name="event" value="<?php echo $row['Event_ID'];  ?>">
+                          <button type="submit" class="btn btn-primary px-4 py-2 fs-5 mt-5" name="readMore">Read More</button>
+                        </form>
                     </div>
                 </div>
             </div>

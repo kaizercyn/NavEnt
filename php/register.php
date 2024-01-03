@@ -40,8 +40,5 @@ if(isset($_POST["register"])) {
         header("Content-type: " . $qrGenerated -> getMimeType());
         echo $qrGenerated -> getString();
     }
-
-
 }
- //header('Location: ../index.php');
 ?>
