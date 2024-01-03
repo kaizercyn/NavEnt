@@ -14,13 +14,13 @@ if(isset($_POST["register"])) {
         $yearlevel = $_POST['year'];
         $eventiD = $_POST['eventid'];
         $uID = $_POST['IDnum'];
-        $registerID = $uID . $eventiD;
+        $registerID = (int)$uID . $eventiD;
         $_SESSION['IDEvent'] = $eventiD;
         $_SESSION['temp'] = $registerID;
         
         
         $st = $conn->prepare('INSERT INTO registration (`Registration_ID`, `Name`, `Age`, `Course`, `Year`, `User_ID`) VALUES (?,?,?,?,?,?)');
-        $st -> bind_param('sssssi', $registerID, $nameUser, $age,$course, $yearlevel, $uID);
+        $st -> bind_param('issssi', $registerID, $nameUser, $age, $course, $yearlevel, $uID);
         $st -> execute();
         $st -> close();
         $qrData = $uID . $eventiD;
@@ -33,13 +33,15 @@ if(isset($_POST["register"])) {
         $st -> bind_param('iis', $uID,$eventiD,$final);
         $st -> execute();
         $st -> close();
+        
+        
 
         
-        //header("Content-type: " . $qrGenerated -> getMimeType());
-        //echo $qrGenerated -> getString();
+        header("Content-type: " . $qrGenerated -> getMimeType());
+        echo $qrGenerated -> getString();
     }
 
 
 }
- header('Location: ../index.php');
+ //header('Location: ../index.php');
 ?>

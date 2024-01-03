@@ -7,7 +7,7 @@ if(isset($_POST["signup"])){
         $nameSecond = $_POST["lname"];
         $email = $_POST["email"];
         $password = $_POST["password"];
-        $schoolID = substr($email, 0 , 6);
+        $schoolID = substr($email, 0 , 7);
 
     $st = $conn ->prepare('INSERT INTO accounts (`User_ID`, `First_Name`,`Last_Name`,`Email_Address`,`Password`) VALUES (?,?,?,?,?)');
         $st -> bind_param('issss', $schoolID, $nameFirst, $nameSecond, $email, $password);
