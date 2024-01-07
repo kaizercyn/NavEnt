@@ -1,10 +1,42 @@
 <?php
+session_start();
 require("../php/dbconnection.php");
 require "../vendor/autoload.php";
-include "../php/register.php";
-session_start();
-$finalQREvent = $_SESSION['IDEvent'];
-$attendee = $_SESSION['userId'];
+
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Writer\PngWriter;
+
+if (isset($_POST["register"])) {
+    if ($_POST["IDnum"] == $_SESSION['userId']) {
+        $nameUser = $_POST['uname'];
+        $role = $_POST['role'];
+        $course = $_POST['course'];
+        $school = $_POST['school'];
+        $eventiD = $_POST['eventid'];
+        $uID = $_POST['IDnum'];
+        $registerID = (int)$uID . $eventiD;
+        $_SESSION['IDEvent'] = $eventiD;
+        $_SESSION['temp'] = $registerID;
+
+        $st = $conn->prepare('INSERT INTO registration (`Name`, `Department`, `Course`, `Role`,`Registration`, `User_ID`) VALUES (?,?,?,?,?,?)');
+        $st->bind_param('ssssii',$nameUser, $role, $course, $school, $registerID, $uID);
+        $st->execute();
+        $st->close();
+        $qrData = $uID . $eventiD;
+        $qr_code = QrCode::create($qrData);
+        $writer = new PngWriter;
+        $qrGenerated = $writer->write($qr_code);
+        $final = $qrGenerated->getString();
+
+        $st = $conn->prepare('INSERT INTO regisdetails (`User_ID`, `Event_ID`,`QR_Code`) VALUES (?,?,?)');
+        $st->bind_param('iis', $uID, $eventiD, $final);
+        $st->execute();
+        $st->close();
+
+        $imageFilePath = "phpqrcode/";
+        file_put_contents($imageFilePath, $qrGenerated->getString());
+    }
+}
 ?>
 
 <!doctype html>
