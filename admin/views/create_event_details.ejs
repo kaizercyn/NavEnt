@@ -93,9 +93,13 @@
         <!-- Add one-time specific fields here -->
         <div style="display: flex; flex-direction: column; gap: 10px;">
 
-          <!-- Start Date -->
-          <label for="startDate">Start Date</label>
+          <!-- Event Date -->
+          <label for="startDate">Event Date</label>
           <input type="date" id="startDate" class="form-control">
+
+          <!--Event Venue-->
+          <label for="eventVenue">Event Venue</label>
+          <input type="text" id="eventVenue" class="form-control">
 
           <div style="display: flex; gap: 10px;">
             <!-- Start Time Container -->
@@ -133,6 +137,12 @@
               <label for="endAM">End</label>
               <input type="time" id="endAM" class="form-control">
             </div>
+
+            <!--AM Event Venue-->
+            <div style="flex: 1;">
+              <label for="AMeventVenue">Event Venue</label>
+              <input type="text" id="AMeventVenue" class="form-control">
+            </div>
           </div>
       
           <!-- PM Time Container -->
@@ -147,13 +157,19 @@
               <label for="endPM">End</label>
               <input type="time" id="endPM" class="form-control">
             </div>
+
+             <!--PM Event Venue-->
+             <div style="flex: 1;">
+              <label for="PMeventVenue">Event Venue</label>
+              <input type="text" id="PMeventVenue" class="form-control">
+            </div>
           </div>
         </div>
       </div>
       
       <div id="seriesSection" style="display: none; margin-top: 10px;">
         <!-- Add series specific fields here -->
-        <label for="seriesNumber">Series Number</label>
+        <label for="seriesNumber">Number of Series</label>
         <input type="number" id="seriesNumber" class="form-control" style="margin-bottom: 10px;">
       
         <!-- Container for dynamically generated series fields -->
@@ -164,17 +180,19 @@
 
       <h4 class="mb-3">Event Links</h4>
       <div class="col-12">
-        <div class="form-check">
-          <input type="checkbox" id="reg-link" class="form-check-input">
-          <label for="reg-link" class="form-check-label">Append External Registration Link</label>
-        </div>
-        <div id="registrationLinkSection" style="display: none; margin-top: 7px; margin-bottom: 10px;">
-          <!-- Input field for registration link -->
-          <label for="registrationLink">Registration Link</label>
-          <input type="text" id="registrationLink" class="form-control">
-        </div>
         <label for="evaluationLink" class="form-label">Evaluation Link</label>
         <input id="evaluationLink" type="text" class="form-control">
+        <div class="form-check">
+          <input type="checkbox" id="other-link" class="form-check-input">
+          <label for="other-link" class="form-check-label">Add Other Event Links</label>
+        </div>
+        <div id="externalLinks" style="display: none; margin-top: 7px; margin-bottom: 10px;">
+          <label for="linkNumber">Number of Links</label>
+          <input type="number" id="linkNumber" class="form-control" style="margin-bottom: 10px;">
+      
+          <!-- Container for dynamically generated link fields -->
+          <div id="linkFieldsContainer"></div>
+        </div>
       
       </div>      
     
@@ -196,9 +214,27 @@
 
       <hr class="my-4">
 
+      <h4 class="mb-3">Upload Image</h4>
+    
+      <!-- Cover Image Upload -->
+      <form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data">
+        <div class="mt-3 mb-3">
+          <label for="eventImage" class="form-label">Cover Image</label>
+          <input type="file" class="form-control" name="eventImage" id="eventImage" accept="image/*">
+        </div>
+        <!-- <button class="btn btn-primary btn-lg btn-block button-upload" type="submit">Upload Image</button> -->
+      </form>      
+    
+      <hr class="my-4">
+
       <!-- Buttons -->
       <div class="row">
-        <button class="btn btn-primary btn-lg btn-block button-next">Next</button>
+        <div class="col-sm-6">
+          <button class="btn btn-primary btn-lg btn-block button-save-draft">Save as Draft</button>
+        </div>
+        <div class="col-sm-6">
+          <button class="btn btn-primary btn-lg btn-block button-save-publish">Save and Publish</button>
+        </div>
       </div>
     </div>
     

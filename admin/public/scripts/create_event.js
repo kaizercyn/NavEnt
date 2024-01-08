@@ -14,9 +14,11 @@ const endPMField = document.querySelector('.form-control#endPM')
 const seriesNumberField = document.querySelector('.form-control#seriesNumber')
 const publicRadioButton = document.getElementById('true');
 const privateRadioButton = document.getElementById('false');
-const registrationLinkField = document.querySelector('.form-control#registrationLink')
 const evaluationLinkField = document.querySelector('.form-control#evaluationLink')
+const otherLinksCheckbox = document.getElementById('other-link')
 const registrationCheckbox = document.getElementById('reg-open')
+const draftBtn = document.querySelector('.button-save-draft')
+const publishBtn = document.querySelector('.button-save-publish')
 
 
 var selectedEventType = ''
@@ -24,6 +26,7 @@ var isPublic = ''
 var isOpen = ''
 var hasUploaded = ''
 document.getElementById('seriesNumber').addEventListener('input', generateSeriesFields);
+document.getElementById('linkNumber').addEventListener('input', generateLinkFields);
 
 $(document).ready(function () {
     $('input[name="eventType"]').change(function () {
@@ -38,18 +41,61 @@ $(document).ready(function () {
     });
 });
 
-$(document).ready(function () {
-    $('input[type="checkbox"]').change(function () {
-        if ($('#reg-link').prop('checked')) {
-            $('#registrationLinkSection').show();
-            console.log('External Registration checkbox is checked');
+$(document).ready(function() {
+    $('#other-link').change(function() {
+        if (this.checked) {
+            $('#externalLinks').show();
         } else {
-            $('#registrationLinkSection').hide();
-            registrationLinkField.value = ''
-            console.log('External Registration checkbox is not checked');
+            $('#externalLinks').hide();
         }
     });
 });
+
+
+function generateLinkFields(){
+    var linkNumber = document.getElementById('linkNumber').value
+    var linkContainer = document.getElementById('linkFieldsContainer')
+    linkContainer.innerHTML = ''
+
+    for (var j = 1; j <= linkNumber; j++) {
+        var linkContainerDiv = document.createElement('div')
+        linkContainerDiv.style.display = 'flex'
+        linkContainerDiv.style.gap = '10px'
+
+        var linkNameContainerDiv = document.createElement('div')
+        linkNameContainerDiv.style.flex = '1'
+
+        var linkNameLabel = document.createElement('label');
+        linkNameLabel.innerHTML = 'Link Name ' + j;
+
+        var linkNameInput = document.createElement('input');
+        linkNameInput.type = 'text';
+        linkNameInput.className = 'form-control';
+        linkNameInput.id = `linkName${j}`
+
+        var weblinkContainerDiv = document.createElement('div')
+        weblinkContainerDiv.style.flex = '1'
+
+        var weblinkLabel = document.createElement('label');
+        weblinkLabel.innerHTML = 'Web Link ' + j;
+
+        var weblinkInput = document.createElement('input');
+        weblinkInput.type = 'text';
+        weblinkInput.className = 'form-control';
+        weblinkInput.id = `weblink${j}`
+
+        linkNameContainerDiv.appendChild(linkNameLabel)
+        linkNameContainerDiv.appendChild(linkNameInput)
+        weblinkContainerDiv.appendChild(weblinkLabel);
+        weblinkContainerDiv.appendChild(weblinkInput);
+
+        linkContainerDiv.appendChild(linkNameContainerDiv);
+        linkContainerDiv.appendChild(weblinkContainerDiv);
+
+        linkContainer.appendChild(linkContainerDiv);
+    }
+}
+
 
 function generateSeriesFields() {
     var seriesNumber = document.getElementById('seriesNumber').value;
@@ -94,16 +140,30 @@ function generateSeriesFields() {
         endInput.className = 'form-control';
         endInput.id = `endTime${i}`
 
+        var venueContainerDiv = document.createElement('div');
+        venueContainerDiv.style.flex = '1';
+
+        var venueLabel = document.createElement('label');
+        venueLabel.innerHTML = 'Event Venue for Series ' + i;
+
+        var venueInput = document.createElement('input');
+        venueInput.type = 'text';
+        venueInput.className = 'form-control';
+        venueInput.id = `venue${i}`
+
         startDateContainerDiv.appendChild(startDateLabel)
         startDateContainerDiv.appendChild(startDateInput)
         startContainerDiv.appendChild(startLabel);
         startContainerDiv.appendChild(startInput);
         endContainerDiv.appendChild(endLabel);
         endContainerDiv.appendChild(endInput);
+        venueContainerDiv.appendChild(venueLabel);
+        venueContainerDiv.appendChild(venueInput);
 
         seriesContainerDiv.appendChild(startDateContainerDiv);
         seriesContainerDiv.appendChild(startContainerDiv);
         seriesContainerDiv.appendChild(endContainerDiv);
+        seriesContainerDiv.appendChild(venueContainerDiv);
 
         seriesContainer.appendChild(seriesContainerDiv);
     }
