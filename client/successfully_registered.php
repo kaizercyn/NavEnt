@@ -1,10 +1,54 @@
 <?php
+session_start();
 require("../php/dbconnection.php");
 require "../vendor/autoload.php";
-include "../php/register.php";
-session_start();
-$finalQREvent = $_SESSION['IDEvent'];
-$attendee = $_SESSION['userId'];
+
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Writer\PngWriter;
+
+$error = '';
+try{
+if (isset($_POST["register"])) {
+    if ($_POST["IDnum"] == $_SESSION['userId']) {
+        $nameUser = $_POST['uname'];
+        $role = $_POST['role'];
+        $course = $_POST['course'];
+        $school = $_POST['school'];
+        $eventiD = $_POST['eventid'];
+        $uID = $_POST['IDnum'];
+        $registerID = (int)$uID . $eventiD;
+        $_SESSION['IDEvent'] = $eventiD;
+        $_SESSION['temp'] = $registerID;
+
+        $st = $conn->prepare('INSERT INTO registration (`Name`, `Department`, `Course`, `Role`,`Registration_ID`, `User_ID`) VALUES (?,?,?,?,?,?)');
+        $st->bind_param('ssssii',$nameUser, $role, $course, $school, $registerID, $uID);
+        $st->execute();
+        $st->close();
+        $qrData = $uID . $eventiD;
+        $qr_code = QrCode::create($qrData);
+        $writer = new PngWriter;
+        $qrGenerated = $writer->write($qr_code);
+        $final = $qrGenerated->getString();
+
+        $st = $conn->prepare('INSERT INTO regisdetails (`User_ID`, `Event_ID`,`QR_Code`) VALUES (?,?,?)');
+        $st->bind_param('iis', $uID, $eventiD, $final);
+        $st->execute();
+        $st->close();
+
+        $imageFilePath = "../phpqrcode/" . "$uID" . "$eventiD";
+        file_put_contents($imageFilePath, $qrGenerated->getString());
+    }
+}
+} catch (mysqli_sql_exception $e) {
+  // Handle the exception here
+  if ($e->getCode() == 1062) {
+      // Duplicate entry error (error code 1062)
+      $error =  "Duplicate entry detected. Handle accordingly.";
+  } else {
+      // Handle other SQL errors
+      $error = "Error: " . $e->getMessage();
+  }
+}
 ?>
 
 <!doctype html>
@@ -41,12 +85,12 @@ $attendee = $_SESSION['userId'];
             </div>
           </button>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="acount_details.php">Account Details</a></li>
+            <li><a class="dropdown-item" href="../client/acount_details.php">Account Details</a></li>
             <li><a class="dropdown-item" href="bookmarked_events.html">Bookmarks</a></li>
-            <li><a class="dropdown-item" href="event_history.html">Event History</a></li>
-            <li><a class="dropdown-item" href="pending_evaluation.html">Pending Evaluations</a></li>
+            <li><a class="dropdown-item" href="../client/event_history.html">Event History</a></li>
+            <li><a class="dropdown-item" href="../client/pending_evaluation.html">Pending Evaluations</a></li>
             <li><a class="dropdown-item" href="qr_code.html">QR Code</a></li>
-            <li><hr class="dropdown-divider"></li>
+            <li><hr class=" dropdown-divider"></li>
             <li>
             <form action="../php/logoutfunctions.php" method="POST"><button type="submit" class="dropdown-item" onclick="return confirm('Are you sure you want to logout?')">Logout</button></form></li>
           </ul>
@@ -58,8 +102,8 @@ $attendee = $_SESSION['userId'];
     <nav>
         <div class="nav-links">
             <a href="../index.php">HOME</a>
-            <a href="announcement.html">ANNOUNCEMENTS</a>
-        </div>
+            <a href="../client/announcement.php">ANNOUNCEMENTS</a>
+        </div>  
         <div class="box">
             <input type="text" placeholder="Search...">
             <a href="">
@@ -75,18 +119,7 @@ $attendee = $_SESSION['userId'];
         <div class="container">
             <div class="row">
                 <div class="col-md-4 mx-auto text-center">
-                    <?php
-                    $st = $conn -> prepare("SELECT QR_Code FROM REGISDETAILS WHERE User_ID=? and Event_ID=?;");
-                    $st -> bind_param('ii',$attendee, $finalQREvent);
-                    $st -> execute();
-                    $QR_image = $st -> get_result();
-                    if($QR_image -> num_rows != 0){
-                        $real = $QR_image -> fetch_assoc();
-                        $attendeeQR = $real['QR_Code'];
-                        header("Content-type: " . $attendee -> getMimeType());
-                        echo $attendeeQR -> getString();
-                    }
-                    ?>
+                
                 </div>
 
                 <div class="col-md-6 d-flex align-items-center justify-content-center">

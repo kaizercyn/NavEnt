@@ -113,9 +113,13 @@ if(isset($_POST['readMore'] )){
       </div>
   
       <hr class="my-4">
+
+      <?php
+          if(isset($_SESSION['username'])){
+      ?>
   
       <h2 class="mb-3">Registration</h2>
-      <form action="event_details.php"method="POST">
+      <form action="../client/successfully_registered.php" method="POST">
       <label for="name" class="form-label">Name</label>
       <input type="text" class="form-control mb-3" name="uname" required>
   
@@ -127,32 +131,36 @@ if(isset($_POST['readMore'] )){
           </div>
   
           <div class="col-md-6">
-              <label for="year" class="form-label">Year</label>
-              <input id="year" type="text" class="form-control mb-3" name="year" required>
+              <label for="year" class="form-label">School</label>
+              <select id="school" class="form-control mb-3" name="school" required>
+              <option value="" disabled selected>Select your school</option>
+              <option value="SAMCIS">SAMCIS</option>
+              <option value="SONAHBS">SONAHBS</option>
+              <option value="STELA">STELA</option>
+              <option value="SOM">SOM</option>
+              <option value="SOL">SOL</option>
+              <option value="SAS">SAS</option>
+              <option value="SEA">SEA</option>
+              </select>
           </div>
       </div>
   
       <div class="row">
   
           <div class="col-md-6">
-              <label for="age" class="form-label">Age</label>
-              <input id="age" type="text" class="form-control mb-3" name="age" required>
+              <label for="role" class="form-label">Role</label>
+              <select id="age" class="form-control mb-3" name="role" required>
+                <option value=""disabled selected>What is your role?</option>
+                <option value="Student">Student</option>
+                <option value="Faculty">Faculty</option>
+                <option value="other">Other...</option>
+              </select>
           </div>
-          <?php
-          if(isset($_SESSION['username'])){
-          ?>
+          
           <div class="col-md-6">
               <label for="id" class="form-label">Student ID Number</label>
               <input id="id" type="text" class="form-control mb-3" name="IDnum" required>
           </div>
-          <?php
-          }else{
-            ?>
-          <div class="col-md-6">
-          </div>
-          <?php
-          }
-          ?>
       </div>
 
       <div class="reg-btn mt-3">
@@ -162,77 +170,14 @@ if(isset($_POST['readMore'] )){
   </div>
 
   <?php
-require "../vendor/autoload.php";
+          }else{
+  ?>
+          <div class="col-md-6">
+          </div>
+  <?php
+          }
+  ?>
 
-use Endroid\QrCode\QrCode;
-use Endroid\QrCode\Writer\PngWriter;
-
-if(isset($_POST["register"])) {
-    if($_POST["IDnum"] == $_SESSION['userId']) {
-        $nameUser = $_POST['uname'];
-        $age = $_POST['age'];
-        $course = $_POST['course'];
-        $yearlevel = $_POST['year'];
-        $eventiD = $_POST['eventid'];
-        $uID = $_POST['IDnum'];
-        $registerID = (int)$uID . $eventiD;
-        $_SESSION['IDEvent'] = $eventiD;
-        $_SESSION['temp'] = $registerID;
-        
-        
-        $st = $conn->prepare('INSERT INTO registration (`Registration_ID`, `Name`, `Age`, `Course`, `Year`, `User_ID`) VALUES (?,?,?,?,?,?)');
-        $st -> bind_param('issssi', $registerID, $nameUser, $age, $course, $yearlevel, $uID);
-        $st -> execute();
-        $st -> close();
-        $qrData = $uID . $eventiD;
-        $qr_code = QrCode::create($qrData);
-        $writer = new PngWriter; 
-        $qrGenerated = $writer -> write($qr_code);
-        $final = $qrGenerated -> getString();
-
-        $st = $conn ->prepare('INSERT INTO regisdetails (`User_ID`, `Event_ID`,`QR_Code`) VALUES (?,?,?)');
-        $st -> bind_param('iis', $uID,$eventiD,$final);
-        $st -> execute();
-        $st -> close();
-        
-        
-
-        
-        header("Content-type: " . $qrGenerated -> getMimeType());
-        //echo $qrGenerated -> getString();
-    }
-}
-?>
- <div id="qrCodeContainer"></div>
-
- <script>
-        document.getElementById('registrationForm').addEventListener('submit', async function(event) {
-            event.preventDefault();
-
-            try {
-                // Fetch API to send a POST request to the server
-                const response = await fetch('your_server_script.php', {
-                    method: 'POST',
-                    body: new FormData(event.target),
-                });
-
-                if (!response.ok) {
-                    throw new Error('Failed to fetch QR code');
-                }
-
-                const qrCode = await response.text();
-
-                // Create a new div to display the QR code
-                const qrCodeContainer = document.getElementById('qrCodeContainer');
-                const qrCodeDiv = document.createElement('div');
-                qrCodeDiv.innerHTML = qrCode;
-                qrCodeContainer.appendChild(qrCodeDiv);
-            } catch (error) {
-                console.error('Error:', error);
-            }
-        });
-    </script>
-</script>
 
       <footer>
         <div class="footer-bottom">

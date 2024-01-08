@@ -41,7 +41,6 @@ $userAccount = $_SESSION["username"];
             <li><a class="dropdown-item" href="client/bookmarked_events.html">Bookmarks</a></li>
             <li><a class="dropdown-item" href="client/event_history.html">Event History</a></li>
             <li><a class="dropdown-item" href="client/pending_evaluation.html">Pending Evaluations</a></li>
-            <li><a class="dropdown-item" href="client/">QR Code</a></li>
             <li><hr class="dropdown-divider"></li>
             <li>
             <form action="php\logoutfunctions.php" method="POST"><button type="submit" class="dropdown-item" onclick="return confirm('Are you sure you want to logout?')">Logout</button></form></li>
@@ -54,7 +53,7 @@ $userAccount = $_SESSION["username"];
     <nav>
         <div class="nav-links">
             <a href="../webdevfinals/index.php">HOME</a>
-            <a href="client/announcement.html">ANNOUNCEMENTS</a>
+            <a href="client/announcement.php">ANNOUNCEMENTS</a>
         </div>
         <div class="box">
             <input type="text" placeholder="Search...">
