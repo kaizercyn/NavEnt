@@ -161,7 +161,7 @@ $userAccount = $_SESSION["username"];
             ?>
             <div class="col-lg">
                 <div class="card latest-event w-100">
-                    <!-- <img src="<?php //echo $row['Event_PicFilePath']; ?>" class="card-img" alt="<?php //echo $row['Event_Name']; ?>"> -->
+                    <!-- <img src="<?php //echo $row['Event_PicFilePath']; ?>" class="card-img" alt="<?php //echo $row['Event_Name']; ?>"> push daw aq sabi ni jupay-->
                     <div class="card-img-overlay">
                         <h5 class="card-title text-black"><?php echo $row['Event_Name']; ?></h5>
                         <p class="card-text text-black"><?php echo $row['Event_Tagline']; ?></p>
