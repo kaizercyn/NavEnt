@@ -1,4 +1,3 @@
-const nextBtn = document.querySelector('.button-next')
 const eventNameField = document.querySelector('.form-control#eventName')
 const eventTagField = document.querySelector('.form-control#tagline')
 const eventDescField = document.querySelector('.form-control#description')
@@ -6,11 +5,14 @@ const eventTypeRadios = document.querySelectorAll('input[name="eventType"]');
 const oneTimeDateField = document.querySelector('.form-control#startDate')
 const oneTimeStartField = document.querySelector('.form-control#startTime')
 const oneTimeEndField = document.querySelector('.form-control#endTime')
+const oneTimeVenueField = document.querySelector('.form-control#eventVenue')
 const amPmDateField = document.querySelector('.form-control#ampmDate')
 const startAMField = document.querySelector('.form-control#startAM')
 const endAMField = document.querySelector('.form-control#endAM')
+const venueAMField = document.querySelector('.form-control#AMeventVenue')
 const startPMField = document.querySelector('.form-control#startPM')
 const endPMField = document.querySelector('.form-control#endPM')
+const venuePMField = document.querySelector('.form-control#PMeventVenue')
 const seriesNumberField = document.querySelector('.form-control#seriesNumber')
 const publicRadioButton = document.getElementById('true');
 const privateRadioButton = document.getElementById('false');
@@ -25,6 +27,8 @@ var selectedEventType = ''
 var isPublic = ''
 var isOpen = ''
 var hasUploaded = ''
+var eventPic = ''
+
 document.getElementById('seriesNumber').addEventListener('input', generateSeriesFields);
 document.getElementById('linkNumber').addEventListener('input', generateLinkFields);
 
@@ -107,6 +111,17 @@ function generateSeriesFields() {
         seriesContainerDiv.style.display = 'flex';
         seriesContainerDiv.style.gap = '10px';
 
+        var nameContainerDiv = document.createElement('div');
+        nameContainerDiv.style.flex = '1';
+
+        var nameLabel = document.createElement('label');
+        nameLabel.innerHTML = 'Name for Series ' + i;
+
+        var nameInput = document.createElement('input');
+        nameInput.type = 'text';
+        nameInput.className = 'form-control';
+        nameInput.id = `name${i}`
+
         var startDateContainerDiv = document.createElement('div');
         startDateContainerDiv.style.flex = '1';
 
@@ -151,6 +166,8 @@ function generateSeriesFields() {
         venueInput.className = 'form-control';
         venueInput.id = `venue${i}`
 
+        nameContainerDiv.appendChild(nameLabel)
+        nameContainerDiv.appendChild(nameInput)
         startDateContainerDiv.appendChild(startDateLabel)
         startDateContainerDiv.appendChild(startDateInput)
         startContainerDiv.appendChild(startLabel);
@@ -160,6 +177,7 @@ function generateSeriesFields() {
         venueContainerDiv.appendChild(venueLabel);
         venueContainerDiv.appendChild(venueInput);
 
+        seriesContainerDiv.appendChild(nameContainerDiv);
         seriesContainerDiv.appendChild(startDateContainerDiv);
         seriesContainerDiv.appendChild(startContainerDiv);
         seriesContainerDiv.appendChild(endContainerDiv);
@@ -222,49 +240,37 @@ function getValidDate(dateString) {
     return null;
 }
 
+const inputElement = document.getElementById('eventImage');
+inputElement.addEventListener('change', (event) => {
+    eventPic = event.target.files[0]; // Get the selected file
 
-nextBtn.addEventListener('click', function(e) {
-    let eventStartDate;
-    let eventEndDate;
-    let eventType;
-    let oneTimeStart
-    let oneTimeEnd
-    let startAM
-    let endAM
-    let startPM
-    let endPM
-    let seriesStart = []
-    let seriesEnd = []
+    if (eventPic && eventPic.type.startsWith('image/')) {
+    console.log('Image uploaded:', eventPic);
+    } else {
+    console.log('Please upload an image file.');
+    }
+});
+
+function getEventBody(){
+    let eventStartDate
+    let eventEndDate
+    let eventType
 
     switch (selectedEventType) {
         case "oneTime":
             eventStartDate = getValidDate(oneTimeDateField.value);
             eventEndDate = eventStartDate;
             eventType = "OneTime";
-            oneTimeStart = oneTimeStartField.value
-            oneTimeEnd = oneTimeEndField.value
-            console.log(oneTimeStart, oneTimeEnd)
             break;
         case "ampm":
             eventStartDate = getValidDate(amPmDateField.value);
             eventEndDate = eventStartDate;
             eventType = "AM/PM";
-            startAM = startAMField.value
-            endAM = endAMField.value
-            startPM = startPMField.value
-            endPM = endPMField.value
-            console.log(startAM, endAM, startPM, endPM)
             break;
         case "series":
             eventStartDate = getValidDate(document.getElementById('startDate1').value);
             eventEndDate = getValidDate(document.getElementById(`startDate${seriesNumberField.value.trim()}`).value);
             eventType = "Series";
-            for (var i = 1; i <= seriesNumberField.value; i++){
-                seriesStart.push(document.getElementById(`startTime${i}`).value)
-                seriesEnd.push(document.getElementById(`endTime${i}`).value)
-            }
-            console.log(seriesStart)
-            console.log(seriesEnd)
             break;
         default:
             console.log("No type selected")
@@ -276,8 +282,6 @@ nextBtn.addEventListener('click', function(e) {
         return;
     }
 
-    if(registrationLinkField.value.trim() !== null) {var regisLink = registrationLinkField.value.trim()}
-
     const eventBody = {
         name : eventNameField.value.trim(),
         tagline : eventTagField.value.trim(),
@@ -287,11 +291,29 @@ nextBtn.addEventListener('click', function(e) {
         type : eventType,
         open : isOpen,
         public : isPublic,
-        regis : regisLink,
         eval: evaluationLinkField.value.trim(),
     }
+
     console.log(JSON.stringify(eventBody))
     
+    return eventBody
+}
+
+draftBtn.addEventListener('click', function(e) {
+    const eventBody = getEventBody()
+    eventBody.live = false
+    console.log(JSON.stringify(eventBody))
+    sendToServer(eventBody)
+})
+
+publishBtn.addEventListener('click', function(e) {
+    const eventBody = getEventBody()
+    eventBody.live = true
+    console.log(JSON.stringify(eventBody))
+    sendToServer(eventBody)
+})
+
+function sendToServer(eventBody){
     fetch('/addEvent', {
         headers: {
             'Content-type': 'application/json'
@@ -304,9 +326,14 @@ nextBtn.addEventListener('click', function(e) {
         console.log(data);
         switch (selectedEventType) {
             case "oneTime":
+                let oneTimeStart = oneTimeStartField.value
+                let oneTimeEnd = oneTimeEndField.value
+                let oneTimeVenue = oneTimeVenueField.value
+                console.log(oneTimeStart, oneTimeEnd, oneTimeVenue)
                 const oneTimeBody = {
                     startTime: oneTimeStart,
-                    endTime: oneTimeEnd
+                    endTime: oneTimeEnd,
+                    venue: oneTimeVenue
                 }
                 fetch('/oneTime', {
                     headers: {
@@ -317,19 +344,27 @@ nextBtn.addEventListener('click', function(e) {
                 })
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data);
-                    window.location.href = '/create_event_img'
+                    console.log('One Time details uploaded', data);
                 })
                 .catch(error => {
                     console.error('Error:', error);
                 });
                 break;
             case "ampm":
+                let startAM = startAMField.value
+                let endAM = endAMField.value
+                let venueAM = venueAMField.value
+                let startPM = startPMField.value
+                let endPM = endPMField.value
+                let venuePM = venuePMField.value
+                console.log(startAM, endAM, venueAM, startPM, endPM, venuePM)
                 const amPmBody = {
                     amStart : startAM,
                     amEnd: endPM,
+                    amVenue: venueAM,
                     pmStart: startPM,
-                    pmEnd: endPM
+                    pmEnd: endPM,
+                    pmVenue: venuePM
                 }
                 fetch('/amPm', {
                     headers: {
@@ -340,19 +375,34 @@ nextBtn.addEventListener('click', function(e) {
                 })
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data);
-                    window.location.href = '/create_event_img'
+                    console.log('AM/PM details uploaded', data);
                 })
                 .catch(error => {
                     console.error('Error:', error);
                 });
                 break;
             case "series":
+                let seriesName = []
+                let seriesStart = []
+                let seriesEnd = []
+                let seriesVenue = []
+                for (var i = 1; i <= seriesNumberField.value; i++){
+                    seriesName.push(document.getElementById(`name{i}`))
+                    seriesStart.push(document.getElementById(`startTime${i}`).value)
+                    seriesEnd.push(document.getElementById(`endTime${i}`).value)
+                    seriesVenue.push(document.getElementById(`venue${i}`).value)
+                }
+                console.log(seriesStart)
+                console.log(seriesEnd)
+                console.log(seriesVenue)
+
                 for (var i = 1; i <= seriesNumberField.value; i++){
                     const seriesBody = {
                         seriesNum: i,
+                        seriesName:seriesName[`${i-1}`],
                         startTime: seriesStart[`${i-1}`],
-                        endTime: seriesEnd[`${i-1}`]
+                        endTime: seriesEnd[`${i-1}`],
+                        venue: seriesVenue[`${i-1}`]
                     }
                     fetch('/series', {
                         headers: {
@@ -363,8 +413,7 @@ nextBtn.addEventListener('click', function(e) {
                     })
                     .then(response => response.json())
                     .then(data => {
-                        console.log(data);
-                        window.location.href = '/create_event_img'
+                        console.log('Series details uploaded', data);
                     })
                     .catch(error => {
                         console.error('Error:', error);
@@ -380,6 +429,13 @@ nextBtn.addEventListener('click', function(e) {
     .catch(error => {
         console.error('Error:', error);
     });
+}
 
-   
-})
+function convertToBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result.split(',')[1]);
+        reader.onerror = error => reject(error);
+    });
+}
