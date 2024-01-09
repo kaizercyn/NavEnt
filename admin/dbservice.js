@@ -116,7 +116,7 @@ class DbService {
             let eventID = `${lastID[0].Event_ID + 1}`
             console.log("event id: ", eventID)
             response = await new Promise ((resolve, reject) => {
-                const query = "INSERT INTO webdev.events (Event_ID, Event_Name, Event_Tagline, Event_Description, Event_StartDate, Event_EndDate, Event_Type, isOpen, isPublic, Evaluation_Link, External_Regis) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+                const query = "INSERT INTO webdev.events (Event_ID, Event_Name, Event_Tagline, Event_Description, Event_StartDate, Event_EndDate, Event_Type, isOpen, isPublic, isLive, Evaluation_Link) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
                 connection.query(query, [eventID, a, b, c, d, e, f, g, h, i, j],(err, results) => {
                     if (err) {
                         reject(new Error(err.message))
@@ -159,15 +159,15 @@ class DbService {
         }
     }
 
-    async oneTime(a, b){
+    async oneTime(a, b, c){
         let response
         try {
             const lastID = await this.lastEventID();
             let eventID = `${lastID[0].Event_ID}`
             console.log("event id: ", eventID)
             response = await new Promise ((resolve, reject) => {
-                const query = "INSERT INTO webdev.onetime (Event_ID, Start_Time, End_Time) VALUES (?, ?, ?)"
-                connection.query(query, [eventID, a, b],(err, results) => {
+                const query = "INSERT INTO webdev.onetime (Event_ID, Start_Time, End_Time, Venue) VALUES (?, ?, ?, ?)"
+                connection.query(query, [eventID, a, b, c],(err, results) => {
                     if (err) {
                         reject(new Error(err.message))
                     } else {
@@ -184,15 +184,15 @@ class DbService {
         }
     }
     
-    async amPM(a, b, c, d){
+    async amPM(a, b, c, d, e, f){
         let response
         try {
             const lastID = await this.lastEventID();
             let eventID = `${lastID[0].Event_ID}`
             console.log("event id: ", eventID)
             response = await new Promise ((resolve, reject) => {
-                const query = "INSERT INTO webdev.ampm (Event_ID, AM_Start, AM_End, PM_Start, PM_End) VALUES (?, ?, ?, ?, ?)"
-                connection.query(query, [eventID, a, b, c, d],(err, results) => {
+                const query = "INSERT INTO webdev.`am/pm` (Event_ID, AM_Start, AM_End, AM_Venue, PM_Start, PM_End, PM_Venue) VALUES (?, ?, ?, ?, ?, ?, ?)"
+                connection.query(query, [eventID, a, b, c, d, e, f],(err, results) => {
                     if (err) {
                         reject(new Error(err.message))
                     } else {
@@ -209,15 +209,15 @@ class DbService {
         }
     }
 
-    async series(a, b, c){
+    async series(a, b, c, d, e){
         let response
         try {
             const lastID = await this.lastEventID();
             let eventID = `${lastID[0].Event_ID}`
             console.log("event id: ", eventID)
             response = await new Promise ((resolve, reject) => {
-                const query = "INSERT INTO webdev.series (Event_ID, Series_Num, Start_Time, End_Time) VALUES (?, ?, ?, ?)"
-                connection.query(query, [eventID, a, b, c],(err, results) => {
+                const query = "INSERT INTO webdev.series (Event_ID, Series_Num, Series_Name, Start_Time, End_Time, Venue) VALUES (?, ?, ?, ?, ?, ?)"
+                connection.query(query, [eventID, a, b, c, d, e],(err, results) => {
                     if (err) {
                         reject(new Error(err.message))
                     } else {
