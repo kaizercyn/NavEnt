@@ -6,7 +6,7 @@ require "../vendor/autoload.php";
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Writer\PngWriter;
 
-$error = '';
+$error = 'SUCCESSFULLY REGISTERED!';
 try{
 if (isset($_POST["register"])) {
     if ($_POST["IDnum"] == $_SESSION['userId']) {
@@ -113,7 +113,7 @@ if (isset($_POST["register"])) {
     </nav>
 
     <section id="packages" class="pt-3 pb-3 text-center">
-        <h1>SUCCESSFULLY REGISTERED</h1>
+        <h1><?php echo $error; ?></h1>
         <h2 class="my-3">Your QR Code</h2>
 
         <div class="container">
