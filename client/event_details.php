@@ -73,7 +73,7 @@ if(isset($_POST['readMore'] )){
           ?>
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 <button class="btn me-md-2 text-light h-btn" type="button"><a href="user_login.php">Login</a></button>
-                <button class="btn text-light h-btn" type="button"><a href="user_signup.html">Signup</a></button>
+                <button class="btn text-light h-btn" type="button"><a href="user_signup.php">Signup</a></button>
               </div>
         </div>
     <?php
@@ -85,7 +85,7 @@ if(isset($_POST['readMore'] )){
     <nav>
         <div class="nav-links">
             <a href="../index.php">HOME</a>
-            <a href="announcement.html">ANNOUNCEMENTS</a>
+            <a href="../client/announcement.php">ANNOUNCEMENTS</a>
         </div>
         <div class="box">
             <input type="text" placeholder="Search...">
@@ -144,6 +144,20 @@ if(isset($_POST['readMore'] )){
               </select>
           </div>
       </div>
+
+      <div class="row">
+  
+          <div class="col-md-6">
+              <label for="course" class="form-label">Organization</label>
+              <input id="course" type="text" class="form-control mb-3" name="Organization" placeholder="Pick N/A if not in any org. " required>
+          </div>
+  
+          <div class="col-md-6">
+              <label for="year" class="form-label">School</label>
+              <input id="course" type="text" class="form-control mb-3" name="Position" placeholder="Pick N/A if not in any org. " required>
+          </div>
+      </div>
+
   
       <div class="row">
   

@@ -16,12 +16,14 @@ if (isset($_POST["register"])) {
         $school = $_POST['school'];
         $eventiD = $_POST['eventid'];
         $uID = $_POST['IDnum'];
+        $organization = $_POST['Organization'];
+        $postion = $_POST['Position'];
         $registerID = (int)$uID . $eventiD;
         $_SESSION['IDEvent'] = $eventiD;
         $_SESSION['temp'] = $registerID;
 
-        $st = $conn->prepare('INSERT INTO registration (`Name`, `Department`, `Course`, `Role`,`Registration_ID`, `User_ID`) VALUES (?,?,?,?,?,?)');
-        $st->bind_param('ssssii',$nameUser, $role, $course, $school, $registerID, $uID);
+        $st = $conn->prepare('INSERT INTO registration (`Registration_ID`,`Name`, `Course`, `School`, `Role`, `Organization`, `Org_Position`, `User_ID`) VALUES (?,?,?,?,?,?)');
+        $st->bind_param('issssssi',$registerID, $nameUser, $course, $school, $role, $Organization, $postion, $uID);
         $st->execute();
         $st->close();
         $qrData = $uID . $eventiD;
