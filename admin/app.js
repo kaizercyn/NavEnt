@@ -240,12 +240,12 @@ app.post('/addEvent', async (request, response) => {
         let eventType = request.body.type
         let isOpen = request.body.open
         let isPublic = request.body.public
-        let evalLink = request.body.eval   
-        let regisLink = request.body.regis
+        let isLive = request.body.live
+        let evalLink = request.body.eval
 
         const db = dbService.getDbServiceInstance()
         const result = await db.newEvent(eventName, eventTagline, eventDesc, startDate, endDate,
-            eventType, isOpen, isPublic, evalLink, regisLink)
+            eventType, isOpen, isPublic, isLive, evalLink)
         response.json({success: true})
     } catch (error) {
         console.log(error + " Error creating event");
@@ -269,9 +269,10 @@ app.post('/oneTime', async (request, response) => {
     try {
         let startTime = request.body.startTime
         let endTime = request.body.endTime
+        let venue = request.body.venue
 
         const db = dbService.getDbServiceInstance()
-        const result = await db.oneTime(startTime, endTime)
+        const result = await db.oneTime(startTime, endTime, venue)
         response.json({
             success: true
         })
@@ -285,11 +286,13 @@ app.post('/amPm', async (request, response) => {
     try {
         let AMstartTime = request.body.amStart
         let AMendTime = request.body.amEnd
+        let AMVenue = request.body.amVenue
         let PMstartTime = request.body.pmStart
         let PMendTime = request.body.pmEnd
+        let PMVenue = request.body.pmVenue
 
         const db = dbService.getDbServiceInstance()
-        const result = await db.amPm(AMstartTime, AMendTime, PMstartTime, PMendTime)
+        const result = await db.amPM(AMstartTime, AMendTime, AMVenue, PMstartTime, PMendTime, PMVenue)
         response.json({
             success: true
         })
@@ -302,11 +305,13 @@ app.post('/amPm', async (request, response) => {
 app.post('/series', async (request, response) => {
     try {
         let num = request.body.seriesNum
+        let name = request.body.seriesName
         let start = request.body.startTime
         let end = request.body.endTime
+        let venue = request.body.venue
 
         const db = dbService.getDbServiceInstance()
-        const result = await db.series(num, start, end)
+        const result = await db.series(num, name, start, end, venue)
         response.json({
             success: true
         })

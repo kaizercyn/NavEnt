@@ -242,7 +242,8 @@ p {
     font-family: 'CAZentrum Medium', sans serif;
     background-color: #E4960E; 
     color: #fff; 
-    border-color: transparent; 
+    border-color: transparent;
+    align-items: right; 
   }
   
 .btn-scan-qr:hover {
