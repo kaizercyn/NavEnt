@@ -22,7 +22,7 @@ if (isset($_POST["register"])) {
         $_SESSION['IDEvent'] = $eventiD;
         $_SESSION['temp'] = $registerID;
 
-        $st = $conn->prepare('INSERT INTO registration (`Registration_ID`,`Name`, `Course`, `School`, `Role`, `Organization`, `Org_Position`, `User_ID`) VALUES (?,?,?,?,?,?)');
+        $st = $conn->prepare('INSERT INTO registration (`Registration_ID`,`Name`, `Course`, `School`, `Role`, `Organization`, `Org_Position`, `User_ID`) VALUES (?,?,?,?,?,?,?,?)');
         $st->bind_param('issssssi',$registerID, $nameUser, $course, $school, $role, $Organization, $postion, $uID);
         $st->execute();
         $st->close();
