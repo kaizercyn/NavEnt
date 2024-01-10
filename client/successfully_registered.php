@@ -26,8 +26,7 @@ if (isset($_POST["register"])) {
         $st->bind_param('issssssi',$registerID, $nameUser, $course, $school, $role, $Organization, $postion, $uID);
         $st->execute();
         $st->close();
-        $qrData = $uID . $eventiD;
-        $qr_code = QrCode::create($qrData);
+        $qr_code = QrCode::create($registerID);
         $writer = new PngWriter;
         $qrGenerated = $writer->write($qr_code);
         $final = $qrGenerated->getString();
@@ -37,7 +36,7 @@ if (isset($_POST["register"])) {
         $st->execute();
         $st->close();
 
-        $imageFilePath = "../phpqrcode/" . "$uID" . "$eventiD";
+        $imageFilePath ="C:/xampp/htdocs/webdevfinals/res/QRimages";
         file_put_contents($imageFilePath, $qrGenerated->getString());
     }
 }
