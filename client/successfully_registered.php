@@ -44,7 +44,7 @@ if (isset($_POST["register"])) {
   // Handle the exception here
   if ($e->getCode() == 1062) {
       // Duplicate entry error (error code 1062)
-      $error =  "Duplicate entry detected. Handle accordingly.";
+      $error =  "You have already Registered for this event";
   } else {
       // Handle other SQL errors
       $error = "Error: " . $e->getMessage();
