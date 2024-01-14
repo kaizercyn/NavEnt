@@ -5,6 +5,7 @@ require "../vendor/autoload.php";
 
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Writer\PngWriter;
+use Endroid\QrCode\Label\Label;
 
 $error = 'SUCCESSFULLY REGISTERED!';
 try{
@@ -125,8 +126,9 @@ if (isset($_POST["register"])) {
                 <div class="col-md-4 mx-auto text-center">
                   <?php
                   $qr_code = QrCode::create($_SESSION['username'] . $_SESSION['IDEvent'] );
+                  $label = Label::create("$nameuser" . "$eventiD");                   
                   $writer = new PngWriter;
-                  $qrGenerated = $writer ->write($qr_code);
+                  $qrGenerated = $writer ->write($qr_code,null,$label);
                   $QrImage = $qrGenerated -> getString();
                   $filePath = "../res/QRimages/"."$nameUser"."$eventiD".".png"; 
 
