@@ -9,45 +9,48 @@ use Endroid\QrCode\Writer\PngWriter;
 $error = 'SUCCESSFULLY REGISTERED!';
 try{
 if (isset($_POST["register"])) {
-    if ($_POST["IDnum"] == $_SESSION['userId']) {
-        $nameUser = $_POST['uname'];
-        $role = $_POST['role'];
-        $course = $_POST['course'];
-        $school = $_POST['school'];
-        $eventiD = $_POST['eventid'];
-        $uID = $_POST['IDnum'];
-        $organization = $_POST['Organization'];
-        $postion = $_POST['Position'];
-        $registerID = (int)$uID . $eventiD;
-        $_SESSION['IDEvent'] = $eventiD;
-        $_SESSION['temp'] = $registerID;
+  $nameUser = $_POST['uname'];
+  $role = $_POST['role'];
+  $course = $_POST['course'];
+  $school = $_POST['school'];
+  $eventiD = $_POST['eventid'];
+  $uID = $_POST['IDnum'];
+  $organization = $_POST['Organization'];
+  $postion = $_POST['Position'];
+  $registerID = uniqid();
+  $_SESSION['IDEvent'] = $eventiD;
+  $_SESSION['temp'] = $registerID;
 
-        $st = $conn->prepare('INSERT INTO registration (`Registration_ID`,`Name`, `Course`, `School`, `Role`, `Organization`, `Org_Position`, `User_ID`) VALUES (?,?,?,?,?,?,?,?)');
-        $st->bind_param('issssssi',$registerID, $nameUser, $course, $school, $role, $Organization, $postion, $uID);
-        $st->execute();
-        $st->close();
-        $qr_code = QrCode::create($registerID);
-        $writer = new PngWriter;
-        $qrGenerated = $writer->write($qr_code);
-        $final = $qrGenerated->getString();
+  $st = $conn -> prepare("SELECT * FROM REGISDETAILS WHERE User_ID=? and Event_ID=?;");
+  $st-> bind_param('ii', $uID, $eventiD);
+  $st-> execute();
+  $result= $st->get_result();
+  $st -> close(); 
+    if ($result->num_rows ==  0){
+      $st = $conn->prepare('INSERT INTO registration (`Registration_ID`,`Name`, `Course`, `School`, `Role`, `Organization`, `Org_Position`, `User_ID`) VALUES (?,?,?,?,?,?,?,?)');
+      $st->bind_param('issssssi',$registerID, $nameUser, $course, $school, $role, $organization, $postion, $uID);
+      $st->execute();
+      $st->close();
+      $qr_code = QrCode::create($nameUser . $eventiD);
+      $writer = new PngWriter;
+      $qrGenerated = $writer ->write($qr_code);
+      $final = $qrGenerated -> getString();
 
-        $st = $conn->prepare('INSERT INTO regisdetails (`User_ID`, `Event_ID`,`QR_Code`) VALUES (?,?,?)');
-        $st->bind_param('iis', $uID, $eventiD, $final);
-        $st->execute();
-        $st->close();
 
-        $imageFilePath ="C:/xampp/htdocs/webdevfinals/res/QRimages";
-        file_put_contents($imageFilePath, $qrGenerated->getString());
+      $st = $conn->prepare('INSERT INTO regisdetails (`User_ID`, `Event_ID`,`QR_Code`) VALUES (?,?,?)');
+      $st->bind_param('iis', $uID, $eventiD, $final);
+      $st->execute();
+      $st->close();
+
+    } else{
+      $error = "You have already Registered for this event";
     }
 }
 } catch (mysqli_sql_exception $e) {
-  // Handle the exception here
   if ($e->getCode() == 1062) {
-      // Duplicate entry error (error code 1062)
-      $error =  "You have already Registered for this event";
+      //$error =  "You have already Registered for this event";
   } else {
-      // Handle other SQL errors
-      $error = "Error: " . $e->getMessage();
+     // $error = "Error: " . $e->getMessage();
   }
 }
 ?>
@@ -120,7 +123,23 @@ if (isset($_POST["register"])) {
         <div class="container">
             <div class="row">
                 <div class="col-md-4 mx-auto text-center">
-                
+                  <?php
+                  $qr_code = QrCode::create($_SESSION['username'] . $_SESSION['IDEvent'] );
+                  $writer = new PngWriter;
+                  $qrGenerated = $writer ->write($qr_code);
+                  $QrImage = $qrGenerated -> getString();
+                  $filePath = "../res/QRimages/"."$nameUser"."$eventiD".".png"; 
+
+                  // Save the QR code image to the server
+                  file_put_contents($filePath, $QrImage);
+                  
+                  // Display a message indicating success or failure
+                  if (file_exists($filePath)) {
+                      echo '<img src="' . $filePath . '" alt="QR Code">';
+                  } else {
+                      echo 'Failed to save QR code.';
+                  }
+                  ?>
                 </div>
 
                 <div class="col-md-6 d-flex align-items-center justify-content-center">
