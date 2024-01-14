@@ -165,8 +165,8 @@ if (isset($_POST["register"])) {
     <script>
         function downloadQR() {
             var downloadLink = document.createElement("a");
-            downloadLink.href = "/res/imgs/prof_placeholder.png";
-            downloadLink.download = "qr-code.png";
+            downloadLink.href = "<?php echo $filePath ?>";
+            downloadLink.download = "<?php echo $filePath ?>";  
             document.body.appendChild(downloadLink);
             downloadLink.click();
             document.body.removeChild(downloadLink);
