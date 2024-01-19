@@ -1,15 +1,20 @@
+<?php
+session_start();
+require "../php/dbconnection.php";
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pending Evaluations</title>
+    <title>Bookmarked Events</title>
  
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
 
-    <link rel="stylesheet" href="style/pending_evaluation.css">
+    <link rel="stylesheet" href="style/bookmarked_events.css">
 </head>
 <body>
     <header>
@@ -26,17 +31,16 @@
                         <div class="profile-icon">
                           <i class="bi bi-person"></i>
                       </div>
-                      <span class="username">John Doe</span>
+                      <span class="username"><?php echo $_SESSION['username']; ?></span>
                       
                       </div>
               </div>
             </button>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="account_details.html">Account Details</a></li>
-              <li><a class="dropdown-item" href="bookmarked_events.html">Bookmarks</a></li>
-              <li><a class="dropdown-item" href="event_history.html">Event History</a></li>
-            <li><a class="dropdown-item" href="pending_evaluation.html">Pending Evaluations</a></li>
-            <li><a class="dropdown-item" href="qr_code.html">QR Code</a></li>
+              <li><a class="dropdown-item" href="client/account_details.html">Account Details</a></li>
+              <li><a class="dropdown-item" href="client/bookmarked_events.html">Bookmarks</a></li>
+              <li><a class="dropdown-item" href="client/event_history.html">Event History</a></li>
+              <li><a class="dropdown-item" href="client/pending_evaluation.html">Pending Evaluations</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="#">
                 <form action="logout.php" method="post"><button type="submit" class="dropdown-item" onclick="return confirm('Are you sure you want to logout?')">Logout</button></form></a></li>
@@ -48,12 +52,13 @@
 
     <nav>
         <div class="nav-links">
-            <a href="home.php">HOME</a>
+            <a href="../index.php">HOME</a>
+            <a href="../client/announcement.php">ANNOUNCEMENTS</a>
         </div>
     </nav>
 
     <section id="packages" class="pt-3 pb-3 custom-left-padding">
-        <h2 class="text-left my-3">Pending Evaluations</h2>
+      <h2 class="text-left my-3">Bookmarked Events<h2>
     </section>
 
     <div id="latestEventsSlider" class="carousel slide" data-bs-ride="false">

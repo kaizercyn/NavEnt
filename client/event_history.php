@@ -38,7 +38,6 @@
               <li><a class="dropdown-item" href="bookmarked_events.html">Bookmarks</a></li>
               <li><a class="dropdown-item" href="event_history.html">Event History</a></li>
             <li><a class="dropdown-item" href="pending_evaluation.html">Pending Evaluations</a></li>
-            <li><a class="dropdown-item" href="qr_code.html">QR Code</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="#">
                 <form action="logout.php" method="post"><button type="submit" class="dropdown-item" onclick="return confirm('Are you sure you want to logout?')">Logout</button></form></a></li>
