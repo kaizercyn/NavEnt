@@ -123,7 +123,7 @@ if (isset($_POST["register"])) {
 
         <div class="container">
             <div class="row">
-                <div class="col-md-4 mx-auto text-center">
+                <div class="col-md-6 mx-auto text-center">
                   <?php
                   $qr_code = QrCode::create($_SESSION['username'] . $_SESSION['IDEvent'] );
                   $label = Label::create("$nameUser" . "$eventiD");                   
@@ -144,7 +144,7 @@ if (isset($_POST["register"])) {
                   ?>
                 </div>
 
-                <div class="col-md-6 d-flex align-items-center justify-content-center">
+                <div class="col-md-6 d-flex align-items-center justify-content-between">
                     <div class="d-flex flex-column align-items-center">
                         <button class="button" onclick="downloadQR()">Download</button>
                         <button class="button" onclick="printQR()">Print</button>
