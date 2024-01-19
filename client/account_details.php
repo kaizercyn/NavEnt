@@ -36,7 +36,7 @@ session_start();
             </div>
           </button>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="account_details.html">Account Details</a></li>
+            <li><a class="dropdown-item" href="account_details.">Account Details</a></li>
             <li><a class="dropdown-item" href="bookmarked_events.html">Bookmarks</a></li>
             <li><a class="dropdown-item" href="event_history.html">Event History</a></li>
             <li><a class="dropdown-item" href="pending_evaluation.html">Pending Evaluations</a></li>

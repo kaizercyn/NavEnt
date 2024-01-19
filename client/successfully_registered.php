@@ -6,6 +6,7 @@ require "../vendor/autoload.php";
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Writer\PngWriter;
 use Endroid\QrCode\Label\Label;
+use Endroid\QrCode\Logo\Logo;
 
 $error = 'SUCCESSFULLY REGISTERED!';
 try{
@@ -91,10 +92,9 @@ if (isset($_POST["register"])) {
           </button>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="../client/acount_details.php">Account Details</a></li>
-            <li><a class="dropdown-item" href="bookmarked_events.html">Bookmarks</a></li>
-            <li><a class="dropdown-item" href="../client/event_history.html">Event History</a></li>
-            <li><a class="dropdown-item" href="../client/pending_evaluation.html">Pending Evaluations</a></li>
-            <li><a class="dropdown-item" href="qr_code.html">QR Code</a></li>
+            <li><a class="dropdown-item" href="../client/bookmarked_events.php">Bookmarks</a></li>
+            <li><a class="dropdown-item" href="../client/event_history.php">Event History</a></li>
+            <li><a class="dropdown-item" href="../client/pending_evaluation.php">Pending Evaluations</a></li>
             <li><hr class=" dropdown-divider"></li>
             <li>
             <form action="../php/logoutfunctions.php" method="POST"><button type="submit" class="dropdown-item" onclick="return confirm('Are you sure you want to logout?')">Logout</button></form></li>
@@ -126,11 +126,12 @@ if (isset($_POST["register"])) {
                 <div class="col-md-6 mx-auto text-center">
                   <?php
                   $qr_code = QrCode::create($_SESSION['username'] . $_SESSION['IDEvent'] );
-                  $label = Label::create("$nameUser" . "$eventiD");                   
+                  $label = Label::create("$nameUser");
+                  $logo = Logo::create("../res/imgs/navi-event-logo(flat-40a).png");                   
                   $writer = new PngWriter;
-                  $qrGenerated = $writer ->write($qr_code,null,$label);
+                  $qrGenerated = $writer ->write($qr_code,$logo,$label);
                   $QrImage = $qrGenerated -> getString();
-                  $filePath = "../res/QRimages/"."$nameUser"."$eventiD".".png"; 
+                  $filePath = "../res/QRimages/"."$nameUser".".png"; 
 
                   // Save the QR code image to the server
                   file_put_contents($filePath, $QrImage);
