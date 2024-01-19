@@ -144,8 +144,8 @@ if (isset($_POST["register"])) {
                   ?>
                 </div>
 
-                <div class="col-md-6 d-flex align-items-center justify-content-between">
-                    <div class="d-flex flex-column align-items-center">
+                <div class="col-md-6 d-flex align-items-center justify-content-center flex-column">
+                    <div class="d-flex flex-column align-items-center mb-3">
                         <button class="button" onclick="downloadQR()">Download</button>
                         <button class="button" onclick="printQR()">Print</button>
                     </div>
