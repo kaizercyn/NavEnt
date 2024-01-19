@@ -18,7 +18,7 @@ if (isset($_POST["register"])) {
   $uID = $_POST['IDnum'];
   $organization = $_POST['Organization'];
   $postion = $_POST['Position'];
-  $registerID = uniqid();
+  $registerID = substr(uniqid(), 0,6);
   $_SESSION['IDEvent'] = $eventiD;
   $_SESSION['temp'] = $registerID;
 
@@ -126,7 +126,7 @@ if (isset($_POST["register"])) {
                 <div class="col-md-4 mx-auto text-center">
                   <?php
                   $qr_code = QrCode::create($_SESSION['username'] . $_SESSION['IDEvent'] );
-                  $label = Label::create("$nameuser" . "$eventiD");                   
+                  $label = Label::create("$nameUser" . "$eventiD");                   
                   $writer = new PngWriter;
                   $qrGenerated = $writer ->write($qr_code,null,$label);
                   $QrImage = $qrGenerated -> getString();
