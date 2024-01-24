@@ -33,7 +33,7 @@ if (isset($_POST["register"])) {
       $st->bind_param('issssssi',$registerID, $nameUser, $course, $school, $role, $organization, $postion, $uID);
       $st->execute();
       $st->close();
-      $qr_code = QrCode::create($nameUser . $eventiD);
+      $qr_code = QrCode::create($uID . $eventiD);
       $writer = new PngWriter;
       $qrGenerated = $writer ->write($qr_code);
       $final = $qrGenerated -> getString();
@@ -119,25 +119,31 @@ if (isset($_POST["register"])) {
 
     <section id="packages" class="pt-3 pb-3 text-center">
         <h1><?php echo $error; ?></h1>
-        <h2 class="my-3">Your QR Code</h2>
+        <h2 class="my-3"><?php
+          if($error == "SUCCESSFULLY REGISTERED!"){
+            $message = $_SESSION['name'];
+            echo "Your QR code for $message.";
+          }else{
+            echo "Something went wrong...";
+          }
+          ?>
 
         <div class="container">
             <div class="row">
                 <div class="col-md-6 mx-auto text-center">
                   <?php
-                  $qr_code = QrCode::create($_SESSION['username'] . $_SESSION['IDEvent'] );
+                  $qr_code = QrCode::create($_POST['IDnum'] . $_SESSION['IDEvent'] )
+                            -> setSize(300);
                   $label = Label::create("$nameUser");
                   $logo = Logo::create("../res/imgs/navi-event-logo(flat-40a-circle).png")
-                          -> setResizeToWidth(70);                   
+                          -> setResizeToWidth(30);                   
                   $writer = new PngWriter;
                   $qrGenerated = $writer ->write($qr_code,$logo,$label);
                   $QrImage = $qrGenerated -> getString();
                   $filePath = "../res/QRimages/"."$nameUser".".png"; 
 
-                  // Save the QR code image to the server
                   file_put_contents($filePath, $QrImage);
                   
-                  // Display a message indicating success or failure
                   if (file_exists($filePath)) {
                       echo '<img src="' . $filePath . '" alt="QR Code">';
                   } else {
