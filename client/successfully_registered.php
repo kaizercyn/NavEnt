@@ -19,7 +19,7 @@ if (isset($_POST["register"])) {
   $uID = $_POST['IDnum'];
   $organization = $_POST['Organization'];
   $postion = $_POST['Position'];
-  $registerID = substr(uniqid(), 0,6);
+  $registerID = str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT);
   $_SESSION['IDEvent'] = $eventiD;
   $_SESSION['temp'] = $registerID;
 
@@ -127,7 +127,8 @@ if (isset($_POST["register"])) {
                   <?php
                   $qr_code = QrCode::create($_SESSION['username'] . $_SESSION['IDEvent'] );
                   $label = Label::create("$nameUser");
-                  $logo = Logo::create("../res/imgs/navi-event-logo(flat-40a-circle).png");                   
+                  $logo = Logo::create("../res/imgs/navi-event-logo(flat-40a-circle).png")
+                          -> setResizeToWidth(70);                   
                   $writer = new PngWriter;
                   $qrGenerated = $writer ->write($qr_code,$logo,$label);
                   $QrImage = $qrGenerated -> getString();
