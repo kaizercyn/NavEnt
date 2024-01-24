@@ -127,7 +127,7 @@ if (isset($_POST["register"])) {
                   <?php
                   $qr_code = QrCode::create($_SESSION['username'] . $_SESSION['IDEvent'] );
                   $label = Label::create("$nameUser");
-                  $logo = Logo::create("../res/imgs/navi-event-logo(flat-40a).png");                   
+                  $logo = Logo::create("../res/imgs/navi-event-logo(flat-40a-circle).png");                   
                   $writer = new PngWriter;
                   $qrGenerated = $writer ->write($qr_code,$logo,$label);
                   $QrImage = $qrGenerated -> getString();
