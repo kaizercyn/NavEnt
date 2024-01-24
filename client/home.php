@@ -12,6 +12,16 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
 
     <link rel="stylesheet" href="client/style/home.css">
+
+    <style>
+        /* Add some styling for the search results box */
+        #searchResultsContainer {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            display: none;
+        }
+    </style>
 </head>
   <body>
 
@@ -34,11 +44,72 @@
             <a href="client/announcement.html">ANNOUNCEMENTS</a>
         </div>
         <div class="box">
-            <input type="text" placeholder="Search...">
-            <a href="">
-                <i class="bi bi-search search-icon"></i>
-                <i class="fas fa-search"></i>
-            </a>
+
+
+    <form id="searchForm" action="index.php" method="get">
+        <input type="text" name="search_query" placeholder="Search...">
+        <button type="button" onclick="performSearch()">
+            <i class="bi bi-search search-icon"></i>
+            <i class="fas fa-search"></i>
+        </button>
+    </form>
+
+    <div id="searchResultsContainer">
+                <h2>Search Results</h2>
+                <div id="resultsTable"></div>
+            </div>
+
+    <div id="searchResults">
+        <!-- Search results will be displayed here -->
+        <?php
+// Establish a database connection (you should replace the placeholder values with your actual database credentials)
+$db_host = "localhost";
+$db_user = "root";
+$db_password = "";
+$db_name = "jopweb";
+
+$conn = new mysqli($db_host, $db_user, $db_password, $db_name);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["search_query"])) {
+    $search_query = $_GET["search_query"];
+
+    // Perform a simple search on the Event_Name column
+    $sql = "SELECT * FROM events WHERE Event_Name LIKE '%$search_query%'";
+    $result = $conn->query($sql);
+
+    echo '<div id="searchResults">';
+    echo '<h2>Search Results</h2>';
+    
+    if ($result->num_rows > 0) {
+        echo '<table border="1">';
+        echo '<tr><th>Event ID</th><th>Event Name</th><th>Event Tagline</th></tr>';
+
+        while ($row = $result->fetch_assoc()) {
+            echo '<tr>';
+            echo '<td>' . $row['Event_ID'] . '</td>';
+            echo '<td>' . $row['Event_Name'] . '</td>';
+            echo '<td>' . $row['Event_Tagline'] . '</td>';
+            echo '</tr>';
+        }
+
+        echo '</table>';
+    } else {
+        echo '<p>No results found.</p>';
+    }
+
+    echo '</div>';
+}
+
+// Close the database connection
+$conn->close();
+?>
+    </div>
+    
+    
     </nav>
     <?php
     require("php/dbconnection.php");
@@ -251,5 +322,27 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-  </body>
+
+    
+    <script>
+        function performSearch() {
+        var form = document.getElementById("searchForm");
+        var formData = new FormData(form);
+
+        // Use Fetch API to send the form data to index.php
+        fetch('index.php', {
+            method: 'GET',
+            body: formData
+        })
+        .then(response => response.text())
+        .then(data => {
+            // Update the content of the searchResultsContainer with the search results
+            var searchResultsContainer = document.getElementById("searchResultsContainer");
+            searchResultsContainer.innerHTML = '<h2>Search Results</h2>' + data;
+            searchResultsContainer.style.display = "block";
+        })
+        .catch(error => console.error('Error:', error));
+    }
+    </script>
+</body>
 </html>
