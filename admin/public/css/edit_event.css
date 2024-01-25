@@ -91,15 +91,23 @@ header {
     transition: border-color 0.3s ease;
 }
 
-.pf-dropdown .dropdown-menu a.dropdown-item {
-    font-family: 'CAZentrum Regular', sans-serif;
-    color: #000e1e;
+.logout-btn{
+    text-decoration: none;
+    /* padding-left: 30px; */
 }
 
-.pf-dropdown .dropdown-menu a.dropdown-item:hover,
-.pf-dropdown .dropdown-menu a.dropdown-item:focus {
+.pf-dropdown .dropdown-menu a.logout-btn {
+    font-family: 'CAZentrum Regular', sans-serif;
+    color: #000e1e;
+    display: flex;
+    justify-content: center;
+}
+
+.pf-dropdown .dropdown-menu :hover,
+.pf-dropdown .dropdown-menu a.logout-btn:focus {
     background-color: #71999B;
 }
+
 
 .username {
     color: #F1F1F1;
@@ -113,7 +121,48 @@ header {
     align-items: center;
 }
 
-.bi-pencil-square {
+nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #E4960E;
+    padding: 10px 20px;
+}
+
+.toHome{
+    border: none;
+    background-color: transparent;
+    font-size: 14px;
+    color: #F1F1F1;
+    outline: none;
+    cursor: pointer;
+}
+
+#msg {
+    text-align: center;
+    margin: auto;
+    width: 50%; 
+}
+
+#previewImage {
+    max-width: 25%;
+    max-height: 25%;
+    display: block;
+    margin: 0 auto;
+}
+
+.centered-image-container {
+    position: relative;
+    display: inline-block;
+}
+
+.overlay {
+    position: absolute;
+    background-color: rgba(114, 113, 113, 0.5);
+    z-index: 1;
+}
+
+.plus-icon {
     font-size: 50px;
     color:#71999B;
 }

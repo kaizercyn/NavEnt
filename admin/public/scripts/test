@@ -1,0 +1,23 @@
+`<div class="series1">
+    <h3>Series 1</h3>
+    <p id="eventVenue">Event Venue</p>
+    <div class="row">
+        <div class="col-10"></div>
+        <div class="col-2 text-right">
+            <p class="date">Date</p>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover ">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Participant</th>
+                    <th scope="col">In Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr></tr>
+            </tbody>
+        </table>
+    </div>
+</div>

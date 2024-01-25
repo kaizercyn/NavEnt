@@ -1,3 +1,4 @@
+
 const eventNameField = document.querySelector('.form-control#eventName')
 const eventTagField = document.querySelector('.form-control#tagline')
 const eventDescField = document.querySelector('.form-control#description')
@@ -19,18 +20,26 @@ const privateRadioButton = document.getElementById('false');
 const evaluationLinkField = document.querySelector('.form-control#evaluationLink')
 const otherLinksCheckbox = document.getElementById('other-link')
 const registrationCheckbox = document.getElementById('reg-open')
+const inputElement = document.getElementById('eventImage')
+const errorMsgContainer = document.querySelector('.errorMessageDiv');
+const unfilledMsgContainer = document.querySelector('.unfilledFieldsDiv');
 const draftBtn = document.querySelector('.button-save-draft')
 const publishBtn = document.querySelector('.button-save-publish')
-
-
-var selectedEventType = ''
-var isPublic = ''
-var isOpen = ''
-var hasUploaded = ''
-var eventPic = ''
+const confirmationMsgContainer = document.querySelector('.confirmationDiv');
+const toHomeBtn = document.querySelector('.toHome')
+const logoutBtn = document.querySelector('.logout-btn');
 
 document.getElementById('seriesNumber').addEventListener('input', generateSeriesFields);
 document.getElementById('linkNumber').addEventListener('input', generateLinkFields);
+
+var selectedEventType = ''
+var changedPic = ''
+var isPublic = ''
+var isOpen = ''
+var hasExternal = ''
+var externalCount = 0
+var eventPic = ''
+
 
 $(document).ready(function () {
     $('input[name="eventType"]').change(function () {
@@ -49,19 +58,138 @@ $(document).ready(function() {
     $('#other-link').change(function() {
         if (this.checked) {
             $('#externalLinks').show();
+            
         } else {
             $('#externalLinks').hide();
         }
     });
 });
 
+eventTypeRadios.forEach(radio => {
+    radio.addEventListener('change', function () {
+        if (this.checked) {
+            selectedEventType = this.id
+            console.log(`Selected event type: ${selectedEventType}`);
+      }
+    });
+});
+
+publicRadioButton.addEventListener('change', function() {
+    if (this.checked) {
+      isPublic = true;
+      console.log('Is Public:', isPublic);
+    }
+});
+
+privateRadioButton.addEventListener('change', function() {
+    if (this.checked) {
+        isPublic = false;
+        console.log('Is Public:', isPublic);
+    }
+});
+
+registrationCheckbox.addEventListener('change', function() {
+    if (registrationCheckbox.checked) {
+      isOpen = true
+      console.log('Checkbox is checked. Open for Registration!');
+    } else {
+      isOpen = false
+      console.log('Checkbox is unchecked. Registration closed.');
+    }
+})
+
+logoutBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    fetch('/logout', {
+        method: 'GET',
+        credentials: 'same-origin'
+    })
+    .then(response => {
+        if (response.ok) {
+        console.log('Logout successful');
+        window.location.href = '/';
+        } else {
+        console.error('Logout failed');
+        }
+    })
+    .catch(error => {
+        console.error('Error during logout:', error);
+    });
+});
+
+toHomeBtn.addEventListener('click', function(e) {
+    console.log('home clicked')
+    window.location.href = '/admin_home';
+})
+
+inputElement.addEventListener('change', (event) => {
+    changedPic = true
+    errorMsgContainer.innerHTML = ''
+    eventPic = event.target.files[0];
+
+    const maxSizeInBytes = 1048576;
+    
+    if (eventPic.size > maxSizeInBytes) {
+        console.error('File size exceeds the allowed limit.');
+        displayMessage('The chosen file is too large.', errorMsgContainer, false);
+    }
+
+    if (eventPic && eventPic.type.startsWith('image/')) {
+        console.log('Image uploaded:', eventPic);
+    } else {
+        console.log('Please upload an image file.');
+    }
+});
+
+draftBtn.addEventListener('click', function(e) {
+    unfilledMsgContainer.innerHTML = ''
+    if (!eventNameField.value.trim()){
+        displayMessage("Please enter a name for the event.", unfilledMsgContainer, false)
+    } else {
+        const eventBody = getEventBody()
+        eventBody.live = false
+        console.log(JSON.stringify(eventBody))
+        sendToServer(eventBody)
+        if (hasExternal === true){
+            sendExternalLinks(externalCount)
+        }
+        if(changedPic = true) {
+            uploadEventImg(eventPic)
+        }
+        displayMessage("Draft successfully saved.", confirmationMsgContainer, true)
+        setTimeout(function() {
+            window.location.href = '/admin_home';
+        }, 1000);
+    }
+})
+
+publishBtn.addEventListener('click', function(e) {
+    unfilledMsgContainer.innerHTML = ''
+    if (checkValues() == false){
+        displayMessage("Please fill out all fields before publishing.", unfilledMsgContainer, false)
+    } else {
+        const eventBody = getEventBody()
+        eventBody.live = true
+        console.log(JSON.stringify(eventBody))
+        sendToServer(eventBody)
+        if (hasExternal === true){
+            sendExternalLinks(externalCount)
+        }
+        uploadEventImg(eventPic)
+        displayMessage("Event successfully published", confirmationMsgContainer, true)
+        setTimeout(function() {
+            window.location.href = '/admin_home';
+        }, 1000);
+    }
+})
 
 function generateLinkFields(){
-    var linkNumber = document.getElementById('linkNumber').value
+    hasExternal = true
+    externalCount = document.getElementById('linkNumber').value
     var linkContainer = document.getElementById('linkFieldsContainer')
     linkContainer.innerHTML = ''
 
-    for (var j = 1; j <= linkNumber; j++) {
+    for (var j = 1; j <= externalCount; j++) {
         var linkContainerDiv = document.createElement('div')
         linkContainerDiv.style.display = 'flex'
         linkContainerDiv.style.gap = '10px'
@@ -188,69 +316,6 @@ function generateSeriesFields() {
 
 }
 
-eventTypeRadios.forEach(radio => {
-    radio.addEventListener('change', function () {
-        if (this.checked) {
-            selectedEventType = this.id
-            console.log(`Selected event type: ${selectedEventType}`);
-      }
-    });
-});
-
-publicRadioButton.addEventListener('change', function() {
-    if (this.checked) {
-      isPublic = true;
-      console.log('Is Public:', isPublic);
-    }
-});
-
-privateRadioButton.addEventListener('change', function() {
-    if (this.checked) {
-        isPublic = false;
-        console.log('Is Public:', isPublic);
-    }
-});
-
-registrationCheckbox.addEventListener('change', function() {
-    if (registrationCheckbox.checked) {
-      isOpen = true
-      console.log('Checkbox is checked. Open for Registration!');
-    } else {
-      isOpen = false
-      console.log('Checkbox is unchecked. Registration closed.');
-    }
-})
-
-
-function getValidDate(dateString) {
-    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
-    if (dateRegex.test(dateString)) {
-        const dateParts = dateString.split('-');
-        const year = parseInt(dateParts[0]);
-        const month = parseInt(dateParts[1]) - 1; 
-        const day = parseInt(dateParts[2]);
-
-        if (!isNaN(year) && !isNaN(month) && !isNaN(day)) {
-            const date = new Date(year, month, day);
-            if (!isNaN(date.getTime())) {
-                return date.toISOString().split('T')[0];
-            }
-        }
-    }
-    return null;
-}
-
-const inputElement = document.getElementById('eventImage');
-inputElement.addEventListener('change', (event) => {
-    eventPic = event.target.files[0]; // Get the selected file
-
-    if (eventPic && eventPic.type.startsWith('image/')) {
-    console.log('Image uploaded:', eventPic);
-    } else {
-    console.log('Please upload an image file.');
-    }
-});
-
 function getEventBody(){
     let eventStartDate
     let eventEndDate
@@ -299,19 +364,95 @@ function getEventBody(){
     return eventBody
 }
 
-draftBtn.addEventListener('click', function(e) {
-    const eventBody = getEventBody()
-    eventBody.live = false
-    console.log(JSON.stringify(eventBody))
-    sendToServer(eventBody)
-})
+function getValidDate(dateString) {
+    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    if (dateRegex.test(dateString)) {
+        const dateParts = dateString.split('-');
+        const year = parseInt(dateParts[0]);
+        const month = parseInt(dateParts[1]) - 1; 
+        const day = parseInt(dateParts[2]);
 
-publishBtn.addEventListener('click', function(e) {
-    const eventBody = getEventBody()
-    eventBody.live = true
-    console.log(JSON.stringify(eventBody))
-    sendToServer(eventBody)
-})
+        if (!isNaN(year) && !isNaN(month) && !isNaN(day)) {
+            const date = new Date(year, month, day);
+            if (!isNaN(date.getTime())) {
+                return date.toISOString().split('T')[0];
+            }
+        }
+    }
+    return null;
+}
+
+function displayMessage(message, div, type) {
+    const msgDiv = document.createElement('div');
+    msgDiv.id = 'msg'
+    msgDiv.textContent = message;
+    if (type) {
+      msgDiv.style.color = 'green';
+    } else {
+      msgDiv.style.color = 'red';
+    }
+    div.appendChild(msgDiv);
+}
+
+
+function checkValues(){
+    if (!eventNameField.value.trim() || !eventTagField.value.trim() || !eventDescField.value.trim()) {
+        return false;
+    }
+
+    if (!Array.from(eventTypeRadios).some(radio => radio.checked)) {
+        return false;
+    }
+
+    switch (selectedEventType) {
+        case "oneTime":
+            if (!oneTimeDateField.value || !oneTimeEndField.value || !oneTimeStartField.value || !oneTimeVenueField.value.trim()) {
+                return false
+            }
+            break
+        case "ampm":
+            if (!amPmDateField.value || !startAMField.value || !startPMField.value || !endAMField.value || !endPMField.value || !venueAMField.value.trim() || !venuePMField.value.trim()) {
+                return false
+            }
+            break;
+        case "series":
+            let seriesName = []
+            let seriesStart = []
+            let seriesDate = []
+            let seriesEnd = []
+            let seriesVenue = []
+            for (var i = 1; i <= seriesNumberField.value; i++){
+                seriesName.push(document.getElementById(`name${i}`).value)
+                seriesDate.push(getValidDate(document.getElementById(`startDate${i}`).value))
+                seriesStart.push(document.getElementById(`startTime${i}`).value)
+                seriesEnd.push(document.getElementById(`endTime${i}`).value)
+                seriesVenue.push(document.getElementById(`venue${i}`).value)
+            }
+
+            if (
+                seriesName.length !== seriesNumberField.value ||
+                seriesDate.length !== seriesNumberField.value ||
+                seriesStart.length !== seriesNumberField.value ||
+                seriesEnd.length !== seriesNumberField.value ||
+                seriesVenue.length !== seriesNumberField.value
+            ) {
+                return false;
+            }
+            break;
+        default:
+            return false
+    }
+
+    if (!publicRadioButton.checked && !privateRadioButton.checked) {
+        return false;
+    }
+
+    if (!inputElement.files || inputElement.files.length === 0) {
+        return false
+    }
+
+    return true
+}
 
 function sendToServer(eventBody){
     fetch('/addEvent', {
@@ -324,118 +465,172 @@ function sendToServer(eventBody){
     .then(response => response.json())
     .then(data => {
         console.log(data);
-        switch (selectedEventType) {
-            case "oneTime":
-                let oneTimeStart = oneTimeStartField.value
-                let oneTimeEnd = oneTimeEndField.value
-                let oneTimeVenue = oneTimeVenueField.value
-                console.log(oneTimeStart, oneTimeEnd, oneTimeVenue)
-                const oneTimeBody = {
-                    startTime: oneTimeStart,
-                    endTime: oneTimeEnd,
-                    venue: oneTimeVenue
-                }
-                fetch('/oneTime', {
-                    headers: {
-                        'Content-type': 'application/json'
-                    },
-                    method: 'POST',
-                    body: JSON.stringify(oneTimeBody)
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('One Time details uploaded', data);
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-                break;
-            case "ampm":
-                let startAM = startAMField.value
-                let endAM = endAMField.value
-                let venueAM = venueAMField.value
-                let startPM = startPMField.value
-                let endPM = endPMField.value
-                let venuePM = venuePMField.value
-                console.log(startAM, endAM, venueAM, startPM, endPM, venuePM)
-                const amPmBody = {
-                    amStart : startAM,
-                    amEnd: endPM,
-                    amVenue: venueAM,
-                    pmStart: startPM,
-                    pmEnd: endPM,
-                    pmVenue: venuePM
-                }
-                fetch('/amPm', {
-                    headers: {
-                        'Content-type': 'application/json'
-                    },
-                    method: 'POST',
-                    body: JSON.stringify(amPmBody)
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('AM/PM details uploaded', data);
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-                break;
-            case "series":
-                let seriesName = []
-                let seriesStart = []
-                let seriesEnd = []
-                let seriesVenue = []
-                for (var i = 1; i <= seriesNumberField.value; i++){
-                    seriesName.push(document.getElementById(`name{i}`))
-                    seriesStart.push(document.getElementById(`startTime${i}`).value)
-                    seriesEnd.push(document.getElementById(`endTime${i}`).value)
-                    seriesVenue.push(document.getElementById(`venue${i}`).value)
-                }
-                console.log(seriesStart)
-                console.log(seriesEnd)
-                console.log(seriesVenue)
-
-                for (var i = 1; i <= seriesNumberField.value; i++){
-                    const seriesBody = {
-                        seriesNum: i,
-                        seriesName:seriesName[`${i-1}`],
-                        startTime: seriesStart[`${i-1}`],
-                        endTime: seriesEnd[`${i-1}`],
-                        venue: seriesVenue[`${i-1}`]
-                    }
-                    fetch('/series', {
-                        headers: {
-                            'Content-type': 'application/json'
-                        },
-                        method: 'POST',
-                        body: JSON.stringify(seriesBody)
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log('Series details uploaded', data);
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
-                }
-                break;
-            default:
-                console.log("No type selected")
-                break;
-        }
-        
+        sendEventType(selectedEventType)
     })
     .catch(error => {
         console.error('Error:', error);
     });
 }
 
-function convertToBase64(file) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result.split(',')[1]);
-        reader.onerror = error => reject(error);
+function sendExternalLinks(count){
+    let linkNames = []
+    let weblinks = []
+    for (var i = 1; i <= count; i++){
+        linkNames.push(document.getElementById(`linkName${i}`).value)
+        weblinks.push(document.getElementById(`weblink${i}`).value)
+    }
+    console.log(linkNames)
+    console.log(weblinks)
+
+    for (var i = 1; i <= count; i++){
+        const linkBody = {
+            name: linkNames[`${i-1}`],
+            weblink: weblinks[`${i-1}`]
+        }
+        fetch('/external', {
+            headers: {
+                'Content-type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify(linkBody)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('External link details uploaded', data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+}
+
+function sendEventType(type){
+    switch (type) {
+        case "oneTime":
+            let oneTimeStart = oneTimeStartField.value
+            let oneTimeEnd = oneTimeEndField.value
+            let oneTimeVenue = oneTimeVenueField.value
+            console.log(oneTimeStart, oneTimeEnd, oneTimeVenue)
+            const oneTimeBody = {
+                startTime: oneTimeStart,
+                endTime: oneTimeEnd,
+                venue: oneTimeVenue
+            }
+            fetch('/oneTime', {
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                method: 'POST',
+                body: JSON.stringify(oneTimeBody)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('One Time details uploaded', data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+            break;
+        case "ampm":
+            let startAM = startAMField.value
+            let endAM = endAMField.value
+            let venueAM = venueAMField.value
+            let startPM = startPMField.value
+            let endPM = endPMField.value
+            let venuePM = venuePMField.value
+            console.log(startAM, endAM, venueAM, startPM, endPM, venuePM)
+            const amPmBody = {
+                amStart : startAM,
+                amEnd: endPM,
+                amVenue: venueAM,
+                pmStart: startPM,
+                pmEnd: endPM,
+                pmVenue: venuePM
+            }
+            fetch('/amPm', {
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                method: 'POST',
+                body: JSON.stringify(amPmBody)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('AM/PM details uploaded', data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+            break;
+        case "series":
+            let seriesName = []
+            let seriesDate = []
+            let seriesStart = []
+            let seriesEnd = []
+            let seriesVenue = []
+            for (var i = 1; i <= seriesNumberField.value; i++){
+                seriesName.push(document.getElementById(`name${i}`).value)
+                seriesDate.push(getValidDate(document.getElementById(`startDate${i}`).value))
+                seriesStart.push(document.getElementById(`startTime${i}`).value)
+                seriesEnd.push(document.getElementById(`endTime${i}`).value)
+                seriesVenue.push(document.getElementById(`venue${i}`).value)
+            }
+            console.log(seriesName)
+            console.log(seriesDate)
+            console.log(seriesStart)
+            console.log(seriesEnd)
+            console.log(seriesVenue)
+
+            for (var i = 1; i <= seriesNumberField.value; i++){
+                const seriesBody = {
+                    seriesNum: i,
+                    seriesName:seriesName[`${i-1}`],
+                    seriesDate:seriesDate[`${i-1}`],
+                    startTime: seriesStart[`${i-1}`],
+                    endTime: seriesEnd[`${i-1}`],
+                    venue: seriesVenue[`${i-1}`]
+                }
+                fetch('/series', {
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    method: 'POST',
+                    body: JSON.stringify(seriesBody)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Series details uploaded', data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            }
+            break;
+        default:
+            console.log("No type selected")
+            break;
+    }
+}
+
+function uploadEventImg() {
+    const formData = new FormData()
+    formData.append("eventImage", eventPic)
+
+    fetch('/upload', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.json(); 
+        }
+        throw new Error('Network response was not ok.');
+    })
+    .then(data => {
+        console.log('Upload successful:', data);
+    })
+    .catch(error => {
+        console.error('There was an error with the upload:', error);
     });
+    
 }

@@ -4,24 +4,36 @@ document.addEventListener('DOMContentLoaded', function () {
     .then(data => {
         load(data['data'])
 
-        const editBtn = document.querySelector('.btn_edit')
-        const announceBtn = document.querySelector('.btn_announce')
-        const attendanceBtn = document.querySelector('.btn_attendance')
+        const editBtns = document.querySelectorAll('.btn_edit')
+        const announceBtns = document.querySelectorAll('.btn_announce')
+        const attendanceBtns = document.querySelectorAll('.btn_attendance')
         
-        editBtn.addEventListener('click', function(e) {
-            console.log('edit clicked')
-            window.location.href = '/edit_event'
-        });
+        editBtns.forEach(function(editBtn) {
+          editBtn.addEventListener('click', function(e) {
+            const eventID = this.getAttribute('data-id')
+              console.log(eventID)
+              console.log('edit clicked')
+              window.location.href = '/edit_event?eventID=' +eventID
+          });
+        })
 
-        announceBtn.addEventListener('click', function(e) {
-            console.log('announce clicked')
-            window.location.href = '/post_announce'
-        });
+        announceBtns.forEach(function(announceBtn) {
+          announceBtn.addEventListener('click', function(e) {
+              const eventID = this.getAttribute('data-id')
+              console.log(eventID)
+              console.log('announce clicked')
+              window.location.href = '/post_announce?eventID=' +eventID
+          });
+        })
 
-        attendanceBtn.addEventListener('click', function(e) {
-            console.log('attendance clicked')
-            window.location.href = '/event_attendance'
-        });
+        attendanceBtns.forEach(function(attendanceBtn) {
+          attendanceBtn.addEventListener('click', function(e) {
+              const eventID = this.getAttribute('data-id')
+              console.log(eventID)
+              console.log('attendance clicked')
+              window.location.href = '/attendance?eventID=' +eventID
+          });
+        })
     })
 })
 

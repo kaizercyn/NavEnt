@@ -37,7 +37,7 @@ app.use('/font', express.static(path.join(__dirname, 'public/css/font')));
 
 app.use('/res', express.static(path.join(__dirname, 'public/css/res')));
 
-app.use('uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.set('views', path.join(__dirname, 'views'));
 
@@ -87,8 +87,8 @@ app.get('/create_event_img', sessionAuth, (request, response) => {
     response.render('create_event_img');
 });
 
-app.get('/event_attendance', sessionAuth, (request, response) => {
-    response.render('event_attendance');
+app.get('/attendance', sessionAuth, (request, response) => {
+    response.render('attendance');
 });
 
 app.get('/admin_home.js', (request, response) => {
@@ -115,17 +115,32 @@ app.get('/create_event.js', (request, response) => {
     });
 });
 
-app.get('/upload_eventImg.js', (request, response) => {
-    response.sendFile(path.join(__dirname, '/public/scripts/upload_eventImg.js'), {
+app.get('/edit_event.js', (request, response) => {
+    response.sendFile(path.join(__dirname, '/public/scripts/edit_event.js'), {
       headers: {
         'Content-Type': 'application/javascript'
         }
     });
 });
 
+app.get('/load_event.js', (request, response) => {
+    response.sendFile(path.join(__dirname, '/public/scripts/load_event.js'), {
+      headers: {
+        'Content-Type': 'application/javascript'
+        }
+    });
+});
 
-app.get('/edit_event.js', (request, response) => {
-    response.sendFile(path.join(__dirname, '/public/scripts/edit_event.js'), {
+app.get('/post_announce.js', (request, response) => {
+    response.sendFile(path.join(__dirname, '/public/scripts/post_announce.js'), {
+      headers: {
+        'Content-Type': 'application/javascript'
+        }
+    });
+});
+
+app.get('/attendance.js', (request, response) => {
+    response.sendFile(path.join(__dirname, '/public/scripts/attendance.js'), {
       headers: {
         'Content-Type': 'application/javascript'
         }
@@ -172,23 +187,39 @@ app.get('/edit_event.css', (request, response) => {
     });
 });
 
+app.get('/post_announce.css', (request, response) => {
+    response.sendFile(path.join(__dirname, '/public/css/post_announce.css'), {
+        headers: {
+            'Content-Type': 'text/css'
+        }
+    });
+});
+
+app.get('/attendance.css', (request, response) => {
+    response.sendFile(path.join(__dirname, '/public/css/attendance.css'), {
+        headers: {
+            'Content-Type': 'text/css'
+        }
+    });
+});
+
 app.get('/getEvents', async (request, response) => {
     try {
         const db = dbService.getDbServiceInstance()
         const results = await db.getEvents()
         response.json({data: results});
     } catch (error) {
-        console.log(err + " Error getting events.");
-        response.status(500).json({ error: err.message });
+        console.log(error + " Error getting events.");
+        response.status(500).json({ error: error.message });
     }
 })
 
-app.get('/search/:Event_Name', async (request, response) => {
+app.get('/search/:Event', async (request, response) => {
     try {
-        const { Event_Name } = request.params
-        console.log({ Event_Name })
+        const { Event } = request.params
+        console.log({Event})
         const db = dbService.getDbServiceInstance()
-        const results = await db.searchEvent(Event_Name)
+        const results = await db.searchEvent(Event)
         response.json({data: results});
     } catch (error) {
         console.log(error + " Error getting searched events");
@@ -205,7 +236,7 @@ app.post('/login', async (request, response) => {
             console.log({ username, password })
             const db = dbService.getDbServiceInstance()
             const results = await db.verifyUser(username, password)
-            console.log("app.js:", results)
+            // console.log("app.js:", results)
 
             if (results.length > 0) {
                 request.session.username = username;
@@ -246,25 +277,43 @@ app.post('/addEvent', async (request, response) => {
         const db = dbService.getDbServiceInstance()
         const result = await db.newEvent(eventName, eventTagline, eventDesc, startDate, endDate,
             eventType, isOpen, isPublic, isLive, evalLink)
-        response.json({success: true})
+        response.json({
+            data: result,
+            success: true})
     } catch (error) {
         console.log(error + " Error creating event");
         response.status(500).json({ error: error.message }); 
     }
 })
 
-app.post('/changeLive', async (request, response) => {
+app.post('/editEvent/:eventID/:willDel', async (request, response) => {
     try {
-        let live = request.body.isLive
+        let eventId = request.params.eventID
+        let del = request.params.willDel
+        let eventName = request.body.name
+        let eventTagline = request.body.tagline
+        let eventDesc = request.body.desc
+        let startDate = request.body.start
+        let endDate = request.body.end
+        let eventType = request.body.type
+        let evalLink = request.boddel
+        let isOpen = request.body.open
+        let isPublic = request.body.public
+        let isLive = request.body.live
 
         const db = dbService.getDbServiceInstance()
-        const result = await db.changeLive(live)
-        response.json({success: true})
+        const result = await db.editEvent(eventId, eventName, eventTagline, eventDesc, startDate, endDate,
+            eventType, isOpen, isPublic, isLive, evalLink, del)
+        response.json({
+            data: result,
+            success: true
+        })
     } catch (error) {
         console.log(error + " Error creating event");
         response.status(500).json({ error: error.message }); 
     }
 })
+
 app.post('/oneTime', async (request, response) => {
     try {
         let startTime = request.body.startTime
@@ -274,6 +323,7 @@ app.post('/oneTime', async (request, response) => {
         const db = dbService.getDbServiceInstance()
         const result = await db.oneTime(startTime, endTime, venue)
         response.json({
+            data: result,
             success: true
         })
     } catch (error) {
@@ -294,6 +344,7 @@ app.post('/amPm', async (request, response) => {
         const db = dbService.getDbServiceInstance()
         const result = await db.amPM(AMstartTime, AMendTime, AMVenue, PMstartTime, PMendTime, PMVenue)
         response.json({
+            data: result,
             success: true
         })
     } catch (error) {
@@ -306,13 +357,15 @@ app.post('/series', async (request, response) => {
     try {
         let num = request.body.seriesNum
         let name = request.body.seriesName
+        let date = request.body.seriesDate
         let start = request.body.startTime
         let end = request.body.endTime
         let venue = request.body.venue
 
         const db = dbService.getDbServiceInstance()
-        const result = await db.series(num, name, start, end, venue)
+        const result = await db.series(num, name, date, start, end, venue)
         response.json({
+            data: result,
             success: true
         })
     } catch (error) {
@@ -344,8 +397,116 @@ app.post('/upload', upload.single("eventImage"), async (req, res) => {
     }
 });
 
+app.post('/external', async (request, response) => {
+    try {
+        let name = request.body.name
+        let weblink = request.body.weblink
 
+        const db = dbService.getDbServiceInstance()
+        const result = await db.external(name, weblink)
+        response.json({
+            data: result,
+            success: true
+        })
+    } catch (error) {
+        console.log(error + " Error adding Event Links");
+        response.status(500).json({ error: error.message }); 
+    }
+})
 
+app.post('/announce', async (request, response) =>{
+    try {
+        let date = request.body.date
+        let anncmnt = request.body.anncmnt
+        let eventID = request.body.event
+
+        const db = dbService.getDbServiceInstance()
+        const result = await db.announce(date, anncmnt, eventID)
+        response.json({
+            data: result,
+            success: true
+        })
+    } catch (error) {
+        console.log(error + " Error adding Announcement");
+        response.status(500).json({ error: error.message }); 
+    }
+})
+
+app.get('/getAttnDetails/:eventID/:type', async (request, response) => {
+    try {
+        const eventID = request.params.eventID;
+        const type = request.params.type;
+        const db = dbService.getDbServiceInstance()
+        const results = await db.getAttn(eventID, type)
+        response.json({
+            data: results,
+            success: true
+        })
+    } catch (error) {
+        console.log(error + " Error getting event's attendance type details.");
+        response.status(500).json({ error: error.message });
+    }
+})
+
+app.get('/getExternalDetails/:eventID', async (request, response) => {
+    try {
+        const eventID = request.params.eventID;
+        const db = dbService.getDbServiceInstance()
+        const results = await db.getExternal(eventID)
+        response.json({
+            data: results,
+            success: true
+        })
+    } catch (error) {
+        console.log(error + " Error getting event's external links' details.");
+        response.status(500).json({ error: error.message });
+    }
+})
+
+app.get('/getRegistrants/:eventID', async (request, response) => {
+    try {
+        const eventID = request.params.eventID;
+        const db = dbService.getDbServiceInstance()
+        const results = await db.getRegistrants(eventID)
+        response.json({
+            data: results,
+            success: true
+        })
+    } catch (error) {
+        console.log(error + " Error getting event's external links' details.");
+        response.status(500).json({ error: error.message });
+    }
+})
+
+app.get('/getRegistrantsAMPM/:eventID', async (request, response) => {
+    try {
+        const eventID = request.params.eventID;
+        const db = dbService.getDbServiceInstance()
+        const results = await db.getRegistrantsAMPM(eventID)
+        response.json({
+            data: results,
+            success: true
+        })
+    } catch (error) {
+        console.log(error + " Error getting event's external links' details.");
+        response.status(500).json({ error: error.message });
+    }
+})
+
+app.get('/getRegistrantsSeries/:eventID', async (request, response) => {
+    try {
+        const eventID = request.params.eventID;
+        const db = dbService.getDbServiceInstance()
+        const results = await db.getRegistrantsSeries(eventID)
+        response.json({
+            data: results,
+            success: true
+        })
+    } catch (error) {
+        console.log(error + " Error getting event's external links' details.");
+        response.status(500).json({ error: error.message });
+    }
+})
 
 async function createFileName () {
     try {
@@ -356,14 +517,15 @@ async function createFileName () {
         if (results && results.length > 0) {
             const eventId = parseInt(results[0].Event_ID, 10);
             if (!isNaN(eventId)) {
+                const newEventId = eventId + 1;
                 console.log("Response: ", eventId);
                 return `${eventId}`;
             }
         }
-        return "defaultFileName";
+        return "10001";
     } catch (error) {
         console.error("Error creating filename:", error);
-        return "defaultFileName";
+        return "10001";
     }
 }
 
