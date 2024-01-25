@@ -131,6 +131,9 @@ nav {
     cursor: pointer;
 }
 
+
+  
+
 .box {
     height: 30px;
     display: flex;
@@ -218,7 +221,8 @@ p {
     color: #000e1e;
 }
 
-.btn-scan-qr {
+.btn-scan-qr,
+.btn-add-parti {
     font-family: 'CAZentrum Medium', sans serif;
     background-color: #E4960E; 
     color: #fff; 
@@ -226,16 +230,31 @@ p {
     align-items: right; 
   }
   
-.btn-scan-qr:hover {
+.btn-scan-qr .btn-add-parti :hover {
     background-color: #ce870e; 
     border-color: transparent;
 }
   
-.btn-scan-qr:active {
+.btn-scan-qr .btn-add-parti :active {
     background-color: transparent !important; 
     border-color: #71999B !important; 
     color: #71999B !important;
-  }
+}
+
+.scanner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#reader {
+    width: 600px;
+}
+
+#result {
+    text-align: center;
+    font-size: 1.5rem;
+}
 
 footer {
     position: relative;

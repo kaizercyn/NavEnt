@@ -360,7 +360,7 @@ class DbService {
             let eventID = `${lastID[0].Event_ID}`
             console.log("event id: ", eventID)
             response = await new Promise ((resolve, reject) => {
-                const query = "UPDATE webdev.events SET Event_Pic = ?, Event_PicFilePath = ? WHERE Event_Id = ?"
+                const query = "UPDATE webdev.events SET Event_Pic = ?, Event_PicFilePath = ? WHERE Event_ID = ?"
                 connection.query(query, [a, b, eventID],(err, results) => {
                     if (err) {
                         reject(new Error(err.message))
@@ -426,17 +426,61 @@ class DbService {
         }
     }
 
+    async addRecord(a, b, c, d) {
+        let response;
+        try {
+            const hasRecord = await new Promise((resolve, reject) => {
+                const query = "SELECT COUNT(In_Time) AS record FROM webdev.attendance WHERE Event_ID = ? AND User_ID = ?";
+                connection.query(query, [c, d], (err, results) => {
+                    if (err) {
+                        reject(new Error(err.message));
+                    } else {
+                        // console.log("Fetched data from DB:", results);
+                        resolve(results);
+                    }
+                });
+            });
+    
+            const count = hasRecord[0].record;
+    
+            if (count === 0) {
+                response = await new Promise((resolve, reject) => {
+                    const updateQuery = "UPDATE webdev.attendance SET Date = ?, In_Time = ? WHERE Event_ID = ? AND User_ID = ?";
+                    connection.query(updateQuery, [a, b, c, d], (err, results) => {
+                        if (err) {
+                            reject(new Error(err.message));
+                        } else {
+                            console.log("Fetched data from DB:", results);
+                            resolve("Attendance recorded successfully!");
+                        }
+                    });
+                });
+                return response;
+            } else {
+                return "Attendance was already recorded!";
+            }
+        } catch (error) {
+            console.log(error + ' Creating new attendance record failed.');
+            return "Error creating new attendance record";
+        }
+    }
+    
+
     async getRegistrants(a){
         
         let response;
         try {
             response = await new Promise ((resolve, reject) => {
-                const query = "SELECT regisdetails.User_ID, registration.Name FROM regisdetails JOIN registration ON regisdetails.User_ID = registration.User_ID WHERE regisdetails.Event_ID = ?;"
+                const query = `
+                SELECT regisdetails.User_ID, registration.Name, attendance.In_Time FROM regisdetails 
+                JOIN registration ON regisdetails.User_ID = registration.User_ID 
+                JOIN attendance ON regisdetails.User_ID = attendance.User_ID
+                WHERE regisdetails.Event_ID = ?`
                 connection.query(query, [a], (err, results) => {
                     if (err) {
                         reject(new Error(err.message))
                     } else {
-                        console.log("Fetched data from DB (EL):", results);
+                        console.log("Fetched data from DB (GR-O):", results);
                         resolve(results)
                     }
                 })
@@ -456,7 +500,7 @@ class DbService {
                     if (err) {
                         reject(new Error(err.message));
                     } else {
-                        console.log("Fetched data from DB (Registrants):", results);
+                        console.log("Fetched data from DB (GR-A):", results);
                         resolve(results);
                     }
                 });
@@ -478,7 +522,7 @@ class DbService {
                     if (err) {
                         reject(new Error(err.message));
                     } else {
-                        console.log("Fetched data from DB (Registrants):", results);
+                        console.log("Fetched data from DB (GR-S):", results);
                         resolve(results);
                     }
                 });

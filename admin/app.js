@@ -508,6 +508,24 @@ app.get('/getRegistrantsSeries/:eventID', async (request, response) => {
     }
 })
 
+app.post('/addRecord', async (request, response) => {
+    try {
+        let date = request.body.Date
+        let time = request.body.InTime
+        let user = request.body.user
+        let event = request.body.event
+        const db = dbService.getDbServiceInstance()
+        const result = await db.addRecord(date, time, event, user)
+        response.json({
+            data: result,
+            success: true
+        })
+    } catch (error) {
+        console.log(error + " Error adding Event Links");
+        response.status(500).json({ error: error.message }); 
+    }
+})
+
 async function createFileName () {
     try {
         const db = dbService.getDbServiceInstance();
