@@ -38,9 +38,9 @@ $userAccount = $_SESSION["username"];
           </button>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="client/account_details.php">Account Details</a></li>
-            <li><a class="dropdown-item" href="client/bookmarked_events.html">Bookmarks</a></li>
-            <li><a class="dropdown-item" href="client/event_history.html">Event History</a></li>
-            <li><a class="dropdown-item" href="client/pending_evaluation.html">Pending Evaluations</a></li>
+            <li><a class="dropdown-item" href="client/bookmarked_events.php">Bookmarks</a></li>
+            <li><a class="dropdown-item" href="client/event_history.php">Event History</a></li>
+            <li><a class="dropdown-item" href="client/pending_evaluation.php">Pending Evaluations</a></li>
             <li><hr class="dropdown-divider"></li>
             <li>
             <form action="php\logoutfunctions.php" method="POST"><button type="submit" class="dropdown-item" onclick="return confirm('Are you sure you want to logout?')">Logout</button></form></li>

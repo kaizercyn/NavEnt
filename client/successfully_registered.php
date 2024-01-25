@@ -5,50 +5,54 @@ require "../vendor/autoload.php";
 
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Writer\PngWriter;
+use Endroid\QrCode\Label\Label;
+use Endroid\QrCode\Logo\Logo;
 
 $error = 'SUCCESSFULLY REGISTERED!';
 try{
 if (isset($_POST["register"])) {
-    if ($_POST["IDnum"] == $_SESSION['userId']) {
-        $nameUser = $_POST['uname'];
-        $role = $_POST['role'];
-        $course = $_POST['course'];
-        $school = $_POST['school'];
-        $eventiD = $_POST['eventid'];
-        $uID = $_POST['IDnum'];
-        $organization = $_POST['Organization'];
-        $postion = $_POST['Position'];
-        $registerID = (int)$uID . $eventiD;
-        $_SESSION['IDEvent'] = $eventiD;
-        $_SESSION['temp'] = $registerID;
+  $nameUser = $_POST['uname'];
+  $role = $_POST['role'];
+  $course = $_POST['course'];
+  $school = $_POST['school'];
+  $eventiD = $_POST['eventid'];
+  $uID = $_POST['IDnum'];
+  $organization = $_POST['Organization'];
+  $postion = $_POST['Position'];
+  $registerID = str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT);
+  $_SESSION['IDEvent'] = $eventiD;
+  $_SESSION['temp'] = $registerID;
 
-        $st = $conn->prepare('INSERT INTO registration (`Registration_ID`,`Name`, `Course`, `School`, `Role`, `Organization`, `Org_Position`, `User_ID`) VALUES (?,?,?,?,?,?,?,?)');
-        $st->bind_param('issssssi',$registerID, $nameUser, $course, $school, $role, $Organization, $postion, $uID);
-        $st->execute();
-        $st->close();
-        $qrData = $uID . $eventiD;
-        $qr_code = QrCode::create($qrData);
-        $writer = new PngWriter;
-        $qrGenerated = $writer->write($qr_code);
-        $final = $qrGenerated->getString();
+  $st = $conn -> prepare("SELECT * FROM REGISDETAILS WHERE User_ID=? and Event_ID=?;");
+  $st-> bind_param('ii', $uID, $eventiD);
+  $st-> execute();
+  $result= $st->get_result();
+  $st -> close(); 
+    if ($result->num_rows ==  0){
+      $st = $conn->prepare('INSERT INTO registration (`Registration_ID`,`Name`, `Course`, `School`, `Role`, `Organization`, `Org_Position`, `User_ID`) VALUES (?,?,?,?,?,?,?,?)');
+      $st->bind_param('issssssi',$registerID, $nameUser, $course, $school, $role, $organization, $postion, $uID);
+      $st->execute();
+      $st->close();
+      $qr_code = QrCode::create($uID . $eventiD);
+      $writer = new PngWriter;
+      $qrGenerated = $writer ->write($qr_code);
+      $final = $qrGenerated -> getString();
 
-        $st = $conn->prepare('INSERT INTO regisdetails (`User_ID`, `Event_ID`,`QR_Code`) VALUES (?,?,?)');
-        $st->bind_param('iis', $uID, $eventiD, $final);
-        $st->execute();
-        $st->close();
 
-        $imageFilePath = "../phpqrcode/" . "$uID" . "$eventiD";
-        file_put_contents($imageFilePath, $qrGenerated->getString());
+      $st = $conn->prepare('INSERT INTO regisdetails (`User_ID`, `Event_ID`,`QR_Code`) VALUES (?,?,?)');
+      $st->bind_param('iis', $uID, $eventiD, $final);
+      $st->execute();
+      $st->close();
+
+    } else{
+      $error = "You have already Registered for this event";
     }
 }
 } catch (mysqli_sql_exception $e) {
-  // Handle the exception here
   if ($e->getCode() == 1062) {
-      // Duplicate entry error (error code 1062)
-      $error =  "Duplicate entry detected. Handle accordingly.";
+      //$error =  "You have already Registered for this event";
   } else {
-      // Handle other SQL errors
-      $error = "Error: " . $e->getMessage();
+     // $error = "Error: " . $e->getMessage();
   }
 }
 ?>
@@ -88,10 +92,9 @@ if (isset($_POST["register"])) {
           </button>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="../client/acount_details.php">Account Details</a></li>
-            <li><a class="dropdown-item" href="bookmarked_events.html">Bookmarks</a></li>
-            <li><a class="dropdown-item" href="../client/event_history.html">Event History</a></li>
-            <li><a class="dropdown-item" href="../client/pending_evaluation.html">Pending Evaluations</a></li>
-            <li><a class="dropdown-item" href="qr_code.html">QR Code</a></li>
+            <li><a class="dropdown-item" href="../client/bookmarked_events.php">Bookmarks</a></li>
+            <li><a class="dropdown-item" href="../client/event_history.php">Event History</a></li>
+            <li><a class="dropdown-item" href="../client/pending_evaluation.php">Pending Evaluations</a></li>
             <li><hr class=" dropdown-divider"></li>
             <li>
             <form action="../php/logoutfunctions.php" method="POST"><button type="submit" class="dropdown-item" onclick="return confirm('Are you sure you want to logout?')">Logout</button></form></li>
@@ -116,16 +119,41 @@ if (isset($_POST["register"])) {
 
     <section id="packages" class="pt-3 pb-3 text-center">
         <h1><?php echo $error; ?></h1>
-        <h2 class="my-3">Your QR Code</h2>
+        <h2 class="my-3"><?php
+          if($error == "SUCCESSFULLY REGISTERED!"){
+            $message = $_SESSION['name'];
+            echo "Your QR code for $message.";
+          }else{
+            echo "Something went wrong...";
+          }
+          ?>
 
         <div class="container">
             <div class="row">
-                <div class="col-md-4 mx-auto text-center">
-                
+                <div class="col-md-6 mx-auto text-center">
+                  <?php
+                  $qr_code = QrCode::create($_POST['IDnum'] . $_SESSION['IDEvent'] )
+                            -> setSize(300);
+                  $label = Label::create("$nameUser");
+                  $logo = Logo::create("../res/imgs/navi-event-logo(flat-40a-circle).png")
+                          -> setResizeToWidth(30);                   
+                  $writer = new PngWriter;
+                  $qrGenerated = $writer ->write($qr_code,$logo,$label);
+                  $QrImage = $qrGenerated -> getString();
+                  $filePath = "../res/QRimages/"."$nameUser".".png"; 
+
+                  file_put_contents($filePath, $QrImage);
+                  
+                  if (file_exists($filePath)) {
+                      echo '<img src="' . $filePath . '" alt="QR Code">';
+                  } else {
+                      echo 'Failed to save QR code.';
+                  }
+                  ?>
                 </div>
 
-                <div class="col-md-6 d-flex align-items-center justify-content-center">
-                    <div class="d-flex flex-column align-items-center">
+                <div class="col-md-6 d-flex align-items-center justify-content-center flex-column">
+                    <div class="d-flex flex-column align-items-center mb-3">
                         <button class="button" onclick="downloadQR()">Download</button>
                         <button class="button" onclick="printQR()">Print</button>
                     </div>
@@ -147,8 +175,8 @@ if (isset($_POST["register"])) {
     <script>
         function downloadQR() {
             var downloadLink = document.createElement("a");
-            downloadLink.href = "/res/imgs/prof_placeholder.png";
-            downloadLink.download = "qr-code.png";
+            downloadLink.href = "<?php echo $filePath ?>";
+            downloadLink.download = "<?php echo $filePath ?>";  
             document.body.appendChild(downloadLink);
             downloadLink.click();
             document.body.removeChild(downloadLink);
