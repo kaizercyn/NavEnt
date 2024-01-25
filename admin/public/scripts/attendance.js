@@ -80,46 +80,24 @@ scanQrButtons.forEach(function (button) {
     });
 });
 
-// addParticipantButtons.forEach(function (button) {
-//     button.addEventListener('click', function () {
-//         var partiContainer = document.getElementById('parti')
-
-//         const labelElement = document.createElement('label');
-//         labelElement.setAttribute('for', 'userID');
-//         labelElement.setAttribute('class', 'form-label');
-
-//         labelElement.textContent = 'Enter ID Number: ';
-
-//         partiContainer.appendChild(labelElement)
-
-//         const inputElement = document.createElement('input');
-
-//         inputElement.id = 'userID';
-//         inputElement.type = 'text';
-//         inputElement.classList.add('form-control');
-
-//         partiContainer.appendChild(inputElement)
-
-//         // `
-//         // <label for="userID" class="form-label">Enter ID Number: </label>
-//         // <input id="userID" type="text" class="form-control">
-//         // `
-//     });
-// });
-
 closeModalButtons.forEach(function (button) {
     button.addEventListener('click', function () {
+        document.getElementById('userID').value = ''
+        document.getElementById('msg').textContent = ''
         html5QrcodeScanner.clear();
     });
 });
 
 addModalButtons.forEach(function (button) {
     button.addEventListener('click', function () {
-        if(!document.getElementById('participantID').value.trim()){
-            document.getElementById('msg').innerHTML = 'Please enter an ID Number.'
+        if(!document.getElementById('userID').value.trim()){
+            document.getElementById('msg').textContent = "Please enter an ID Number."
         } else {
             console.log("oms")
-            // addParticipant(document.getElementById('participantID').value.trim())
+            const concat = document.getElementById('userID').value.trim() + eventID
+            console.log(concat)
+            addRecord(concat)
+            document.getElementById('userID').value = ''
         }
     });
 });
@@ -240,11 +218,18 @@ async function genSeriesTables(){
         containerHTMl += `<div class=series${i+1}>`
         containerHTMl += `<h3>${seriesData[i].Series_Name}</h3>`
         containerHTMl += `<p id="seriesVenue${i}">${seriesData[i].Venue}</p>`
-        containerHTMl += `<div class="row">
+        containerHTMl += `<button type="button" class="btn btn-primary btn-scan-qr" id="qr${i+1}" data-bs-toggle="modal" data-bs-target="#qrModal">
+                                Scan QR
+                            </button>
+
+                            <button type="button" class="btn btn-primary btn-add-parti id="add${i+1}" data-bs-toggle="modal" data-bs-target="#addModal">
+                                Add Participants
+                            </button>
+                            <div class="row">
                             <div class="col-10"></div>
                             <div class="col-2 text-right">
                                 <p class="date${i+1}">${date}</p>
-                                </div>
+                            </div>
                         </div>`
         containerHTMl += `<div class="table-responsive">
                             <table class="table table-striped table-hover" id="seriesTable${i+1}">
@@ -265,21 +250,18 @@ async function genSeriesTables(){
 async function loadSeries(){
     const registrants  = await getRegistrantsSeries(eventID)
     console.log("Registrants: ", registrants)
-    let seriesTable = ''
-    for (var j = 1; j <= seriesCount; j++){
-        seriesTable = document.querySelector(`table#seriesTable${j} tbody`);
-        if (!registrants || registrants.length === 0) {
-            seriesTable.innerHTML = "<tr><td class='no-data' colspan='2'>No Participants Yet</td></tr>";
-        } else {
-            let tableHTML = ""
-            registrants.forEach(function ({User_ID, Name}){
-                tableHTML += "<tr>"
-                tableHTML += `<td>${Name}</td>`
-                tableHTML += `<td class=${eventID} id=${User_ID}></td>`
-                tableHTML += "</tr>"
-            })
-            seriesTable.innerHTML = tableHTML
-        }
+    for (const registrant of registrants) {
+        const j = registrant.Series_Num; // Assuming Series_Num corresponds to the table index
+        const seriesTable = document.querySelector(`table#seriesTable${j} tbody`);
+    
+        const tableHTML = `
+            <tr>
+                <td>${registrant.Name}</td>
+                <td class=${registrant.eventID} id=${registrant.User_ID}></td>
+            </tr>
+        `;
+    
+        seriesTable.innerHTML += tableHTML;
     }
 }
 
@@ -341,15 +323,31 @@ function addRecord(txt){
     const eventID = txt.slice(-5)
     const date = new Date().toISOString().split('T')[0];
     const time = new Date().toTimeString().split(' ')[0];
+    const num = ''
+    // switch (eventType) {
+    //     case "OneTime":
+    //         num
+    //         break;
+    //     case "AM/PM":
+    //         loadAMPM()
+    //         break;
+    //     case "Series":
+    //         loadSeries()
+    //         break;
+    //     default:
+    //         break;
+    // }
+    
     console.log("User ID: " +userID)
     console.log("Event ID: " +eventID)
     console.log('Date:', date);
     console.log('Time:', time);
     const recordBody = {
         Date: date,
-        InTime: time,
-        user: 2224512,
-        event: 10001
+        SeriesNum: num,
+        // InTime: time,
+        user: userID,
+        event: eventID
     }
     fetch('/addRecord', {
         headers: {
@@ -369,7 +367,8 @@ function addRecord(txt){
   
 function handleRecordResult(data) {
     console.log('Attendance record', data);
-    document.getElementById('result').innerHTML = `<h2>${data.data}</h2>`
+    document.querySelector('#result').innerHTML = `<h2>${data.data}</h2>`
+    document.querySelector('#msg').innerHTML = `<h2>${data.data}</h2>`
     switch (eventType) {
         case "OneTime":
             loadOneTime()

@@ -536,8 +536,8 @@ async function createFileName () {
             const eventId = parseInt(results[0].Event_ID, 10);
             if (!isNaN(eventId)) {
                 const newEventId = eventId + 1;
-                console.log("Response: ", eventId);
-                return `${eventId}`;
+                console.log("Response: ", newEventId);
+                return `${newEventId}`;
             }
         }
         return "10001";

@@ -445,20 +445,49 @@ class DbService {
     
             if (count === 0) {
                 response = await new Promise((resolve, reject) => {
-                    const updateQuery = "UPDATE webdev.attendance SET Date = ?, In_Time = ? WHERE Event_ID = ? AND User_ID = ?";
-                    connection.query(updateQuery, [a, b, c, d], (err, results) => {
-                        if (err) {
-                            reject(new Error(err.message));
+                    // Update the existing record
+                    const updateQuery = `
+                        UPDATE webdev.attendance
+                        SET Date = ?, In_Time = ?
+                        WHERE Event_ID = ? AND User_ID = ?
+                    `;
+            
+                    // Insert a new record if the update didn't affect any rows
+                    const insertQuery = `
+                        INSERT INTO webdev.attendance (Event_ID, User_ID, Date, In_Time)
+                        SELECT ?, ?, ?, ?
+                        FROM dual
+                        WHERE NOT EXISTS (
+                            SELECT 1
+                            FROM webdev.attendance
+                            WHERE Event_ID = ? AND User_ID = ?
+                        )
+                    `;
+            
+                    connection.query(updateQuery, [a, b, c, d], (updateErr, updateResults) => {
+                        if (updateErr) {
+                            reject(new Error(updateErr.message));
                         } else {
-                            console.log("Fetched data from DB:", results);
-                            resolve("Attendance recorded successfully!");
+                            if (updateResults.affectedRows > 0) {
+                                // The update was successful, resolve with a success message
+                                resolve("Attendance updated successfully!");
+                            } else {
+                                // No rows were updated, so try to insert a new record
+                                connection.query(insertQuery, [c, d, a, b, c, d], (insertErr, insertResults) => {
+                                    if (insertErr) {
+                                        reject(new Error(insertErr.message));
+                                    } else {
+                                        resolve("Attendance recorded successfully!");
+                                    }
+                                });
+                            }
                         }
                     });
                 });
                 return response;
             } else {
                 return "Attendance was already recorded!";
-            }
+            }            
         } catch (error) {
             console.log(error + ' Creating new attendance record failed.');
             return "Error creating new attendance record";
@@ -467,7 +496,6 @@ class DbService {
     
 
     async getRegistrants(a){
-        
         let response;
         try {
             response = await new Promise ((resolve, reject) => {
@@ -475,7 +503,7 @@ class DbService {
                 SELECT regisdetails.User_ID, registration.Name, attendance.In_Time FROM regisdetails 
                 JOIN registration ON regisdetails.User_ID = registration.User_ID 
                 JOIN attendance ON regisdetails.User_ID = attendance.User_ID
-                WHERE regisdetails.Event_ID = ?`
+                WHERE attendance.Event_ID = ?`
                 connection.query(query, [a], (err, results) => {
                     if (err) {
                         reject(new Error(err.message))
@@ -495,7 +523,12 @@ class DbService {
     async getRegistrantsAMPM(a){
         try {
             const response = await new Promise((resolve, reject) => {
-                const query = "SELECT regisdetails.User_ID, registration.Name FROM regisdetails JOIN registration ON regisdetails.User_ID = registration.User_ID WHERE regisdetails.Event_ID = ?;"
+                const query = `
+                SELECT regisdetails.User_ID, registration.Name, attendance.Series_Num, attendance.In_Time FROM regisdetails 
+                JOIN registration ON regisdetails.User_ID = registration.User_ID 
+                JOIN attendance ON regisdetails.User_ID = attendance.User_ID
+                WHERE attendance.Event_ID = ?
+                `
                 connection.query(query, [a], (err, results) => {
                     if (err) {
                         reject(new Error(err.message));
@@ -517,7 +550,12 @@ class DbService {
     async getRegistrantsSeries(a){
         try {
             const response = await new Promise((resolve, reject) => {
-                const query = "SELECT regisdetails.User_ID, registration.Name FROM regisdetails JOIN registration ON regisdetails.User_ID = registration.User_ID WHERE regisdetails.Event_ID = ?;"
+                const query = `
+                SELECT regisdetails.User_ID, registration.Name, attendance.Series_Num, attendance.In_Time FROM regisdetails 
+                JOIN registration ON regisdetails.User_ID = registration.User_ID 
+                JOIN attendance ON regisdetails.User_ID = attendance.User_ID
+                WHERE attendance.Event_ID = ?
+                `
                 connection.query(query, [a], (err, results) => {
                     if (err) {
                         reject(new Error(err.message));
@@ -566,8 +604,8 @@ function makeRecord(ID, names){
                 const userIDs = names.map(row => row.User_ID);
                 console.log("USER IDs: ", userIDs);
                 userIDs.forEach(userID =>{
-                    const insertQuery = "INSERT INTO webdev.attendance (Event_ID, User_ID) VALUES (?, ?)"
-                    connection.query(insertQuery , [ID, userID], (err, results) => {
+                    const insertQuery = "INSERT INTO webdev.attendance (Series_Num, Event_ID, User_ID) VALUES (?, ?)"
+                    connection.query(insertQuery , [1, ID, userID], (err, results) => {
                         if (err) {
                             console.error('Error executing INSERT query:', err);
                         } else {
