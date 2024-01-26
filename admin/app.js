@@ -514,6 +514,7 @@ app.post('/addRecord', async (request, response) => {
         let time = request.body.InTime
         let user = request.body.user
         let event = request.body.event
+
         const db = dbService.getDbServiceInstance()
         const result = await db.addRecord(date, time, event, user)
         response.json({

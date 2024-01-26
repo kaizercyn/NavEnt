@@ -11,9 +11,11 @@ const oneTimeTable = document.querySelector('table#oneTimeTable tbody');
 const ampmTitle = document.querySelector('#ampmTitle')
 const ampmTagline = document.querySelector('#ampmTagline')
 const ampmDesc = document.querySelector('#ampmDesc');
+const ampmDate = document.querySelector('#ampmDate');
 const venueAM = document.querySelector('#venueAM');
 const venuePM = document.querySelector('#venuePM');
-const ampmTable = document.querySelector('table#ampmTable tbody');
+const amTable = document.querySelector('table#amTable tbody');
+const pmTable = document.querySelector('table#pmTable tbody');
 const seriesTitle = document.querySelector('#seriesTitle')
 const seriesTagline = document.querySelector('#seriesTagline')
 const seriesDesc = document.querySelector('#seriesDesc');
@@ -21,7 +23,6 @@ const seriesContainer = document.querySelector('.seriesContainer')
 const toHomeBtn = document.querySelector('.toHome')
 const logoutBtn = document.querySelector('.logout-btn');
 const scanQrButtons = document.querySelectorAll('.btn-scan-qr');
-// const addParticipantButtons  = document.querySelectorAll('.btn-add-parti');
 const closeModalButtons = document.querySelectorAll('.closeModal');
 const addModalButtons = document.querySelectorAll('.btn-addtoRecord');
 const urlParams = new URLSearchParams(window.location.search)
@@ -30,6 +31,10 @@ const urlParams = new URLSearchParams(window.location.search)
 var eventID = urlParams.get('eventID')
 var eventType = ''
 var seriesCount = ''
+var eventData = ''
+var seriesData = ''
+var selectedOptionIndex = ''
+
 let html5QrcodeScanner = new Html5QrcodeScanner(
     "reader", { 
         fps: 10, 
@@ -41,7 +46,8 @@ document.addEventListener('DOMContentLoaded', function () {
     fetch(`/search/${eventID}`)
     .then(response => response.json())
     .then(data => {
-      loadEvent(data['data'])
+        eventData = data['data'];
+        loadEvent(data['data'])
     })
     .catch(error => console.error("Error fetching data:", error)); 
 })
@@ -76,31 +82,62 @@ toHomeBtn.addEventListener('click', function(e) {
 scanQrButtons.forEach(function (button) {
     button.addEventListener('click', function () {
         document.getElementById('result').innerHTML = ''
-        html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+        html5QrcodeScanner.render(onScanSuccess, onScanFailure)
     });
 });
 
 closeModalButtons.forEach(function (button) {
     button.addEventListener('click', function () {
         document.getElementById('userID').value = ''
-        document.getElementById('msg').textContent = ''
+        document.getElementById('msgID').textContent = ''
+        document.getElementById('msgDropdownQR').textContent = ''
+        document.querySelector('.dropdown').innerHTML = ''
+        selectedOptionIndex = ''
+        const dropdownElement = document.querySelector('.dropdown')
+        dropdownElement.innerHTML = ''
         html5QrcodeScanner.clear();
     });
 });
 
-addModalButtons.forEach(function (button) {
-    button.addEventListener('click', function () {
-        if(!document.getElementById('userID').value.trim()){
-            document.getElementById('msg').textContent = "Please enter an ID Number."
+
+function attachListener() {
+    document.querySelector('.seriesSelect').addEventListener('change', function () {
+        document.getElementById('msgID').textContent = '';
+        selectedOptionIndex = parseInt(this.selectedIndex, 10);
+        console.log('Selected Option Index:', selectedOptionIndex); 
+    });
+}
+addModalButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        console.log('Button clicked: ', eventType)
+        const userIDInput = document.getElementById('userID');
+        const msgID = document.getElementById('msgID');
+        
+        if (!userIDInput.value.trim()) {
+            msgID.textContent = "Please enter an ID Number";
         } else {
-            console.log("oms")
-            const concat = document.getElementById('userID').value.trim() + eventID
-            console.log(concat)
-            addRecord(concat)
-            document.getElementById('userID').value = ''
+            const concat = userIDInput.value.trim() + eventID;
+
+            if (eventType.toLowerCase() === "series") {
+                genDropdown("AddDropdown");
+                attachListener();
+
+                if (selectedOptionIndex === 0 || selectedOptionIndex === '') {
+                    msgID.innerHTML = 'Please select a series.';
+                } else {
+                    console.log(concat);
+                    addRecord(concat);
+                    userIDInput.value = '';
+                }
+            } else {
+                console.log(concat);
+                addRecord(concat);
+                userIDInput.value = '';
+            }
         }
     });
 });
+
 
 async function loadEvent(data) {
     console.log(data)
@@ -184,27 +221,43 @@ async function loadOneTime(){
 }
 
 async function loadAMPM(){
-    ampmTable.innerHTML = ''
+    amTable.innerHTML = ''
+    pmTable.innerHTML = ''
     const registrants  = await getRegistrantsAMPM(eventID)
     console.log(registrants)
 
     if (!registrants || registrants.length === 0) {
-        ampmTable.innerHTML = "<tr><td class='no-data' colspan='3'>No Participants Yet</td></tr>";
+        amTable.innerHTML = "<tr><td class='no-data' colspan='2'>No Participants Yet</td></tr>";
+        pmTable.innerHTML = "<tr><td class='no-data' colspan='2'>No Participants Yet</td></tr>";
         return;
     }
 
-    let tableHTML = ""
-    registrants.forEach(function ({User_ID, Name}){
-        tableHTML += "<tr>"
-        tableHTML += `<td>${Name}</td>`
-        tableHTML += `<td class=${eventID} id=${User_ID}></td>`
-        tableHTML += "</tr>"
-    })
-    ampmTable.innerHTML = tableHTML
+    let amTableHTML = '';
+    let pmTableHTML = '';
+
+    registrants.forEach(registrant => {
+        const { Name, Series_Num, In_Time } = registrant;
+
+        let tableHTML = "<tr>";
+        tableHTML += `<td>${Name}</td>`;
+        tableHTML += `<td class="${eventID} ${Series_Num}">${In_Time ? In_Time : ''}</td>`;
+        tableHTML += "</tr>";
+
+        if (Series_Num === 1) {
+            amTableHTML += tableHTML;
+        } else if (Series_Num === 2) {
+            pmTableHTML += tableHTML;
+        }
+    });
+
+    amTable.innerHTML = amTableHTML;
+    pmTable.innerHTML = pmTableHTML;
+
+
 }
 
 async function genSeriesTables(){
-    const seriesData = await getAttendanceDetails("series", eventID)
+    seriesData = await getAttendanceDetails("series", eventID)
     console.log("Received data:", seriesData);
     seriesCount = seriesData.length
 
@@ -218,14 +271,7 @@ async function genSeriesTables(){
         containerHTMl += `<div class=series${i+1}>`
         containerHTMl += `<h3>${seriesData[i].Series_Name}</h3>`
         containerHTMl += `<p id="seriesVenue${i}">${seriesData[i].Venue}</p>`
-        containerHTMl += `<button type="button" class="btn btn-primary btn-scan-qr" id="qr${i+1}" data-bs-toggle="modal" data-bs-target="#qrModal">
-                                Scan QR
-                            </button>
-
-                            <button type="button" class="btn btn-primary btn-add-parti id="add${i+1}" data-bs-toggle="modal" data-bs-target="#addModal">
-                                Add Participants
-                            </button>
-                            <div class="row">
+        containerHTMl += `<div class="row">
                             <div class="col-10"></div>
                             <div class="col-2 text-right">
                                 <p class="date${i+1}">${date}</p>
@@ -248,10 +294,16 @@ async function genSeriesTables(){
     seriesContainer.innerHTML = containerHTMl
 }
 async function loadSeries(){
+    for (let r = 0; r <= seriesCount; r++){
+        let seriesTable = document.querySelector(`table#seriesTable${r} tbody`);
+        if (seriesTable !== null) {
+            seriesTable.innerHTML = '';
+        }
+    }
     const registrants  = await getRegistrantsSeries(eventID)
     console.log("Registrants: ", registrants)
     for (const registrant of registrants) {
-        const j = registrant.Series_Num; // Assuming Series_Num corresponds to the table index
+        const j = registrant.Series_Num;
         const seriesTable = document.querySelector(`table#seriesTable${j} tbody`);
     
         const tableHTML = `
@@ -310,42 +362,91 @@ function getRegistrantsSeries(ID){
 function onScanSuccess(decodedText, decodedResult) {
     console.log(`Code matched = ${decodedText}`, decodedResult)
     html5QrcodeScanner.clear()
-    addRecord(decodedText)
-  }
+    if (eventType === "Series") {
+        genDropdown("QRDropdown")
+
+        document.querySelector('.seriesSelect').addEventListener('change', function() {
+            document.getElementById('msgDropdownQR').textContent = ''
+            selectedOptionIndex = parseInt(this.selectedIndex, 10)
+            console.log('Selected Option Index:', selectedOptionIndex);
+            if (selectedOptionIndex == 0) {
+                document.getElementById('msgDropdownQR').innerHTML = 'Please select a series.'
+            } else {
+                addRecord(decodedText)
+            }
+        });
+
+    } else {
+        addRecord(decodedText)
+    }
+    
+}
   
-  function onScanFailure(error) {
+function onScanFailure(error) {
     console.warn(`Code scan error = ${error}`);
-  }
+}
+
+function genDropdown(type) {
+        var optionsHTML = ''
+        var seriesNames = ''
+        seriesNames = seriesData.map(item => item.Series_Name)
+        console.log(seriesNames);
+        optionsHTML = seriesNames.map(seriesName => `<option>${seriesName}</option>`).join('');
+        console.log('Options HTML:', optionsHTML);
+
+
+        let dropdownElement =''
+        
+        if (type === "QRDropdown") {
+            dropdownElement = document.querySelector('#qrSeriesSelect');
+        } else {
+            dropdownElement = document.querySelector('#partiSeriesSelect');
+        }
+        console.log('Dropdown Element:', dropdownElement);
+
+        dropdownElement.innerHTML = `
+        <select class="form-select form-select-sm seriesSelect"  aria-label=".form-select-sm example">
+            <option selected>Select a series</option>
+            ${optionsHTML}
+        </select>
+`;
+}
 
 
 function addRecord(txt){
-    const userID = txt.slice(0, -5)
-    const eventID = txt.slice(-5)
+    const userID = txt.slice(0, 7)
+    const eventID = txt.slice(7)
     const date = new Date().toISOString().split('T')[0];
     const time = new Date().toTimeString().split(' ')[0];
-    const num = ''
-    // switch (eventType) {
-    //     case "OneTime":
-    //         num
-    //         break;
-    //     case "AM/PM":
-    //         loadAMPM()
-    //         break;
-    //     case "Series":
-    //         loadSeries()
-    //         break;
-    //     default:
-    //         break;
-    // }
+    var num = ''
+    switch (eventType) {
+        case "OneTime":
+            num = 1
+            break;
+        case "AM/PM":
+            let period = time.slice(-2);
+            if (period.toUpperCase() === "AM") {
+                num = 1;
+            } else {
+                num = 2;
+            }
+            break;
+        case "Series":
+              num = selectedOptionIndex
+            break;
+        default:
+            break;
+    }
     
     console.log("User ID: " +userID)
     console.log("Event ID: " +eventID)
     console.log('Date:', date);
+    console.log('Num:', num);
     console.log('Time:', time);
     const recordBody = {
         Date: date,
-        SeriesNum: num,
-        // InTime: time,
+        // SeriesNum: num,
+        InTime: time,
         user: userID,
         event: eventID
     }
@@ -368,7 +469,7 @@ function addRecord(txt){
 function handleRecordResult(data) {
     console.log('Attendance record', data);
     document.querySelector('#result').innerHTML = `<h2>${data.data}</h2>`
-    document.querySelector('#msg').innerHTML = `<h2>${data.data}</h2>`
+    document.querySelector('#msgID').innerHTML = `<h2>${data.data}</h2>`
     switch (eventType) {
         case "OneTime":
             loadOneTime()
