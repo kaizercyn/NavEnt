@@ -1,6 +1,16 @@
 <?php
+require_once "../php/dbconnection.php";
 session_start();
+$userID = $_SESSION['userId'];
+$st = $conn -> prepare('SELECT Event_ID FROM REGISDETAILS WHERE User_ID = ?');
+$st -> bind_param("i",$userID);
+$st -> execute();
+$result = $st -> get_result();
+if ($result->num_rows !=0){
+    $registeredEvents = $result->fetch_all(MYSQLI_ASSOC);
 
+    
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -54,7 +64,7 @@ session_start();
     <nav>
         <div class="nav-links">
             <a href="../index.php">HOME</a>
-            <a href="announcement.php">ANNOUNCEMENTS</a>
+            <a href="../client/announcement.php">ANNOUNCEMENTS</a>
         </div>
         <div class="box">
             <input type="text" placeholder="Search...">
@@ -73,16 +83,6 @@ session_start();
                         <li class="nav-item">
                             <a class="nav-link active" href="#">
                                 <i class="bi bi-card-list"></i> All Announcements
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="bi bi-check-circle"></i> Read Announcements
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="bi bi-clock"></i> Unread Announcements
                             </a>
                         </li>
                     </ul>

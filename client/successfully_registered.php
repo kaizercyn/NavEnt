@@ -133,7 +133,7 @@ if (isset($_POST["register"])) {
                 <div class="col-md-6 mx-auto text-center">
                   <?php
                   $qr_code = QrCode::create($_POST['IDnum'] . $_SESSION['IDEvent'] )
-                            -> setSize(300);
+                            -> setSize(200);
                   $label = Label::create("$nameUser");
                   $logo = Logo::create("../res/imgs/navi-event-logo(flat-40a-circle).png")
                           -> setResizeToWidth(30);                   
