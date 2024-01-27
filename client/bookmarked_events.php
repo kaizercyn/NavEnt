@@ -1,7 +1,16 @@
 <?php
 session_start();
 require "../php/dbconnection.php";
-
+$bookmarkedUserID = $_SESSION['userId']; 
+$st = $conn ->prepare("SELECT Event_ID FROM REGISDETAILS WHERE User_ID=?");
+$st -> bind_param("s",$bookmarkedUserID);
+$st -> execute();
+$result = $st -> get_result();
+if($result -> num_rows != 0){
+  $bookmarkedEvents = $result->fetch_all(MYSQLI_ASSOC);
+}
+$st->close();
+$result->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -60,7 +69,18 @@ require "../php/dbconnection.php";
     <section id="packages" class="pt-3 pb-3 custom-left-padding">
       <h2 class="text-left my-3">Bookmarked Events<h2>
     </section>
+    <?php
+    while($bookmarkedEvents != 0){
+      $eventBookmarked = array_shift($bookmarkedEvents);
+      $st = $conn -> prepare("SELECT * FROM EVENTS WHERE Event_ID=?");
+      $st -> bind_param('i',$eventBookmarked);
+      $st -> execute();
+      $result = $st -> get_result();
+      if($result -> num_rows != 0){
+        $bmEvents = $result -> fetch_all(MYSQLI_ASSOC);
+      
 
+    ?>
     <div id="latestEventsSlider" class="carousel slide" data-bs-ride="false">
         <div class="carousel-inner">
           <div class="carousel-item active">
@@ -69,39 +89,22 @@ require "../php/dbconnection.php";
                   <div class="card latest-event w-100">
                     <img src="https://images.unsplash.com/photo-1560439514-07abbb294a86?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img" alt="event4">
                     <div class="card-img-overlay">
-                        <h5 class="card-title">Event Name</h5>
-                        <p class="card-text">Description</p>
-                        <p class="card-text"><small>Date of Event</small></p>
-                        <button class="btn btn-primary">Read More</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg">
-                  <div class="card latest-event w-100">
-                    <img src="https://images.unsplash.com/photo-1559223694-98ed5e272fef?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img" alt="event5">
-                    <div class="card-img-overlay">
-                        <h5 class="card-title">Event Name</h5>
-                        <p class="card-text">Description</p>
-                        <p class="card-text"><small>Date of Event</small></p>
-                        <button class="btn btn-primary">Read More</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg">
-                  <div class="card latest-event w-100">
-                    <img src="https://images.unsplash.com/photo-1563807894768-f28bee0d37b6?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img" alt="event6">
-                    <div class="card-img-overlay">
-                        <h5 class="card-title">Event Name</h5>
-                        <p class="card-text">Description</p>
-                        <p class="card-text"><small>Date of Event</small></p>
-                        <button class="btn btn-primary">Read More</button>
+                      <?php $eventBm = array_shift($bmEvents); ?>
+                        <h5 class="card-title"><?php echo $eventBm['Event_Name']; ?></h5>
+                        <p class="card-text"><?php echo $eventBm['Event_Description']; ?></p>
+                        <p class="card-text"><small><?php echo $eventBm['Event_StartDate']; ?></small></p>
+                        <input type="hidden" name="event" value="<?php echo $eventBm['Event_ID'];  ?>">
+                        <button type="submit" class="btn btn-primary" name="readMore">Read More</button>
                     </div>
                   </div>
                 </div>
             </div>
         </div>
     </div>
-
+    <?php
+      }
+    }
+    ?>
     <footer>
         <div class="footer-bottom">
             <div class="logo">

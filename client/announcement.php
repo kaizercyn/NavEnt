@@ -7,10 +7,10 @@ $st -> bind_param("i",$userID);
 $st -> execute();
 $result = $st -> get_result();
 if ($result->num_rows !=0){
-    $registeredEvents = $result->fetch_all(MYSQLI_ASSOC);
-
-    
+    $registeredEvents = $result->fetch_all(MYSQLI_ASSOC);   
 }
+$st-> close();
+$result-> close();
 ?>
 <!doctype html>
 <html lang="en">
@@ -93,7 +93,11 @@ if ($result->num_rows !=0){
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 class="h2">Announcements</h1>
                 </div>
-    
+                <?php
+                if($registeredEvents-> num_rows != 0){
+                    
+                }
+                ?>
                 <div class="card mb-3">
                     <div class="card-header">
                         <h5 class="card-title">Announcement Title</h5>

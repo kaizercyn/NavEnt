@@ -50,7 +50,8 @@ session_start();
 
     <nav>
         <div class="nav-links">
-            <a href="home.php">HOME</a>
+            <a href="../index.php">HOME</a>
+            <a href="../client/announcement.php">ANNOUNCEMENTS</a>
         </div>
     </nav>
 

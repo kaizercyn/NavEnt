@@ -57,10 +57,10 @@ if(isset($_POST['readMore'] )){
             </div>
           </button>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="acount_details.php">Account Details</a></li>
-            <li><a class="dropdown-item" href="bookmarked_events.html">Bookmarks</a></li>
-            <li><a class="dropdown-item" href="event_history.html">Event History</a></li>
-            <li><a class="dropdown-item" href="pending_evaluation.html">Pending Evaluations</a></li>
+            <li><a class="dropdown-item" href="client/acount_details.php">Account Details</a></li>
+            <li><a class="dropdown-item" href="client/bookmarked_events.html">Bookmarks</a></li>
+            <li><a class="dropdown-item" href="client/event_history.html">Event History</a></li>
+            <li><a class="dropdown-item" href="client/pending_evaluation.html">Pending Evaluations</a></li>
             <li><hr class="dropdown-divider"></li>
             <li>
             <form action="../php/logoutfunctions.php" method="POST"><button type="submit" class="dropdown-item" onclick="return confirm('Are you sure you want to logout?')">Logout</button></form></li>
@@ -99,7 +99,10 @@ if(isset($_POST['readMore'] )){
         <h5><?php echo $_SESSION['start'];?></h5>
         <h1><?php echo $_SESSION['name'];?></h1>
         <h3><?php echo $_SESSION['tagline'];?></h3>
-        <button class="bookmark-button">&#128278;</button>
+        <form method="POST" action="../php/boobmark.php">
+          <input type="hidden" name="eID" value="<?php echo $_SESSION['IDEvent']; ?>">
+          <input type="hidden" name="user" value="<?php echo $_SESSION['userId']; ?>">
+        <button type="submit" name="boobmark" class="bookmark-button">&#128278;</button>
       </div>
     </div>
 
