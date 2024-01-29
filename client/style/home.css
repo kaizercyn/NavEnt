@@ -100,6 +100,15 @@ nav {
     width: 100%;
 }
 
+.btn a {
+    color: white;
+    text-decoration: none;
+}
+
+.btn:hover a {
+    color: #E4960E;
+}
+
 .box {
     height: 30px;
     display: flex;
