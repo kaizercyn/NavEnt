@@ -1,3 +1,7 @@
+const eventNameField = document.querySelector('.form-control#eventName')
+const eventTagField = document.querySelector('.form-control#tagline')
+const eventDescField = document.querySelector('.form-control#description')
+const eventTypeRadios = document.querySelectorAll('input[name="eventType"]');
 const oneTimeDateField = document.querySelector('.form-control#startDate')
 const oneTimeStartField = document.querySelector('.form-control#startTime')
 const oneTimeEndField = document.querySelector('.form-control#endTime')
@@ -10,23 +14,115 @@ const startPMField = document.querySelector('.form-control#startPM')
 const endPMField = document.querySelector('.form-control#endPM')
 const venuePMField = document.querySelector('.form-control#PMeventVenue')
 const seriesNumberField = document.querySelector('.form-control#seriesNumber')
+const publicButton = document.getElementById('true');
+const privateButton = document.getElementById('false');
+const evaluationLinkField = document.querySelector('.form-control#evaluationLink')
+const otherLinksCheckbox = document.getElementById('other-link')
+const linkNumberField = document.querySelector('.form-control#linkNumber')
+const regisCheckbox = document.getElementById('reg-open')
+const inputElement = document.getElementById('eventImage')
+const unfilledMsgContainer = document.querySelector('.unfilledFieldsDiv');
+const draftBtn = document.querySelector('.button-save-draft')
+const publishBtn = document.querySelector('.button-save-publish')
+const confirmationMsgContainer = document.querySelector('.confirmationDiv');
+const errorMsgContainer = document.querySelector('.errorMessageDiv');
+const urlParams = new URLSearchParams(window.location.search)
 
-var selectedEventType = ''
+var eventID = urlParams.get('eventID')
+
+var eventType
+var newEventType = ''
+var selectedEventType = eventType
 var isPublic = ''
 var isOpen = ''
 var willDel = ''
 var hasExternal = ''
-var externalCount = 0
 var eventPic = ''
+var changedPic = ''
+
+document.addEventListener('DOMContentLoaded', function () {
+    fetch(`/search/${eventID}`)
+    .then(response => response.json())
+    .then(data => {
+      loadEventDefine(data['data'])
+    })
+    .catch(error => console.error("Error fetching data:", error)); 
+})    
+
+function loadEventDefine(data) {
+    console.log("Edit.JS:",data)
+    eventType = data.length > 0 ? data[0].Event_Type : null;
+    console.log("Loaded:", eventType)
+}
+
+
+inputElement.addEventListener('change', (event) => {
+    changedPic = true
+    errorMsgContainer.innerHTML = ''
+    eventPic = event.target.files[0];
+    const maxSizeInBytes = 1048576;
+    
+    if (eventPic.size > maxSizeInBytes) {
+        console.error('File size exceeds the allowed limit.');
+        displayMessage('The chosen file is too large.', errorMsgContainer, false);
+    } else {
+        if (eventPic && eventPic.type.startsWith('image/')) {
+            overlayImg()
+            displayMessage('Image uploaded.', errorMsgContainer, true);
+        } else {
+            displayMessage('Please upload an image file.', errorMsgContainer, false);
+        }
+    }
+
+     
+});
+
+
+function overlayImg(){
+    const overlay = document.createElement('div');
+    overlay.classList.add('overlay');
+    overlay.style.width = `${previewImage.width}px`;
+    overlay.style.height = `${previewImage.height}px`
+    overlay.style.top = '50%';
+    overlay.style.left = '50%';
+    overlay.style.transform = 'translate(-50%, -50%)';
+    document.getElementById('imageContainer').appendChild(overlay);
+}
 
 function getBtnValues(){
+
+    eventTypeRadios.forEach(radio => {
+        radio.addEventListener('change', function () {
+            if (this.checked) {
+                newEventType = this.id
+                console.log(`Selected event type: ${newEventType}`);
+            }
+        });
+    });
+    
+
+    eventTypeRadios.forEach(radio => {
+        if (radio.checked) {
+            eventType = radio.id;
+            console.log(`Checked event type: ${eventType}`);
+        }
+    });
+
     if (newEventType.toLowerCase() == eventType){
         selectedEventType = eventType // means attendance type is the same
+        console.log(`Checked event type: same`);
+        willDel = false
+    } else if (newEventType.toLowerCase() != eventType && !newEventType) {
+        selectedEventType = eventType
+        console.log(`SAME`);
         willDel = false
     } else {
         selectedEventType = newEventType
+        console.log(`DIFF`);
         willDel = true
     }
+
+    console.log("SELECTED: ", selectedEventType)
     
     if (publicButton.checked = true ) {
         isPublic = true
@@ -50,18 +146,18 @@ function getBtnValues(){
 
 draftBtn.addEventListener('click', function(e) {
     unfilledMsgContainer.innerHTML = ''
+    getBtnValues()
     if (!eventNameField.value.trim()){
         displayMessage("Please enter a name for the event.", unfilledMsgContainer, false)
     } else {
-        getBtnValues()
         const eventBody = getEventBody()
         eventBody.live = false
         console.log(JSON.stringify(eventBody))
         sendToServer(eventBody)
         if (hasExternal === true){
-            sendExternalLinks(externalCount)
+            sendExternalLinks(linkNumberField.value.trim())
         }
-        if(changedPic = true) {
+        if(changedPic == true) {
             uploadEventImg(eventPic)
         }
         displayMessage("Draft successfully saved.", confirmationMsgContainer, true)
@@ -73,16 +169,16 @@ draftBtn.addEventListener('click', function(e) {
 
 publishBtn.addEventListener('click', function(e) {
     unfilledMsgContainer.innerHTML = ''
+    getBtnValues()
     if (checkValues() == false){
         displayMessage("Please fill out all fields before publishing.", unfilledMsgContainer, false)
     } else {
-        getBtnValues()
         const eventBody = getEventBody()
         eventBody.live = true
         console.log(JSON.stringify(eventBody))
         sendToServer(eventBody)
         if (hasExternal === true){
-            sendExternalLinks(externalCount)
+            sendExternalLinks(linkNumberField.value.trim())
         }
         uploadEventImg(eventPic)
         displayMessage("Event successfully published", confirmationMsgContainer, true)
@@ -95,23 +191,23 @@ publishBtn.addEventListener('click', function(e) {
 function getEventBody(){
     let eventStartDate
     let eventEndDate
-    let eventType
+    let eType
 
     switch (selectedEventType) {
         case "oneTime":
             eventStartDate = getValidDate(oneTimeDateField.value);
             eventEndDate = eventStartDate;
-            eventType = "OneTime";
+            eType = "OneTime";
             break;
         case "ampm":
             eventStartDate = getValidDate(amPmDateField.value);
             eventEndDate = eventStartDate;
-            eventType = "AM/PM";
+            eType = "AM/PM";
             break;
         case "series":
             eventStartDate = getValidDate(document.getElementById('startDate1').value);
             eventEndDate = getValidDate(document.getElementById(`startDate${seriesNumberField.value.trim()}`).value);
-            eventType = "Series";
+            eType = "Series";
             break;
         default:
             console.log("No type selected")
@@ -129,7 +225,7 @@ function getEventBody(){
         desc : eventDescField.value.trim(),
         start : eventStartDate,
         end : eventEndDate,
-        type : eventType,
+        type : eType,
         open : isOpen,
         public : isPublic,
         eval: evaluationLinkField.value.trim(),
@@ -160,23 +256,28 @@ function getValidDate(dateString) {
 
 
 function checkValues(){
+    var unfilled = true
     if (!eventNameField.value.trim() || !eventTagField.value.trim() || !eventDescField.value.trim()) {
-        return false;
+        console.log("top 3")
+        unfilled =  false;
     }
 
     if (!Array.from(eventTypeRadios).some(radio => radio.checked)) {
-        return false;
+        console.log("event type!")
+        unfilled =  false;
     }
 
     switch (selectedEventType) {
         case "oneTime":
             if (!oneTimeDateField.value || !oneTimeEndField.value || !oneTimeStartField.value || !oneTimeVenueField.value.trim()) {
-                return false
+                console.log("onetime!")
+                unfilled =  false;
             }
             break
         case "ampm":
             if (!amPmDateField.value || !startAMField.value || !startPMField.value || !endAMField.value || !endPMField.value || !venueAMField.value.trim() || !venuePMField.value.trim()) {
-                return false
+                console.log("ampm!")
+                unfilled =  false;
             }
             break;
         case "series":
@@ -200,22 +301,28 @@ function checkValues(){
                 seriesEnd.length !== seriesNumberField.value ||
                 seriesVenue.length !== seriesNumberField.value
             ) {
+                console.log("top 2")
+                unfilled =  false;
                 return false;
             }
             break;
         default:
+            console.log("no type")
+            unfilled =  false;
             return false
     }
 
-    if (!publicRadioButton.checked && !privateRadioButton.checked) {
-        return false;
+    if (!publicButton.checked && !privateButton.checked) {
+        console.log("public")
+        unfilled =  false;
     }
 
     if (!inputElement.files || inputElement.files.length === 0) {
-        return false
+        console.log("no img")
+        unfilled =  false;
     }
 
-    return true
+    return unfilled
 }
 
 function sendToServer(eventBody){
@@ -269,7 +376,7 @@ function sendExternalLinks(count){
 }
 
 function sendEventType(type){
-    switch (type.toLowerCase) {
+    switch (type.toLowerCase()) {
         case "onetime":
             let oneTimeStart = oneTimeStartField.value
             let oneTimeEnd = oneTimeEndField.value
@@ -398,3 +505,15 @@ function uploadEventImg() {
     });
     
 }
+
+function displayMessage(message, div, type) {
+    const msgDiv = document.createElement('div');
+    msgDiv.id = 'msg'
+    msgDiv.textContent = message;
+    if (type) {
+      msgDiv.style.color = 'green';
+    } else {
+      msgDiv.style.color = 'red';
+    }
+    div.appendChild(msgDiv);
+  }

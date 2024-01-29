@@ -88,17 +88,19 @@ toHomeBtn.addEventListener('click', function(e) {
 function load(data) {
     // console.log("Received data:", data);
     if (!data || data.length === 0) {
-        table.innerHTML = "<tr><td class='no-data' colspan='6'>No Data</td></tr>";
+        table.innerHTML = "<tr><td class='no-data' colspan='8'>No Data</td></tr>";
         return;
     }
     let tableHTML = "";
-    data.forEach(function ({ Event_ID, Event_Name, Event_StartDate, Event_EndDate, Participants, Event_Type }) {
+    data.forEach(function ({ Event_ID, Event_Name, Event_StartDate, Event_EndDate, Participants, Event_Type, isLive, isOpen }) {
         tableHTML += "<tr>"
         tableHTML += `<td>${Event_Name}</td>`
         tableHTML += `<td>${String(Participants)}</td>` 
         tableHTML += `<td>${new Date(Event_StartDate).toLocaleDateString()}</td>`
         tableHTML += `<td>${new Date(Event_EndDate).toLocaleDateString()}</td>`
         tableHTML += `<td>${Event_Type}</td>`
+        tableHTML += `<td>${isLive ? 'Published' : 'Draft'}</td>`;
+        tableHTML += `<td>${isOpen ? 'Open' : 'Closed'}</td>`;
         tableHTML += `<td>
                         <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                             <button type="button" class="btn_edit" data-id=${Event_ID}>Edit</button>

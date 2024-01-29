@@ -24,10 +24,6 @@ const inputElement = document.getElementById('eventImage')
 const previewImage = document.getElementById('previewImage');
 const imageContainer = document.getElementById("imageContainer");
 const errorMsgContainer = document.querySelector('.errorMessageDiv');
-const unfilledMsgContainer = document.querySelector('.unfilledFieldsDiv');
-const draftBtn = document.querySelector('.button-save-draft')
-const publishBtn = document.querySelector('.button-save-publish')
-const confirmationMsgContainer = document.querySelector('.confirmationDiv');
 const toHomeBtn = document.querySelector('.toHome')
 const logoutBtn = document.querySelector('.logout-btn');
 document.getElementById('seriesNumber').addEventListener('input', generateSeriesFields);
@@ -37,9 +33,12 @@ const urlParams = new URLSearchParams(window.location.search)
 var eventID = urlParams.get('eventID')
 var changedPic = ''
 var eventType = ''
-var newEventType = ''
 var eventPic = ''
+
+
 console.log(eventID)
+
+
 
 document.addEventListener('DOMContentLoaded', function () {
     fetch(`/search/${eventID}`)
@@ -142,19 +141,19 @@ function fillAttendanceDetails(type, data){
     const startDate = new Date(data[0].Event_StartDate);
     const formattedStartDate = startDate.toISOString().split('T')[0];
     console.log(formattedStartDate)
-    switch (type) {
-        case 'OneTime':
+    switch (type.toLowerCase()) {
+        case 'onetime':
             radioToCheck = document.getElementById('oneTime')
             console.log(data[0].Event_StartDate)
             oneTimeDateField.value = formattedStartDate
             oneTime()
             break;
-        case 'AM/PM':
+        case 'am/pm':
             radioToCheck = document.getElementById('ampm')
             amPmDateField.value = formattedStartDate
             ampm()
             break;
-        case 'Series':
+        case 'series':
             radioToCheck = document.getElementById('series')
             series(true)
             break;
@@ -255,14 +254,7 @@ $(document).ready(function() {
     });
 });
 
-eventTypeRadios.forEach(radio => {
-    radio.addEventListener('change', function () {
-        if (this.checked) {
-            newEventType = this.id
-            console.log(`Selected event type: ${eventType}`);
-      }
-    });
-});
+
 
 publicButton.addEventListener('change', function() {
     if (this.checked) {
@@ -292,37 +284,9 @@ otherLinksCheckbox.addEventListener('change', function() {
     }
 })
 
-inputElement.addEventListener('change', (event) => {
-    changedPic = true
-    errorMsgContainer.innerHTML = ''
-    eventPic = event.target.files[0];
-    const maxSizeInBytes = 1048576;
-    
-    if (eventPic.size > maxSizeInBytes) {
-        console.error('File size exceeds the allowed limit.');
-        displayMessage('The chosen file is too large.', errorMsgContainer, false);
-    }
-
-     
-    if (eventPic && eventPic.type.startsWith('image/')) {
-        overlayImg()
-        displayMessage('Image uploaded.', errorMsgContainer, true);
-    } else {
-        displayMessage('Please upload an image file.', errorMsgContainer, false);
-    }
-});
 
 
-function overlayImg(){
-    const overlay = document.createElement('div');
-    overlay.classList.add('overlay');
-    overlay.style.width = `${previewImage.width}px`;
-    overlay.style.height = `${previewImage.height}px`
-    overlay.style.top = '50%';
-    overlay.style.left = '50%';
-    overlay.style.transform = 'translate(-50%, -50%)';
-    document.getElementById('imageContainer').appendChild(overlay);
-}
+
 
 function displayMessage(message, div, type) {
     const msgDiv = document.createElement('div');

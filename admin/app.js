@@ -24,6 +24,8 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage })
 
+var filename = ''
+
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended : false }));
@@ -374,7 +376,7 @@ app.post('/series', async (request, response) => {
     }
 })
 
-app.post('/upload', upload.single("eventImage"), async (req, res) => {
+app.post('/upload/', upload.single("eventImage"), async (req, res) => {
     try {
         const filePath = req.file.path;
         fs.readFile(filePath, (err, data) => {

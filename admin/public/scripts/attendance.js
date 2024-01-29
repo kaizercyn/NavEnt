@@ -157,7 +157,7 @@ async function loadEvent(data) {
             }).format(new Date(data[0].Event_StartDate))
             const oneTimeData = await getAttendanceDetails("onetime", eventID)
             console.log("Received data:", oneTimeData);
-            oneTimeVenue.innerHTML = oneTimeData[0].Venue
+            oneTimeVenue.innerHTML = (oneTimeData[0].Venue ? oneTimeData[0].Venue : "No venue specified")
             loadOneTime()
             break;
         case "AM/PM":
@@ -173,8 +173,8 @@ async function loadEvent(data) {
             }).format(new Date(data[0].Event_StartDate))
             const AMPMData = await getAttendanceDetails("ampm", eventID)
             console.log("Received data:", AMPMData);
-            venueAM.innerHTML = "AM Session Venue: " + AMPMData[0].AM_Venue
-            venuePM.innerHTML = "PM Session Venue: " + AMPMData[0].PM_Venue
+            venueAM.innerHTML = "AM Session Venue: " + (AMPMData[0].AM_Venue ? AMPMData[0].AM_Venue : 'No venue specified');
+            venuePM.innerHTML = "PM Session Venue: " + (AMPMData[0].PM_Venue ? AMPMData[0].PM_Venue : 'No venue specified');
             loadAMPM()
             break;
         case "Series":
@@ -269,8 +269,8 @@ async function genSeriesTables(){
             day: '2-digit',
         }).format(new Date(seriesData[i].Date))
         containerHTMl += `<div class=series${i+1}>`
-        containerHTMl += `<h3>${seriesData[i].Series_Name}</h3>`
-        containerHTMl += `<p id="seriesVenue${i}">${seriesData[i].Venue}</p>`
+        containerHTMl += `<h3>${seriesData[i].Venue ? seriesData[i].Name : 'No name specified'}</h3>`
+        containerHTMl += `<p id="seriesVenue${i}">${seriesData[i].Venue ? seriesData[i].Venue : 'No venue specified'}</p>`
         containerHTMl += `<div class="row">
                             <div class="col-10"></div>
                             <div class="col-2 text-right">
