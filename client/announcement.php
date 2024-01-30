@@ -9,6 +9,7 @@ $result = $st -> get_result();
 if ($result->num_rows !=0){
     $registeredEvents = $result->fetch_all(MYSQLI_ASSOC);   
 }
+
 $st-> close();
 $result-> close();
 ?>
@@ -94,9 +95,7 @@ $result-> close();
                     <h1 class="h2">Announcements</h1>
                 </div>
                 <?php
-                if($registeredEvents-> num_rows != 0){
-                    
-                }
+                $arraylength 
                 ?>
                 <div class="card mb-3">
                     <div class="card-header">

@@ -37,87 +37,24 @@
         </div>
     </header>
 
-   
     <nav>
-        <div class="nav-links"> 
-            <a href="index.php">HOME</a>
-            <a href="client/announcement.html">ANNOUNCEMENTS</a>
+        <div class="nav-links">
+            <a href="../webdevfinals/index.php">HOME</a>
+            <a href="client/announcement.php">ANNOUNCEMENTS</a>
         </div>
         <div class="box">
-
-
-    <form id="searchForm" action="index.php" method="get">
-        <input type="text" name="search_query" placeholder="Search...">
-        <button type="button" onclick="performSearch()">
-            <i class="bi bi-search search-icon"></i>
-            <i class="fas fa-search"></i>
-        </button>
-    </form>
-
-    <div id="searchResultsContainer">
-                <h2>Search Results</h2>
-                <div id="resultsTable"></div>
-            </div>
-
-    <div id="searchResults">
-        <!-- Search results will be displayed here -->
-        <?php
-// Establish a database connection (you should replace the placeholder values with your actual database credentials)
-$db_host = "localhost";
-$db_user = "root";
-$db_password = "";
-$db_name = "webdev";
-
-$conn = new mysqli($db_host, $db_user, $db_password, $db_name);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["search_query"])) {
-    $search_query = $_GET["search_query"];
-
-    // Perform a simple search on the Event_Name column
-    $sql = "SELECT * FROM events WHERE Event_Name LIKE '%$search_query%'";
-    $result = $conn->query($sql);
-
-    echo '<div id="searchResults">';
-    echo '<h2>Search Results</h2>';
-    
-    if ($result->num_rows > 0) {
-        echo '<table border="1">';
-        echo '<tr><th>Event ID</th><th>Event Name</th><th>Event Tagline</th></tr>';
-
-        while ($row = $result->fetch_assoc()) {
-            echo '<tr>';
-            echo '<td>' . $row['Event_ID'] . '</td>';
-            echo '<td>' . $row['Event_Name'] . '</td>';
-            echo '<td>' . $row['Event_Tagline'] . '</td>';
-            echo '</tr>';
-        }
-
-        echo '</table>';
-    } else {
-        echo '<p>No results found.</p>';
-    }
-
-    echo '</div>';
-}
-
-// Close the database connection
-$conn->close();
-?>
-    </div>
-    
-    
+            <input type="text" placeholder="Search...">
+            <a href="">
+                <i class="bi bi-search search-icon"></i>
+                <i class="fas fa-search"></i>
+            </a>
     </nav>
     <?php
     require("php/dbconnection.php");
     $public = 1;
     $open = 1;
-    $live = 1;
-    $st = $conn -> prepare("SELECT * FROM EVENTS WHERE isPublic=? and isOpen=? and isLive=?");
-    $st-> bind_param('iii', $public, $open, $live);
+    $st = $conn -> prepare("SELECT * FROM EVENTS WHERE isPublic=? and isOpen=?");
+    $st-> bind_param('ii', $public, $open);
     $st-> execute();
     $result= $st->get_result();
     if ($result->num_rows !=0){
@@ -188,7 +125,7 @@ $conn->close();
           <span class="visually-hidden">Next</span>
         </button>
       </div>
-    
+      
       <div class="container events-container">
     <section id="packages" class="pt-3 pb-3">
         <h1 class="text-center my-3">Latest Events</h1>
@@ -211,12 +148,15 @@ $conn->close();
             ?>
             <div class="col-lg">
                 <div class="card latest-event w-100">
-                    <!-- <img src="<?php //echo $row['Event_PicFilePath']; ?>" class="card-img" alt="<?php //echo $row['Event_Name']; ?>"> -->
+                    <!-- <img src="<?php //echo $row['Event_PicFilePath']; ?>" class="card-img" alt="<?php //echo $row['Event_Name']; ?>"> push daw aq sabi ni jupay-->
                     <div class="card-img-overlay">
                         <h5 class="card-title text-black"><?php echo $row['Event_Name']; ?></h5>
                         <p class="card-text text-black"><?php echo $row['Event_Tagline']; ?></p>
                         <p class="card-text"><small class="text-black">Date of Event: <?php echo $row['Event_StartDate']; ?></small></p>
-                        <button class="btn btn-primary">Read More</button>
+                        <form action="client/event_details.php" method="POST">
+                          <input type="hidden" name="event" value="<?php echo $row['Event_ID'];  ?>">
+                          <button type="submit" class="btn btn-primary px-4 py-2 fs-5 mt-5" name="readMore">Read More</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -240,7 +180,7 @@ $conn->close();
         <span class="visually-hidden">Next</span>
     </button>
 </div>
-      
+
       <script>
         const latestEventsSlider = new bootstrap.Carousel(document.getElementById('latestEventsSlider'), {
           interval: false,
@@ -276,7 +216,10 @@ $conn->close();
                         <h5 class="card-title text-black"><?php echo $row['Event_Name']; ?></h5>
                         <p class="card-text text-black"><?php echo $row['Event_Description']; ?></p>
                         <p class="card-text text-black"><small>Date of Event: <?php echo $row['Event_StartDate']; ?></small></p>
-                        <button class="btn btn-primary">Read More</button>
+                        <form action="client/event_details.php" method="POST">
+                          <input type="hidden" name="event" value="<?php echo $row['Event_ID'];  ?>">
+                          <button type="submit" class="btn btn-primary px-4 py-2 fs-5 mt-5" name="readMore">Read More</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -302,13 +245,78 @@ $conn->close();
 </div>
 
 
+
+
       <script>
         const upcomingEventsSlider = new bootstrap.Carousel(document.getElementById('upcomingEventsSlider'), {
         interval: false,
         });
       </script>
-      
-      </div>
+
+      <section id="packages" class="pt-3 pb-3">
+        <h1 class="text-center my-3">All Events</h1>
+    </section>
+
+    <div id="allEventsSlider" class="carousel slide" data-bs-ride="false">
+    <div class="carousel-inner">
+        <?php
+        require("php/dbconnection.php");
+        $st = $conn->prepare("SELECT * FROM events");
+        $st->execute();
+        $result = $st->get_result();
+        $eventCount = 0;
+        while ($row = $result->fetch_assoc()) {
+            if ($eventCount % 2 === 0) {
+                $active = ($eventCount === 0) ? 'active' : '';
+                echo '<div class="carousel-item ' . $active . '">';
+                echo '<div class="container"><div class="row">';
+            }
+            ?>
+            <div class="col-lg-6">
+                <div class="card all-event w-100">
+                    <!-- <img src="<?php //echo $row['Event_PicFilePath']; ?>" class="card-img" alt="<?php //echo $row['Event_Name']; ?>"> -->
+                    <div class="card-img-overlay">
+                        <h5 class="card-title text-black"><?php echo $row['Event_Name']; ?></h5>
+                        <p class="card-text text-black"><?php echo $row['Event_Description']; ?></p>
+                        <p class="card-text text-black"><small>Date of Event: <?php echo $row['Event_StartDate']; ?></small></p>
+                        <form action="client/event_details.php" method="POST">
+                          <input type="hidden" name="event" value="<?php echo $row['Event_ID'];  ?>">
+                          <button type="submit" class="btn btn-primary px-4 py-2 fs-5 mt-5" name="readMore">Read More</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <?php
+            $eventCount++;
+            if ($eventCount % 2 === 0 || $eventCount === $result->num_rows) {
+                echo '</div></div></div>';
+            }
+        }
+        $st->close();
+        $result->close();
+        ?>
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#allEventsSlider" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#allEventsSlider" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+
+
+
+      <script>
+        const allEventsSlider = new bootstrap.Carousel(document.getElementById('allEventsSlider') {
+        interval: false,
+        });
+      </script>
+
+  </div>\
 
       <footer>
         <div class="footer-bottom">
@@ -322,27 +330,5 @@ $conn->close();
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-
-    
-    <script>
-        function performSearch() {
-        var form = document.getElementById("searchForm");
-        var formData = new FormData(form);
-
-        // Use Fetch API to send the form data to index.php
-        fetch('index.php', {
-            method: 'GET',
-            body: formData
-        })
-        .then(response => response.text())
-        .then(data => {
-            // Update the content of the searchResultsContainer with the search results
-            var searchResultsContainer = document.getElementById("searchResultsContainer");
-            searchResultsContainer.innerHTML = '<h2>Search Results</h2>' + data;
-            searchResultsContainer.style.display = "block";
-        })
-        .catch(error => console.error('Error:', error));
-    }
-    </script>
 </body>
 </html>

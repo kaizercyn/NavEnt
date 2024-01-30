@@ -265,8 +265,71 @@ $userAccount = $_SESSION["username"];
         interval: false,
         });
       </script>
-      
-      </div>
+
+      <section id="packages" class="pt-3 pb-3">
+        <h1 class="text-center my-3">All Events</h1>
+    </section>
+
+    <div id="allEventsSlider" class="carousel slide" data-bs-ride="false">
+    <div class="carousel-inner">
+        <?php
+        require("php/dbconnection.php");
+        $st = $conn->prepare("SELECT * FROM events");
+        $st->execute();
+        $result = $st->get_result();
+        $eventCount = 0;
+        while ($row = $result->fetch_assoc()) {
+            if ($eventCount % 2 === 0) {
+                $active = ($eventCount === 0) ? 'active' : '';
+                echo '<div class="carousel-item ' . $active . '">';
+                echo '<div class="container"><div class="row">';
+            }
+            ?>
+            <div class="col-lg-6">
+                <div class="card all-event w-100">
+                    <!-- <img src="<?php //echo $row['Event_PicFilePath']; ?>" class="card-img" alt="<?php //echo $row['Event_Name']; ?>"> -->
+                    <div class="card-img-overlay">
+                        <h5 class="card-title text-black"><?php echo $row['Event_Name']; ?></h5>
+                        <p class="card-text text-black"><?php echo $row['Event_Description']; ?></p>
+                        <p class="card-text text-black"><small>Date of Event: <?php echo $row['Event_StartDate']; ?></small></p>
+                        <form action="client/event_details.php" method="POST">
+                          <input type="hidden" name="event" value="<?php echo $row['Event_ID'];  ?>">
+                          <button type="submit" class="btn btn-primary px-4 py-2 fs-5 mt-5" name="readMore">Read More</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <?php
+            $eventCount++;
+            if ($eventCount % 2 === 0 || $eventCount === $result->num_rows) {
+                echo '</div></div></div>';
+            }
+        }
+        $st->close();
+        $result->close();
+        ?>
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#allEventsSlider" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#allEventsSlider" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+
+
+
+      <script>
+        const allEventsSlider = new bootstrap.Carousel(document.getElementById('allEventsSlider') {
+        interval: false,
+        });
+      </script>
+
+  </div>
 
       <footer>
         <div class="footer-bottom">

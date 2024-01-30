@@ -189,21 +189,24 @@ p {
 }
 
 .latest-event,
-.upcoming-event {
+.upcoming-event,
+.all-event {
     position: relative;
     width: 300px;
     height: 200px;
 }
 
 .latest-event .card-img,
-.upcoming-event .card-img {
+.upcoming-event .card-img,
+.all-event .card-img {
     object-fit: cover;
     width: 100%;
     height: 100%;
 }
 
 .latest-event .card-img-overlay, 
-.upcoming-event .card-img-overlay {
+.upcoming-event .card-img-overlay,
+.all-event .card-img-overlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -212,7 +215,8 @@ p {
 }
 
 .latest-event .btn,
-.upcoming-event .btn {
+.upcoming-event .btn,
+.all-event .btn {
     position: absolute;
     bottom: 10px;
     right: 10px;
@@ -222,7 +226,8 @@ p {
 }
 
 .latest-event .btn:hover,
-.upcoming-event .btn:hover {
+.upcoming-event .btn:hover,
+.all-event .btn:hover {
     background-color: #E4960E;
     border-color: #E4960E;
 }
@@ -230,7 +235,9 @@ p {
 #latestEventsSlider .carousel-control-prev,
 #latestEventsSlider .carousel-control-next,
 #upcomingEventsSlider .carousel-control-prev,
-#upcomingEventsSlider .carousel-control-next {
+#upcomingEventsSlider .carousel-control-next,
+#allEventsSlider .carousel-control-prev,
+#allEventsSlider .carousel-control-next {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -242,26 +249,30 @@ p {
 }
 
 #latestEventsSlider .carousel-control-prev::before,
-#upcomingEventsSlider .carousel-control-prev::before  {
+#upcomingEventsSlider .carousel-control-prev::before,
+#allEventsSlider .carousel-control-prev::before  {
   content: '\2039';
   font-size: 3rem;
   color: #71999B;
 }
 
 #latestEventsSlider .carousel-control-next::before,
-#upcomingEventsSlider .carousel-control-next::before {
+#upcomingEventsSlider .carousel-control-next::before,
+#allEventsSlider .carousel-control-next::before {
   content: '\203A';
   font-size: 3rem;
   color: #71999B;
 }
 
 #latestEventsSlider .carousel-control-prev,
-#upcomingEventsSlider .carousel-control-prev {
+#upcomingEventsSlider .carousel-control-prev,
+#allEventsSlider .carousel-control-prev {
   left: -45px;
 }
 
 #latestEventsSlider .carousel-control-next,
-#upcomingEventsSlider .carousel-control-next {
+#upcomingEventsSlider .carousel-control-next,
+#allEventsSlider .carousel-control-next {
   right: -45px;
 }
 
