@@ -117,6 +117,13 @@ if(isset($_POST['readMore'] )){
           <input type="hidden" name="bookmarkedEvent" value="<?php echo $eventid; ?>">
           <input type="hidden" name="user" value="<?php echo $_SESSION['userId']; ?>">
         <button type="submit" name="boobmark" class="bookmark-button">&#128278;</button>
+        </form>
+          <?php
+        }
+        $st -> close();
+        $result -> close();
+      }
+        ?>
       </div>
     </div>
 
