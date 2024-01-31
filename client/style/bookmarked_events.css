@@ -234,10 +234,16 @@ p {
     filter: brightness(0.6);
 }
 
-.latest-event .card-title,
+.latest-event .card-title {
+    color: black;
+    font-size: large;
+}
+
 .latest-event .card-text,
 .latest-event small {
-    color: white;
+    color: black;
+    font-size: small;
+    
 }
 
 .ev {
