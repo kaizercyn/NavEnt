@@ -99,10 +99,10 @@ if(isset($_POST['readMore'] )){
         <h5><?php echo $_SESSION['start'];?></h5>
         <h1><?php echo $_SESSION['name'];?></h1>
         <h3><?php echo $_SESSION['tagline'];?></h3>
-        <form method="POST" action="../php/boobmark.php">
+        <!-- <form method="POST" action="../php/boobmark.php">
           <input type="hidden" name="eID" value="<?php echo $_SESSION['IDEvent']; ?>">
           <input type="hidden" name="user" value="<?php echo $_SESSION['userId']; ?>">
-        <button type="submit" name="boobmark" class="bookmark-button">&#128278;</button>
+        <button type="submit" name="boobmark" class="bookmark-button">&#128278;</button> -->
       </div>
     </div>
 

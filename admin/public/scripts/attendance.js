@@ -269,7 +269,7 @@ async function genSeriesTables(){
             day: '2-digit',
         }).format(new Date(seriesData[i].Date))
         containerHTMl += `<div class=series${i+1}>`
-        containerHTMl += `<h3>${seriesData[i].Venue ? seriesData[i].Name : 'No name specified'}</h3>`
+        containerHTMl += `<h3>${seriesData[i].Venue ? seriesData[i].Series_Name : 'No name specified'}</h3>`
         containerHTMl += `<p id="seriesVenue${i}">${seriesData[i].Venue ? seriesData[i].Venue : 'No venue specified'}</p>`
         containerHTMl += `<div class="row">
                             <div class="col-10"></div>
