@@ -70,14 +70,7 @@ $placeholders = implode(',', array_fill(0, count($events), '?'));
         <div class="nav-links">
             <a href="../index.php">HOME</a>
             <a href="../client/announcement.php">ANNOUNCEMENTS</a>
-        </div>
-        <div class="box">
-            <input type="text" placeholder="Search...">
-            <a href="">
-                <i class="bi bi-search search-icon"></i>
-                <i class="fas fa-search"></i>
-            </a>
-        </div>
+        </div>  
     </nav>
 
     <div class="container-fluid">
@@ -93,7 +86,6 @@ $placeholders = implode(',', array_fill(0, count($events), '?'));
                     </ul>
                 </div>
             </nav>
-    
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 class="h2">Announcements</h1>
@@ -112,21 +104,23 @@ $placeholders = implode(',', array_fill(0, count($events), '?'));
                 ?>
                 <div class="card mb-3">
                     <div class="card-header">
-                        <h5 class="card-title">Announcement Title</h5>
+                        <h5 class="card-title"></h5>
                     </div>
                     <div class="card-body">
-                        <p class="card-text">This is a sample announcement content. You can add more details and information here.</p>
+                        <p class="card-text"><?php echo $row['Details']; ?></p>
                     </div>
                     <div class="card-footer text-muted">
-                        Date: March 1, 2023
+                        <?php echo $row['Date_Posted']; ?>
                     </div>
                 </div>
-    
+                <?php
+                }
+                $st -> close();
+                ?>   
             </main>
         </div>
     </div>
-
-    <footer>
+        <footer>
         <div class="footer-bottom">
             <div class="logo">
                 <img src="../res/imgs/navi-event-logo(3d).png" alt="Logo" class="footer-logo">

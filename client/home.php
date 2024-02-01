@@ -40,7 +40,6 @@
     <nav>
         <div class="nav-links">
             <a href="../webdevfinals/index.php">HOME</a>
-            <a href="client/announcement.php">ANNOUNCEMENTS</a>
         </div>
         <div class="box">
             <input type="text" placeholder="Search...">

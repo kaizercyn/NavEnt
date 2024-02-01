@@ -178,6 +178,10 @@ nav {
     color: #71999B;
 }
 
+#sidebar {
+    height: 10vh;
+}
+
 #sidebar .nav-link {
     color: #000; 
 }
