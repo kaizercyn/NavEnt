@@ -176,7 +176,7 @@ if(isset($_POST['readMore'] )){
           </div>
   
           <div class="col-md-6">
-              <label for="year" class="form-label">School</label>
+              <label for="year" class="form-label">Organization Position</label>
               <input id="course" type="text" class="form-control mb-3" name="Position" placeholder="Pick N/A if not in any org. " required>
           </div>
       </div>

@@ -445,14 +445,12 @@ class DbService {
     
             if (count === 0) {
                 response = await new Promise((resolve, reject) => {
-                    // Update the existing record
                     const updateQuery = `
                         UPDATE webdev.attendance
                         SET Date = ?, In_Time = ?
                         WHERE Event_ID = ? AND User_ID = ?
                     `;
             
-                    // Insert a new record if the update didn't affect any rows
                     const insertQuery = `
                         INSERT INTO webdev.attendance (Event_ID, User_ID, Date, In_Time)
                         SELECT ?, ?, ?, ?
@@ -469,10 +467,8 @@ class DbService {
                             reject(new Error(updateErr.message));
                         } else {
                             if (updateResults.affectedRows > 0) {
-                                // The update was successful, resolve with a success message
                                 resolve("Attendance updated successfully!");
                             } else {
-                                // No rows were updated, so try to insert a new record
                                 connection.query(insertQuery, [c, d, a, b, c, d], (insertErr, insertResults) => {
                                     if (insertErr) {
                                         reject(new Error(insertErr.message));
@@ -496,32 +492,24 @@ class DbService {
     
 
     async getRegistrants(a){
-        let response;
+        let selectResponse;
         try {
-            response = await new Promise ((resolve, reject) => {
+            selectResponse = await new Promise ((resolve, reject) => {
                 const query = `
-                SELECT regisdetails.User_ID, registration.Name, attendance.In_Time FROM regisdetails 
+                SELECT regisdetails.User_ID, registration.Name FROM regisdetails 
                 JOIN registration ON regisdetails.User_ID = registration.User_ID 
-                JOIN attendance ON regisdetails.User_ID = attendance.User_ID
-                WHERE attendance.Event_ID = ?`
+                WHERE regisdetails.Event_ID = ?`
                 connection.query(query, [a], (err, results) => {
                     if (err) {
                         reject(new Error(err.message))
                     } else {
-                        console.log("Fetched data from DB (GR-O):", results);
+                        console.log("Fetched data from DB (registrants - O):", results);
                         resolve(results)
                     }
                 })
             }) 
-            makeRecord(a, response)
-            return response
-        } catch (error) {
-            console.log(error + ' Fetching registrants from DB failed.')
-        }
-    }
+            makeRecord(a, selectResponse, 1)
 
-    async getRegistrantsAMPM(a){
-        try {
             const response = await new Promise((resolve, reject) => {
                 const query = `
                 SELECT regisdetails.User_ID, registration.Name, attendance.Series_Num, attendance.In_Time FROM regisdetails 
@@ -533,14 +521,56 @@ class DbService {
                     if (err) {
                         reject(new Error(err.message));
                     } else {
-                        console.log("Fetched data from DB (GR-A):", results);
+                        console.log("Fetched data from DB (attendance - 0):", results);
                         resolve(results);
                     }
                 });
             });
     
             console.log("NameS:", response);
-            makeSeriesRecord(a, response, 2);
+            return response
+        } catch (error) {
+            console.log(error + ' Fetching registrants from DB failed.')
+        }
+    }
+
+    async getRegistrantsAMPM(a){
+        try {
+            const selectResponse = await new Promise((resolve, reject) => {
+                const query = `
+                SELECT regisdetails.User_ID, registration.Name FROM regisdetails 
+                JOIN registration ON regisdetails.User_ID = registration.User_ID 
+                WHERE regisdetails.Event_ID = ?
+                `
+                connection.query(query, [a], (err, results) => {
+                    if (err) {
+                        reject(new Error(err.message));
+                    } else {
+                        console.log("Fetched data from DB (registrants - A):", results);
+                        resolve(results);
+                    }
+                });
+            });
+            makeRecord(a, selectResponse, 2);
+
+            const response = await new Promise((resolve, reject) => {
+                const query = `
+                SELECT regisdetails.User_ID, registration.Name, attendance.Series_Num, attendance.In_Time FROM regisdetails 
+                JOIN registration ON regisdetails.User_ID = registration.User_ID 
+                JOIN attendance ON regisdetails.User_ID = attendance.User_ID
+                WHERE attendance.Event_ID = ?
+                `
+                connection.query(query, [a], (err, results) => {
+                    if (err) {
+                        reject(new Error(err.message));
+                    } else {
+                        console.log("Fetched data from DB (attendance - A):", results);
+                        resolve(results);
+                    }
+                });
+            });
+
+            console.log("NameS:", response);
             return response;
         } catch (error) {
             console.log(error + ' Fetching registrants from DB failed.');
@@ -549,12 +579,11 @@ class DbService {
 
     async getRegistrantsSeries(a){
         try {
-            const response = await new Promise((resolve, reject) => {
+            const selectResponse = await new Promise((resolve, reject) => {
                 const query = `
-                SELECT regisdetails.User_ID, registration.Name, attendance.Series_Num, attendance.In_Time FROM regisdetails 
+                SELECT regisdetails.User_ID, registration.Name FROM regisdetails 
                 JOIN registration ON regisdetails.User_ID = registration.User_ID 
-                JOIN attendance ON regisdetails.User_ID = attendance.User_ID
-                WHERE attendance.Event_ID = ?
+                WHERE regisdetails.Event_ID = ?
                 `
                 connection.query(query, [a], (err, results) => {
                     if (err) {
@@ -581,8 +610,27 @@ class DbService {
     
             const count = countResults[0].Series_Count;
     
+            makeRecord(a, selectResponse, count);
+
+            const response = await new Promise((resolve, reject) => {
+                const query = `
+                SELECT regisdetails.User_ID, registration.Name, attendance.Series_Num, attendance.In_Time FROM regisdetails 
+                JOIN registration ON regisdetails.User_ID = registration.User_ID 
+                JOIN attendance ON regisdetails.User_ID = attendance.User_ID
+                WHERE attendance.Event_ID = ?
+                `
+                connection.query(query, [a], (err, results) => {
+                    if (err) {
+                        reject(new Error(err.message));
+                    } else {
+                        console.log("Fetched data from DB (attendance - A):", results);
+                        resolve(results);
+                    }
+                });
+            });
+
             console.log("NameS:", response);
-            makeSeriesRecord(a, response, count);
+
             return response;
         } catch (error) {
             console.log(error + ' Fetching registrants from DB failed.');
@@ -593,67 +641,41 @@ class DbService {
     
 }
 
-function makeRecord(ID, names){
-    const insertQuery = "SELECT COUNT(*) AS row_count FROM webdev.attendance WHERE Event_ID = ?"
-    connection.query(insertQuery , [ID], (err, results) => {
-        if (err) {
-            console.error('Error executing query:', err);
-        } else {
-            console.log('Execution successful (MR). Count:', results[0].row_count);
-            if (results[0].row_count == 0){
-                const userIDs = names.map(row => row.User_ID);
-                console.log("USER IDs: ", userIDs);
-                userIDs.forEach(userID =>{
-                    const insertQuery = "INSERT INTO webdev.attendance (Series_Num, Event_ID, User_ID) VALUES (?, ?)"
-                    connection.query(insertQuery , [1, ID, userID], (err, results) => {
-                        if (err) {
-                            console.error('Error executing INSERT query:', err);
-                        } else {
-                            console.log('Attendance Record creation successful. Rows affected:', results.affectedRows);
-                        }
-                    })
-                })
-            }
-        }
-    })
-}
 
-
-function makeSeriesRecord(ID, names, count){
+function makeRecord(ID, names, count){
     console.log("nAMEs:", names)
-    const countQuery = "SELECT COUNT(*) AS row_count FROM webdev.attendance WHERE Event_ID = ?"
-    connection.query(countQuery , [ID], (err, results) => {
-        if (err) {
-            console.error('Error executing query:', err);
-        } else {
-            console.log('Execution successful (MSR). Count:', results[0].row_count);
-            if (results[0].row_count == 0){
-                const userIDs = names.map(row => row.User_ID);
-                console.log("USER IDs: ", userIDs);
-                console.log("No. of series: ", count)
-                console.log("Event ID: ", ID)
-                const values = []
-                for (var j = 1; j <= count; j++){
-                    for (var k = 0; k < userIDs.length; k++){
-                        values.push([j, ID, userIDs[k]])
-                    }
-                }
-                
-                console.log(values)
-                values.forEach(value => {recordQuery(value)})
-            }
+    const userIDs = names.map(row => row.User_ID);
+    console.log("USER IDs: ", userIDs);
+    console.log("No. of series: ", count)
+    console.log("Event ID: ", ID)
+    const values = []
+    for (var j = 1; j <= count; j++){
+        for (var k = 0; k < userIDs.length; k++){
+            values.push([j, ID, userIDs[k]])
         }
-    })
+    }
+    
+    console.log(values)
+    values.forEach(value => {recordQuery(value)})
 }
 
 
 function recordQuery(val){
-    const insertQuery = "INSERT INTO webdev.attendance (Series_Num, Event_ID, User_ID) VALUES (?, ?, ?)"
-    connection.query(insertQuery , [val[0], parseInt(val[1],10), val[2]], (err, results) => {
+    const selectQuery = "SELECT * FROM webdev.attendance WHERE Series_Num = ? AND Event_ID = ? AND User_ID = ?";
+    connection.query(selectQuery , [val[0], parseInt(val[1],10), val[2]], (err, results) => {
         if (err) {
-            console.error('Error executing INSERT query:', err);
+            console.error('Error executing SELECT query:', err);
         } else {
-            console.log('Attendance Record creation successful (Series). Rows affected:', results.affectedRows);
+            if (results && results.length === 0){
+                const insertQuery = "INSERT INTO webdev.attendance (Series_Num, Event_ID, User_ID) VALUES (?, ?, ?)"
+                connection.query(insertQuery , [val[0], parseInt(val[1],10), val[2]], (err, results) => {
+                    if (err) {
+                        console.error('Error executing INSERT query:', err);
+                    } else {
+                        console.log('Attendance Record creation successful. Rows affected:', results.affectedRows);
+                    }
+                })
+            }
         }
     })
 }

@@ -213,7 +213,7 @@ async function loadOneTime(){
         if(!In_Time){
             tableHTML += `<td class=${eventID} id=${User_ID}></td>`
         } else {
-            tableHTML += `<td class=${eventID} id=${User_ID}>${In_Time}</td>`
+            tableHTML += `<td class= "attendance ${eventID}" id=${User_ID}>${In_Time}</td>`
         }
         tableHTML += "</tr>"
     })
@@ -269,7 +269,7 @@ async function genSeriesTables(){
             day: '2-digit',
         }).format(new Date(seriesData[i].Date))
         containerHTMl += `<div class=series${i+1}>`
-        containerHTMl += `<h3>${seriesData[i].Venue ? seriesData[i].Series_Name : 'No name specified'}</h3>`
+        containerHTMl += `<h3>${seriesData[i].Venue ? seriesData[i].Series_Name : `Series ${i}`}</h3>`
         containerHTMl += `<p id="seriesVenue${i}">${seriesData[i].Venue ? seriesData[i].Venue : 'No venue specified'}</p>`
         containerHTMl += `<div class="row">
                             <div class="col-10"></div>
