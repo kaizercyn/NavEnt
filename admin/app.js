@@ -475,7 +475,7 @@ app.get('/getRegistrants/:eventID', async (request, response) => {
             success: true
         })
     } catch (error) {
-        console.log(error + " Error getting event's external links' details.");
+        console.log(error + " Error getting event's registrants (OT) details.");
         response.status(500).json({ error: error.message });
     }
 })
@@ -490,7 +490,7 @@ app.get('/getRegistrantsAMPM/:eventID', async (request, response) => {
             success: true
         })
     } catch (error) {
-        console.log(error + " Error getting event's external links' details.");
+        console.log(error + " Error getting event's registrants (AP) details.");
         response.status(500).json({ error: error.message });
     }
 })
@@ -505,7 +505,7 @@ app.get('/getRegistrantsSeries/:eventID', async (request, response) => {
             success: true
         })
     } catch (error) {
-        console.log(error + " Error getting event's external links' details.");
+        console.log(error + " Error getting event's registrants (S) details.");
         response.status(500).json({ error: error.message });
     }
 })
@@ -524,30 +524,23 @@ app.post('/addRecord', async (request, response) => {
             success: true
         })
     } catch (error) {
-        console.log(error + " Error adding Event Links");
+        console.log(error + " Error adding attendance records");
         response.status(500).json({ error: error.message }); 
     }
 })
 
-async function createFileName () {
-    try {
-        const db = dbService.getDbServiceInstance();
-        const results = await db.lastEventID();
-        console.log("Create filename", results);
-
-        if (results && results.length > 0) {
-            const eventId = parseInt(results[0].Event_ID, 10);
-            if (!isNaN(eventId)) {
-                const newEventId = eventId + 1;
-                console.log("Response: ", newEventId);
-                return `${newEventId}`;
-            }
-        }
-        return "10001";
-    } catch (error) {
-        console.error("Error creating filename:", error);
-        return "10001";
-    }
-}
+async function createFileName() {
+    return new Promise((resolve) => {
+      const timestamp = Date.now();
+      const filename = `NavEnt_file_${timestamp}.txt`;
+  
+      
+  
+    // Example usage
+    createFileName().then((filename) => {
+        console.log('Generated Filename:', filename);
+    });
+})}
+  
 
 app.listen(process.env.PORT, () => console.log('app is running'))
